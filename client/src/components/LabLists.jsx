@@ -1,10 +1,11 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Loading from './Loading'
+
 const LabLists = ({
 	labs,
 	selectedLabIndex,
@@ -83,29 +84,29 @@ const LabLists = ({
 				)
 			})
 		) : (
-			<div>Nessun laboratorio trovato</div>
+			<div className="text-white"><InformationCircleIcon className="inline-block h-5 w-5 mr-1" />Nessun laboratorio trovato</div>
 		)
 	}
 
 	return (
 		<>
-			<div className="mx-4 flex h-fit flex-col gap-4 rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 text-gray-900 drop-shadow-xl sm:mx-8 sm:p-6">
+			<div className="mx-4 flex h-fit flex-col gap-4 bg-[#213D72] text-gray-900 drop-shadow-xl sm:mx-8 sm:p-6">
 				<form
 					className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2"
 					onSubmit={handleSubmit(onAddLab)}
 				>
-					<h2 className="text-3xl font-bold">Lab Lists</h2>
+					<h2 className="text-3xl font-bold text-white">Lista dei Laboratori</h2>
 					{auth.role === 'admin' && (
 						<div className="flex w-fit grow sm:justify-end">
 							<input
-								placeholder="Type a lab name"
-								className="w-full grow rounded-l border border-gray-300 px-3 py-1 sm:max-w-xs"
+								placeholder="Aggiungi un laboratorio..."
+								className="w-full grow border border-gray-300 px-3 py-1 sm:max-w-xs"
 								required
 								{...register('name', { required: true })}
 							/>
 							<button
 								disabled={isAdding}
-								className="flex items-center whitespace-nowrap rounded-r-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+								className="flex items-center whitespace-nowrap bg-[#8796B3] text-white px-3 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
 							>
 								{isAdding ? 'Elaborazione...' : 'AGGIUNGI +'}
 							</button>
@@ -118,7 +119,7 @@ const LabLists = ({
 					</div>
 					<input
 						type="search"
-						className="block w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-900"
+						className="block w-full border border-gray-300 p-2 pl-10 text-gray-900"
 						placeholder="Cerca un laboratorio..."
 						{...register('search')}
 					/>

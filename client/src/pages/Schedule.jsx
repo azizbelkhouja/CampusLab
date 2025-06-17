@@ -10,6 +10,7 @@ import Loading from '../components/Loading'
 import Navbar from '../components/Navbar'
 import ScheduleTable from '../components/ScheduleTable'
 import { AuthContext } from '../context/AuthContext'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 
 const Schedule = () => {
 	const { auth } = useContext(AuthContext)
@@ -62,7 +63,6 @@ const Schedule = () => {
 	const fetchSeminari = async (data) => {
 		try {
 			const response = await axios.get('/seminario')
-			// console.log(response.data.data)
 			setSeminari(response.data.data)
 		} catch (error) {
 			console.error(error)
@@ -102,7 +102,7 @@ const Schedule = () => {
 					}
 				}
 			)
-			// console.log(response.data)
+
 			fetchLabs()
 			if (data.autoIncrease) {
 				const seminarioLength = seminari.find((seminario) => seminario._id === data.seminario).length
@@ -136,7 +136,7 @@ const Schedule = () => {
 					sessionStorage.setItem('selectedDate', nextShowtime)
 				}
 			}
-			toast.success('Add showtime successful!', {
+			toast.success('Aggiunta dell\'orario riuscita!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -163,13 +163,13 @@ const Schedule = () => {
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 text-gray-900 sm:gap-8">
+		<div className="flex min-h-screen flex-col gap-4 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
 			<LabLists {...props} />
 			{selectedLabIndex !== null &&
 				(labs[selectedLabIndex]?.theaters?.length ? (
-					<div className="mx-4 flex flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
-						<h2 className="text-3xl font-bold text-gray-900">Programma</h2>
+					<div className="mx-4 flex flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
+						<h2 className="text-3xl font-bold text-white">Programma</h2>
 						<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 						{auth.role === 'admin' && (
 							<form
@@ -330,7 +330,7 @@ const Schedule = () => {
 								<button
 									title="Add showtime"
 									disabled={isAddingShowtime}
-									className="whitespace-nowrap rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+									className="whitespace-nowrap bg-[#8796B3] font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
 									type="submit"
 								>
 									ADD +
@@ -353,8 +353,8 @@ const Schedule = () => {
 						)}
 					</div>
 				) : (
-					<div className="mx-4 flex flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
-						<p className="text-center">Non ci sono aule disponibili</p>
+					<div className="mx-4 flex flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
+						<p className="text-center text-white"><InformationCircleIcon className="inline-block h-5 w-5 mr-1" />Non ci sono aule disponibili</p>
 					</div>
 				))}
 		</div>

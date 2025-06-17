@@ -110,39 +110,39 @@ const User = () => {
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 text-gray-900 sm:gap-8">
+		<div className="flex min-h-screen flex-col gap-4 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 flex h-fit flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<h2 className="text-3xl font-bold text-gray-900">Users</h2>
+			<div className="mx-4 flex h-fit flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+				<h2 className="text-3xl font-bold text-white">Users</h2>
 				<div className="relative drop-shadow-sm">
 					<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
 						<MagnifyingGlassIcon className="h-5 w-5 stroke-2 text-gray-500" />
 					</div>
 					<input
 						type="search"
-						className="block w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-900"
-						placeholder="Search username"
+						className="block w-full border border-gray-300 p-2 pl-10 text-gray-900"
+						placeholder="Cerca un utente..."
 						{...register('search')}
 					/>
 				</div>
 				<div
-					className={`mt-2 grid max-h-[60vh] overflow-auto rounded-md bg-gradient-to-br from-indigo-100 to-white`}
+					className={`mt-2 grid max-h-[60vh] overflow-auto bg-gradient-to-br from-indigo-100 to-white`}
 					style={{ gridTemplateColumns: 'repeat(3, minmax(max-content, 1fr)) max-content max-content' }}
 				>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Username
+						Nome
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
 						Email
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Role
+						Ruolo
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Ticket
+						Passi
 					</p>
 					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-						Action
+						
 					</p>
 					{users
 						?.filter((user) => user.username.toLowerCase().includes(watch('search')?.toLowerCase() || ''))
@@ -165,7 +165,7 @@ const User = () => {
 												setTicketsUser(user.username)
 											}}
 										>
-											View {user.tickets.length} Tickets
+											Visualizza {user.tickets.length} Passi
 											<TicketIcon className="h-6 w-6" />
 										</button>
 									</div>
@@ -195,7 +195,7 @@ const User = () => {
 											onClick={() => handleDelete({ id: user._id, username: user.username })}
 											disabled={isDeleting}
 										>
-											DELETE
+											ELIMINA
 											<TrashIcon className="h-5 w-5" />
 										</button>
 									</div>

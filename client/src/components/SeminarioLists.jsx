@@ -1,4 +1,5 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 
 const SeminarioLists = ({ seminari, search, handleDelete }) => {
 	const seminariList = seminari?.filter((seminario) => seminario.name.toLowerCase().includes(search?.toLowerCase() || ''))
@@ -27,7 +28,7 @@ const SeminarioLists = ({ seminari, search, handleDelete }) => {
 			})}
 		</div>
 	) : (
-		<div>Nessun seminario trovato</div>
+		<div className='text-white'><InformationCircleIcon className="inline-block h-5 w-5 mr-1" />Nessun seminario trovato</div>
 	)
 }
 

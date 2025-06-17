@@ -44,14 +44,14 @@ const Login = () => {
 	}
 
 	const inputClasses = () => {
-		return 'appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-blue-500'
+		return 'appearance-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none border-[#213D72] focus:ring-[#213D72] focus:border-[#213D72] shadow-sm sm:text-sm'
 	}
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-900 to-blue-500 py-12 px-4 sm:px-6 lg:px-8">
-			<div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-4 shadow-xl">
+		<div className="flex min-h-screen items-center justify-center bg-[#213D72]">
+			<div className="w-full max-w-md space-y-8 p-4 shadow-xl bg-white">
 				<div>
-					<h2 className="mt-4 text-center text-4xl font-extrabold text-gray-900">Login</h2>
+					<h2 className="mt-4 text-center text-4xl font-extrabold text-[#213D72]">Login</h2>
 				</div>
 				<form className="mt-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
 					<input
@@ -77,15 +77,15 @@ const Login = () => {
 						{errorsMessage && <span className="text-sm text-red-500">{errorsMessage}</span>}
 						<button
 							type="submit"
-							className="mt-4 w-full rounded-md bg-blue-600 bg-gradient-to-br from-indigo-600 to-blue-500 py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-700 hover:from-indigo-500 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:from-slate-500 disabled:to-slate-400"
+							className="mt-4 w-full bg-[#213D72] py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-900 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:from-slate-500 disabled:to-slate-400"
 							disabled={isLoggingIn}
 						>
 							{isLoggingIn ? 'Processing...' : 'Login'}
 						</button>
 					</div>
-					<p className="text-right">
+					<p className="text-right text-[#0086A0]">
 						Non hai un account?{' '}
-						<Link to={'/register'} className="font-bold text-blue-600">
+						<Link to={'/register'} className="text-black">
 							Registrati qui
 						</Link>
 					</p>

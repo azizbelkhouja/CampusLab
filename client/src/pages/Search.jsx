@@ -311,15 +311,15 @@ const Search = () => {
 	const navigate = useNavigate()
 
 	return (
-		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 text-gray-900 sm:gap-8">
+		<div className="flex min-h-screen flex-col gap-4 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 flex h-fit flex-col gap-2 rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<h2 className="text-3xl font-bold text-gray-900">Search Showtimes</h2>
-				<div className="flex flex-col gap-2 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 transition-all duration-500 ease-in-out">
+			<div className="mx-4 flex h-fit flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+				<h2 className="text-3xl font-bold text-white">Cerca Seminari</h2>
+				<div className="flex flex-col gap-2 bg-white p-4 transition-all duration-500 ease-in-out">
 					<div className="flex items-center justify-between" onClick={() => setIsOpenFilter((prev) => !prev)}>
-						<div className="flex items-center gap-2 text-2xl font-bold text-gray-900">
+						<div className="flex items-center gap-2 text-2xl font-bold text-[#213D72]">
 							<FunnelIcon className="h-6 w-6" />
-							Filter
+							Filtra
 						</div>
 						{!isOpenFilter && (
 							<ChevronDownIcon className="h-6 w-6 transition-all hover:scale-125 hover:cursor-pointer" />
@@ -352,7 +352,7 @@ const Search = () => {
 								/>
 							</div>
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Theater :</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Aula :</h4>
 								<Select
 									value={filterTheater}
 									options={Array.from(new Set(showtimes.map((showtime) => showtime.theater.number)))
@@ -419,7 +419,7 @@ const Search = () => {
 									primaryColor="indigo"
 								/>
 								<div className="my-2 flex flex-col items-start gap-x-2 gap-y-1 sm:flex-row sm:items-center">
-									<label className="text-md font-semibold text-gray-800">From</label>
+									<label className="text-md font-semibold text-gray-800">Da</label>
 									<Select
 										value={filterDateFrom}
 										options={Array.from(
@@ -448,7 +448,7 @@ const Search = () => {
 										isSearchable={true}
 										primaryColor="indigo"
 									/>
-									<label className="text-md font-semibold text-gray-800">To</label>
+									<label className="text-md font-semibold text-gray-800">A</label>
 									<Select
 										value={filterDateTo}
 										options={Array.from(
@@ -464,7 +464,6 @@ const Search = () => {
 												})
 											)
 										)
-											// .filter((value) => !filterDateFrom || new Date(filterDateFrom.value) <= new Date(value))
 											.map((value) => ({
 												value,
 												label: value
@@ -480,7 +479,7 @@ const Search = () => {
 								</div>
 								<div className="flex flex-col items-start gap-x-8 gap-y-2 sm:flex-row sm:items-center">
 									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
-										Past Date
+										Data passata
 										<input
 											type="checkbox"
 											className="h-6 w-6"
@@ -494,7 +493,7 @@ const Search = () => {
 										/>
 									</label>
 									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
-										Today
+										Oggi
 										<input
 											type="checkbox"
 											className="h-6 w-6"
@@ -508,7 +507,7 @@ const Search = () => {
 										/>
 									</label>
 									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
-										Future Date
+										Data futura
 										<input
 											type="checkbox"
 											className="h-6 w-6"
@@ -524,7 +523,7 @@ const Search = () => {
 								</div>
 							</div>
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Time :</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Orario :</h4>
 								<Select
 									value={filterTime}
 									options={Array.from(
@@ -552,7 +551,7 @@ const Search = () => {
 									primaryColor="indigo"
 								/>
 								<div className="my-2 flex flex-col items-start gap-x-2 gap-y-1 sm:flex-row sm:items-center">
-									<label className="text-md font-semibold text-gray-800">From</label>
+									<label className="text-md font-semibold text-gray-800">Da</label>
 									<Select
 										value={filterTimeFrom}
 										options={Array.from(
@@ -581,7 +580,7 @@ const Search = () => {
 										isSearchable={true}
 										primaryColor="indigo"
 									/>
-									<label className="text-md font-semibold text-gray-800">To</label>
+									<label className="text-md font-semibold text-gray-800">A</label>
 									<Select
 										value={filterTimeTo}
 										options={Array.from(
@@ -613,10 +612,10 @@ const Search = () => {
 								</div>
 							</div>
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Release :</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Pubbliccato :</h4>
 								<div className="mt-1 flex flex-col items-start gap-x-8 gap-y-2 sm:flex-row sm:items-center">
 									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
-										True
+										Sì
 										<input
 											type="checkbox"
 											className="h-6 w-6"
@@ -629,7 +628,7 @@ const Search = () => {
 										/>
 									</label>
 									<label className="text-md flex items-center justify-between gap-2 font-semibold text-gray-800">
-										False
+										Non ancora
 										<input
 											type="checkbox"
 											className="h-6 w-6"
@@ -650,7 +649,7 @@ const Search = () => {
 					<ArrowDownIcon className="h-8 min-h-[32px] w-8 min-w-[32px] px-1" />
 					<div className="flex flex-wrap items-center gap-2 px-1">
 						<button
-							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							className="flex w-fit items-center justify-center gap-1 bg-[#8796B3] py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleReleaseCheckedShowtimes()}
 							disabled={checkedShowtimes.length === 0 || isReleasingCheckedShowtimes}
 						>
@@ -659,21 +658,21 @@ const Search = () => {
 							) : (
 								<>
 									<EyeIcon className="h-5 w-5" />
-									{`Release ${checkedShowtimes.length} checked showtimes`}
+									{`Mostra ${checkedShowtimes.length} Seminari selezionati`}
 								</>
 							)}
 						</button>
 						<button
-							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							className="flex w-fit items-center justify-center gap-1 bg-[#8796B3] py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleUnreleasedCheckedShowtimes()}
 							disabled={checkedShowtimes.length === 0 || isUnreleasingCheckedShowtimes}
 						>
 							{isUnreleasingCheckedShowtimes ? (
-								`${unreleasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes unreleased`
+								`${unreleasedCheckedShowtimes} / ${checkedShowtimes.length} Seminari non pubblicati`
 							) : (
 								<>
 									<EyeSlashIcon className="h-5 w-5" />
-									{`Unreleased ${checkedShowtimes.length} checked showtimes`}
+									{`Non pubblicati ${checkedShowtimes.length} Seminari selezionati`}
 								</>
 							)}
 						</button>
@@ -683,20 +682,19 @@ const Search = () => {
 							disabled={checkedShowtimes.length === 0 || isDeletingCheckedShowtimes}
 						>
 							{isDeletingCheckedShowtimes ? (
-								`${deletedCheckedShowtimes} / ${checkedShowtimes.length} showtimes deleted`
+								`${deletedCheckedShowtimes} / ${checkedShowtimes.length} Seminari eliminati`
 							) : (
 								<>
 									<TrashIcon className="h-5 w-5" />
-									{`Delete ${checkedShowtimes.length} checked showtimes`}
+									{`Elimina ${checkedShowtimes.length} Seminari selezionati`}
 								</>
 							)}
 						</button>
 					</div>
 
 					{isFetchingShowtimesDone && (
-						<div className="ml-auto flex items-center gap-1 px-1 text-sm font-medium">
-							<InformationCircleIcon className="h-5 w-5" /> Showing {filteredShowtimes.length} filtered
-							showtimes
+						<div className="ml-auto flex items-center gap-1 px-1 text-sm font-medium text-white">
+							<InformationCircleIcon className="h-5 w-5" /> Mostrando {filteredShowtimes.length} Seminari filtrati
 						</div>
 					)}
 				</div>

@@ -108,59 +108,59 @@ const Seminario = () => {
 	const min = sumMin % 60
 
 	return (
-		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 text-gray-900 sm:gap-8">
+		<div className="flex min-h-screen flex-col gap-4 text-gray-900 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 flex h-fit flex-col gap-4 rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<h2 className="text-3xl font-bold text-gray-900">Seminario Lists</h2>
+			<div className="mx-4 flex h-fit flex-col gap-4 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+				<h2 className="text-3xl font-bold text-white">Lista dei Seminari</h2>
 				<form
 					onSubmit={handleSubmit(onAddSeminario)}
-					className="flex flex-col items-stretch justify-end gap-x-4 gap-y-2 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
+					className="flex flex-col items-stretch justify-end gap-x-4 gap-y-2 bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
 				>
 					<div className="flex w-full grow flex-col flex-wrap justify-start gap-4 lg:w-auto">
-						<h3 className="text-xl font-bold">Add Seminario</h3>
+						<h3 className="text-xl font-bold text-[#213D72]">Aggiungi Seminario</h3>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-							<label className="text-lg font-semibold leading-5">Name :</label>
+							<label className="text-lg font-semibold leading-5">Titolo :</label>
 							<input
 								type="text"
 								required
-								className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('name', {
 									required: true
 								})}
 							/>
 						</div>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-							<label className="text-lg font-semibold leading-5">Poster URL :</label>
+							<label className="text-lg font-semibold leading-5">Cover URL :</label>
 							<input
 								type="text"
 								required
-								className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('img', {
 									required: true
 								})}
 							/>
 						</div>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-							<label className="text-lg font-semibold leading-5">Length (hr.):</label>
+							<label className="text-lg font-semibold leading-5">Lunghezza (ore):</label>
 							<input
 								type="number"
 								min="0"
 								max="20"
 								maxLength="2"
-								className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
 								{...register('lengthHr')}
 							/>
 						</div>
 						<div>
 							<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-								<label className="text-lg font-semibold leading-5">Lunghezza (min.):</label>
+								<label className="text-lg font-semibold leading-5">Lunghezza (min):</label>
 								<input
 									type="number"
 									min="0"
 									max="2000"
 									maxLength="4"
 									required
-									className="w-full flex-grow rounded px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+									className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
 									{...register('lengthMin', {
 										required: true
 									})}
@@ -171,10 +171,10 @@ const Seminario = () => {
 					</div>
 					<div className="flex w-full flex-col gap-4 lg:w-auto lg:flex-row">
 						{watch('img') && (
-							<img src={watch('img')} className="h-48 rounded-md object-contain drop-shadow-md lg:h-64" />
+							<img src={watch('img')} className="h-48-md object-contain drop-shadow-md lg:h-64" />
 						)}
 						<button
-							className="w-full min-w-fit items-center rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
+							className="w-full min-w-fit items-center bg-[#8796B3] px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
 							type="submit"
 							disabled={isAddingSeminario}
 						>
@@ -188,8 +188,8 @@ const Seminario = () => {
 					</div>
 					<input
 						type="search"
-						className="block w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-900"
-						placeholder="Search seminario"
+						className="block w-full border border-gray-300 p-2 pl-10 text-gray-900"
+						placeholder="Cerca seminario"
 						{...register('search')}
 					/>
 				</div>
