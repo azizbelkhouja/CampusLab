@@ -163,7 +163,7 @@ const Search = () => {
 
 	const handleDeleteCheckedShowtimes = () => {
 		const confirmed = window.confirm(
-			`Do you want to delete ${checkedShowtimes.length} checked showtimes, including its tickets?`
+			`Vuoi eliminare ${checkedShowtimes.length} seminari selezionati, inclusi i relativi biglietti?`
 		)
 		if (confirmed) {
 			onDeleteCheckedShowtimes()
@@ -313,9 +313,9 @@ const Search = () => {
 	return (
 		<div className="flex min-h-screen flex-col gap-4 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 flex h-fit flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<h2 className="text-3xl font-bold text-white">Cerca Seminari</h2>
-				<div className="flex flex-col gap-2 bg-white p-4 transition-all duration-500 ease-in-out">
+			<div className="mx-4 flex h-fit flex-col gap-2 sm:mx-8 sm:p-6">
+				<h2 className="text-3xl font-bold text-black">Cerca Seminari</h2>
+				<div className="flex flex-col gap-2">
 					<div className="flex items-center justify-between" onClick={() => setIsOpenFilter((prev) => !prev)}>
 						<div className="flex items-center gap-2 text-2xl font-bold text-[#213D72]">
 							<FunnelIcon className="h-6 w-6" />
@@ -649,35 +649,35 @@ const Search = () => {
 					<ArrowDownIcon className="h-8 min-h-[32px] w-8 min-w-[32px] px-1" />
 					<div className="flex flex-wrap items-center gap-2 px-1">
 						<button
-							className="flex w-fit items-center justify-center gap-1 bg-[#8796B3] py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							className="flex w-fit items-center justify-center gap-1 bg-[#8796B3] py-1 pr-1.5 text-sm font-medium disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleReleaseCheckedShowtimes()}
 							disabled={checkedShowtimes.length === 0 || isReleasingCheckedShowtimes}
 						>
 							{isReleasingCheckedShowtimes ? (
-								`${releasedCheckedShowtimes} / ${checkedShowtimes.length} showtimes released`
+								`${releasedCheckedShowtimes} / ${checkedShowtimes.length} Seminari Pubblicati`
 							) : (
 								<>
 									<EyeIcon className="h-5 w-5" />
-									{`Mostra ${checkedShowtimes.length} Seminari selezionati`}
+									{`Pubblica ${checkedShowtimes.length} Seminari selezionati`}
 								</>
 							)}
 						</button>
 						<button
-							className="flex w-fit items-center justify-center gap-1 bg-[#8796B3] py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							className="flex w-fit items-center justify-center gap-1 bg-[#8796B3] py-1 pl-2 pr-1.5 text-sm font-medium text-whitedisabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleUnreleasedCheckedShowtimes()}
 							disabled={checkedShowtimes.length === 0 || isUnreleasingCheckedShowtimes}
 						>
 							{isUnreleasingCheckedShowtimes ? (
-								`${unreleasedCheckedShowtimes} / ${checkedShowtimes.length} Seminari non pubblicati`
+								`${unreleasedCheckedShowtimes} / ${checkedShowtimes.length} Seminari nascosti`
 							) : (
 								<>
 									<EyeSlashIcon className="h-5 w-5" />
-									{`Non pubblicati ${checkedShowtimes.length} Seminari selezionati`}
+									{`Nascondi ${checkedShowtimes.length} Seminari selezionati`}
 								</>
 							)}
 						</button>
 						<button
-							className="flex w-fit items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
+							className="flex w-fit items-center justify-center gap-1 bg-red-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:bg-red-600 disabled:from-slate-500 disabled:to-slate-400 md:min-w-fit"
 							onClick={() => handleDeleteCheckedShowtimes()}
 							disabled={checkedShowtimes.length === 0 || isDeletingCheckedShowtimes}
 						>
@@ -700,10 +700,10 @@ const Search = () => {
 				</div>
 
 				<div
-					className={`mb-4 grid max-h-screen overflow-auto rounded-md bg-gradient-to-br from-indigo-100 to-white`}
+					className={`mb-4 grid max-h-screen overflow-auto`}
 					style={{ gridTemplateColumns: '34px repeat(7, minmax(max-content, 1fr)) 104px' }}
 				>
-					<p className="sticky top-0 flex items-center justify-center rounded-tl-md bg-gradient-to-br from-gray-800 to-gray-700 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 flex items-center justify-center text-center text-xl font-semibold text-white">
 						<input
 							type="checkbox"
 							className="h-6 w-6"
@@ -724,7 +724,7 @@ const Search = () => {
 						/>
 					</p>
 					<button
-						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						className="sticky top-0 flex justify-center bg-white text-black px-2 py-1 text-center text-xl font-semibold"
 						onClick={() => {
 							let prevValue = sortDip
 							resetSort()
@@ -737,7 +737,7 @@ const Search = () => {
 						{sortDip === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
-						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						className="sticky top-0 flex justify-center bg-white text-black px-2 py-1 text-center text-xl font-semibold"
 						onClick={() => {
 							let prevValue = sortAula
 							resetSort()
@@ -750,7 +750,7 @@ const Search = () => {
 						{sortAula === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
-						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						className="sticky top-0 flex justify-center bg-white text-black px-2 py-1 text-center text-xl font-semibold"
 						onClick={() => {
 							let prevValue = sortSeminario
 							resetSort()
@@ -763,60 +763,60 @@ const Search = () => {
 						{sortSeminario === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
-						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						className="sticky top-0 flex justify-center bg-white text-black px-2 py-1 text-center text-xl font-semibold"
 						onClick={() => {
 							let prevValue = sortDate
 							resetSort()
 							setSortDate(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
 						}}
 					>
-						<p className="ml-auto">Date</p>
+						<p className="ml-auto">Data</p>
 						{sortDate === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
 						{sortDate === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
 						{sortDate === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
-						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						className="sticky top-0 flex justify-center bg-white text-black px-2 py-1 text-center text-xl font-semibold"
 						onClick={() => {
 							let prevValue = sortTime
 							resetSort()
 							setSortTime(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
 						}}
 					>
-						<p className="ml-auto">Time</p>
+						<p className="ml-auto">Orario</p>
 						{sortTime === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
 						{sortTime === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
 						{sortTime === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
-						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						className="sticky top-0 flex justify-center bg-white text-black px-2 py-1 text-center text-xl font-semibold"
 						onClick={() => {
 							let prevValue = sortBooked
 							resetSort()
 							setSortBooked(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
 						}}
 					>
-						<p className="ml-auto">Booked</p>
+						<p className="ml-auto">Prenotazioni</p>
 						{sortBooked === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
 						{sortBooked === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
 						{sortBooked === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
-						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
+						className="sticky top-0 flex justify-center bg-white text-black px-2 py-1 text-center text-xl font-semibold"
 						onClick={() => {
 							let prevValue = sortRelease
 							resetSort()
 							setSortRelease(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
 						}}
 					>
-						<p className="ml-auto">Release</p>
+						<p className="ml-auto">Pubblicato</p>
 						{sortRelease === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
 						{sortRelease === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
 						{sortRelease === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
-					<p className="sticky top-0 z-[1] flex items-center justify-center gap-2 rounded-tr-md bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 z-[1] flex items-center justify-center gap-2 bg-white text-black px-2 py-1 text-center text-xl font-semibold">
 						<MapIcon className="h-6 w-6" />
-						View
+						Vedi
 					</p>
 					{isFetchingShowtimesDone &&
 						filteredShowtimes.map((showtime, index) => {
@@ -901,11 +901,10 @@ const Search = () => {
 										)}
 									</div>
 									<button
-										className="flex items-center justify-center gap-2 bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+										className="flex items-center justify-center gap-2 bg-blue-900 px-2 py-1 text-white mb-0.5 disabled:from-slate-500 disabled:to-slate-400"
 										onClick={() => navigate(`/showtime/${showtime._id}`)}
 									>
 										<MapIcon className="h-6 w-6" />
-										View
 									</button>
 								</Fragment>
 							)

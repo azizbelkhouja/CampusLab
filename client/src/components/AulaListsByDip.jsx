@@ -342,11 +342,11 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 					<div className="flex justify-center">
 						<button
 							title="Elimina Ultima Aula"
-							className="w-fit rounded-md bg-gradient-to-r from-red-700 to-rose-600 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400"
+							className="w-fit bg-red-500 px-2 py-1 font-medium text-white drop-shadow-md hover:bg-red-600 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDecreaseAula()}
 							disabled={isDecreasing}
 						>
-							{isDecreasing ? 'Elaborazione...' : 'Elimina Ultima Aula -'}
+							{isDecreasing ? 'Elaborazione...' : 'Elimina Ultima Aula'}
 						</button>
 					</div>
 				)}

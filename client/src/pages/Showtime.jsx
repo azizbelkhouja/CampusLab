@@ -124,9 +124,9 @@ const Showtime = () => {
 							)}
 						</div>
 
-						<div className="mx-auto mt-4 flex flex-col items-center bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
+						<div className="mx-auto mt-4 flex flex-col items-center bg-gradient-to-br from-indigo-100 to-white p-4 text-center">
 							<div className="w-full bg-white">
-								<div className="bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-xl font-bold text-transparent">
+								<div className="text-xl font-bold">
 									Schermo Pc Del Prof
 								</div>
 							</div>

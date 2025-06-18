@@ -47,11 +47,11 @@ const Purchase = () => {
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
+		<div className="flex min-h-screen flex-col gap-4 pb-8 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 h-fit rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+			<div className="mx-4 h-fit rounded-lg p-4 sm:mx-8 sm:p-6">
 				<ShowtimeDetails showtime={showtime} />
-				<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
+				<div className="flex flex-col justify-between text-center text-lg border-2 border-t-0 border-black md:flex-row">
 					<div className="flex flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
 						<p className="font-semibold">Posti selezionati : </p>
 						<p className="text-start">{selectedSeats.join(', ')}</p>
@@ -60,7 +60,7 @@ const Purchase = () => {
 					{!!selectedSeats.length && (
 						<button
 							onClick={() => onPurchase()}
-							className="flex items-center justify-center gap-2 rounded-b-lg  bg-gradient-to-br from-indigo-600 to-blue-500 px-4 py-1 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 md:rounded-none md:rounded-br-lg"
+							className="flex items-center justify-center gap-2 bg-black text-white px-3 disabled:from-slate-500 disabled:to-slate-400"
 							disabled={isPurchasing}
 						>
 							{isPurchasing ? (

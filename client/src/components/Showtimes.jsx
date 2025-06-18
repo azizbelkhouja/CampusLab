@@ -79,7 +79,7 @@ const Showtimes = ({ showtimes, seminari, selectedDate, filterSeminario, showSem
 														`}
 												className={
 													isPast(new Date(showtime.showtime))
-														? `flex items-center gap-1 rounded-md bg-gradient-to-br from-gray-100 to-white px-2 py-1 text-lg text-gray-900 ring-1 ring-inset ring-gray-800 drop-shadow-sm ${
+														? `flex items-center gap-1 px-2 py-1 text-lg text-gray-900 ${
 																auth.role !== 'admin' && 'cursor-not-allowed'
 														  } ${
 																auth.role === 'admin' &&
@@ -91,8 +91,8 @@ const Showtimes = ({ showtimes, seminari, selectedDate, filterSeminario, showSem
 																	(s) => new Date(s.showtime) > new Date()
 																).showtime
 														  ).getTime()
-														? 'flex items-center gap-1 rounded-md bg-gradient-to-br from-indigo-600 to-blue-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-indigo-500 hover:to-blue-400'
-														: 'flex items-center gap-1 rounded-md bg-gradient-to-br from-gray-600 to-gray-500 px-2 py-1 text-lg text-white drop-shadow-sm hover:from-gray-500 hover:to-gray-400'
+														? 'flex items-center gap-1 bg-blue-900 px-2 py-1 text-lg text-white drop-shadow-sm'
+														: 'flex items-center gap-1 bg-gray-400 px-2 py-1 text-lg text-white'
 												}
 												onClick={() => {
 													if (!isPast(new Date(showtime.showtime)) || auth.role === 'admin')
