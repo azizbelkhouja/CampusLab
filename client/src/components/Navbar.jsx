@@ -76,19 +76,17 @@ const Navbar = () => {
 						<ClockIcon className="h-6 w-6" />
 						<p>Programma</p>
 					</Link>
-					{!auth.role === 'admin' && (
-						<Link
-							to={'/ticket'}
-							className={`flex items-center justify-center gap-2 px-2 py-1 ${
-								window.location.pathname === '/ticket'
-									? 'border-b-2 border-black'
-									: 'text-black '
-							}`}
-						>
-							<TicketIcon className="h-6 w-6" />
-							<p>Passo</p>
-						</Link>
-					)}
+					<Link
+						to={'/ticket'}
+						className={`flex items-center justify-center gap-2 px-2 py-1 ${
+							window.location.pathname === '/ticket'
+								? 'border-b-2 border-black'
+								: 'text-black '
+						}`}
+					>
+						<TicketIcon className="h-6 w-6" />
+						<p>Passo</p>
+					</Link>
 					{auth.role === 'admin' && (
 						<>
 							<Link

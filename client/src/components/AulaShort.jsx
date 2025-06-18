@@ -51,14 +51,12 @@ const AulaShort = ({ aulaId, seminari, selectedDate, filterSeminario, rounded = 
 
 	return (
 		<div
-			className={`flex flex-col bg-gradient-to-br from-indigo-100 to-white sm:flex-row sm:rounded-tr-none ${
-				rounded && 'rounded-b-md'
-			}`}
+			className={`flex flex-col sm:flex-row border border-black`}
 		>
 			<div className="flex flex-col sm:flex-row">
 				<div
-					className={`flex min-w-[120px] flex-row items-center justify-center gap-x-2 bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-2xl font-bold text-white sm:flex-col ${
-						rounded && 'sm:rounded-bl-md'
+					className={`flex min-w-[120px] flex-row items-center justify-center gap-x-2 bg-black px-4 text-2xl font-bold text-white sm:flex-col ${
+						rounded && ''
 					}`}
 				>
 					<p className="text-sm">Aula</p>
@@ -66,7 +64,7 @@ const AulaShort = ({ aulaId, seminari, selectedDate, filterSeminario, rounded = 
 				</div>
 				{auth.role === 'admin' && (
 					<div
-						className={`flex w-full min-w-[160px] flex-row justify-center gap-x-4 border-b-2 border-indigo-200 bg-gradient-to-br from-indigo-100 to-white px-4 py-0.5 text-sm font-bold sm:w-fit sm:flex-col sm:border-none`}
+						className={`flex w-full min-w-[160px] flex-row justify-center gap-x-4 px-4 text-sm font-bold sm:w-fit sm:flex-col`}
 					>
 						<div className="flex items-center gap-2">
 							<ArrowsUpDownIcon className="h-5 w-5" />

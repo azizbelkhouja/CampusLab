@@ -353,7 +353,7 @@ const Schedule = () => {
 						)}
 					</div>
 				) : (
-					<div className="mx-4 flex flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
+					<div className="mx-4 flex flex-col gap-2 bg-black p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
 						<p className="text-center text-white"><InformationCircleIcon className="inline-block h-5 w-5 mr-1" />Non ci sono aule disponibili</p>
 					</div>
 				))}

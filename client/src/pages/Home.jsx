@@ -46,8 +46,11 @@ const Home = () => {
 	}
 	return (
 		<div className="flex min-h-screen flex-col gap-4 pb-8 sm:gap-8">
+
 			<Navbar />
+
 			<NowShowing {...props} />
+			
 			{seminari[selectedSeminarioIndex]?.name && <AulaListsBySeminario {...props} />}
 		</div>
 	)

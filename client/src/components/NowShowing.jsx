@@ -14,7 +14,7 @@ const NowShowing = ({ seminari, selectedSeminarioIndex, setSelectedSeminarioInde
 									<div
 										key={index}
 										title={seminario.name}
-										className="flex w-[108px] flex-col bg-black p-1 text-white drop-shadow-md hover:bg-gray-700 sm:w-[144px]"
+										className="flex w-[108px] flex-col bg-black p-1 text-white cursor-pointer drop-shadow-md hover:bg-gray-700 sm:w-[144px]"
 										onClick={() => {
 											setSelectedSeminarioIndex(null)
 											sessionStorage.setItem('selectedSeminarioIndex', null)

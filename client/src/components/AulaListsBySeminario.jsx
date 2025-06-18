@@ -101,10 +101,12 @@ const AulaListsBySeminario = ({ seminari, selectedSeminarioIndex, setSelectedSem
 	return (
 		<>
 			<DipLists {...props} />
-			<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 text-gray-900 drop-shadow-md sm:mx-8">
+			<div className="mx-4 h-fit border text-gray-900 sm:mx-8">
 				<div className="flex flex-col gap-6 p-4 sm:p-6">
+
 					<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-					<div className="flex flex-col gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white py-4">
+
+					<div className="flex flex-col gap-4 border py-4">
 						<div className="flex items-center">
 							<img src={seminari[selectedSeminarioIndex].img} className="w-32 px-4 drop-shadow-md" />
 							<div>
@@ -130,7 +132,7 @@ const AulaListsBySeminario = ({ seminari, selectedSeminarioIndex, setSelectedSem
 									>
 										{filteredAulas[index - 1]?.dip.name !==
 											filteredAulas[index].dip.name && (
-											<div className="rounded-t-md bg-gradient-to-br from-indigo-800 to-blue-700 px-2 py-1.5 text-center text-2xl font-semibold text-white sm:py-2">
+											<div className="bg-black px-2 py-1.5 text-center text-2xl font-semibold text-white sm:py-2">
 												<h2>{aula.dip.name}</h2>
 											</div>
 										)}
