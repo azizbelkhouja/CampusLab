@@ -112,9 +112,9 @@ const User = () => {
 	return (
 		<div className="flex min-h-screen flex-col gap-4 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 flex h-fit flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<h2 className="text-3xl font-bold text-white">Users</h2>
-				<div className="relative drop-shadow-sm">
+			<div className="mx-4 flex h-fit flex-col gap-2 p-4 sm:mx-8 sm:p-6">
+				<h2 className="text-3xl font-bold text-black">Users</h2>
+				<div className="relative">
 					<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
 						<MagnifyingGlassIcon className="h-5 w-5 stroke-2 text-gray-500" />
 					</div>
@@ -126,22 +126,22 @@ const User = () => {
 					/>
 				</div>
 				<div
-					className={`mt-2 grid max-h-[60vh] overflow-auto bg-gradient-to-br from-indigo-100 to-white`}
+					className={`mt-2 grid max-h-[60vh] overflow-auto`}
 					style={{ gridTemplateColumns: 'repeat(3, minmax(max-content, 1fr)) max-content max-content' }}
 				>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 px-2 py-1 text-center text-xl font-semibold text-black">
 						Nome
 					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 px-2 py-1 text-center text-xl font-semibold text-black">
 						Email
 					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 px-2 py-1 text-center text-xl font-semibold text-black">
 						Ruolo
 					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 px-2 py-1 text-center text-xl font-semibold text-black">
 						Passi
 					</p>
-					<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+					<p className="sticky top-0 px-2 py-1 text-center text-xl font-semibold text-black">
 						
 					</p>
 					{users
@@ -149,16 +149,16 @@ const User = () => {
 						.map((user, index) => {
 							return (
 								<Fragment key={index}>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">{user.username}</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">{user.email}</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">{user.role}</div>
-									<div className="border-t-2 border-indigo-200 px-2 py-1">
+									<div className="border-t-2 px-2 py-1">{user.username}</div>
+									<div className="border-t-2 px-2 py-1">{user.email}</div>
+									<div className="border-t-2 px-2 py-1">{user.role}</div>
+									<div className="border-t-2 px-2 py-1">
 										<button
-											className={`flex items-center justify-center gap-1 rounded bg-gradient-to-r py-1 pl-2 pr-1.5 text-sm font-medium text-white  disabled:from-slate-500 disabled:to-slate-400
+											className={`flex items-center justify-center gap-1 bg-black py-1 pl-2 pr-1.5 text-sm font-medium text-white  disabled:from-slate-500 disabled:to-slate-400
 										${
 											ticketsUser === user.username
-												? 'from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400'
-												: 'from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400'
+												? ''
+												: 'bg-gray-400'
 										}`}
 											onClick={() => {
 												setTickets(user.tickets)
@@ -172,7 +172,7 @@ const User = () => {
 									<div className="flex gap-2 border-t-2 border-indigo-200 px-2 py-1">
 										{user.role === 'user' && (
 											<button
-												className="flex w-[115px] items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+												className="flex w-[115px] items-center justify-center gap-1 bg-blue-900 py-1 pl-2 pr-1.5 text-sm font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
 												onClick={() => onUpdateUser({ id: user._id, role: 'admin' })}
 												disabled={isUpdating}
 											>
@@ -182,7 +182,7 @@ const User = () => {
 										)}
 										{user.role === 'admin' && (
 											<button
-												className="flex w-[115px] items-center justify-center gap-1 rounded bg-gradient-to-r from-indigo-600 to-blue-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+												className="flex w-[115px] items-center justify-center gap-1 bg-blue-900 py-1 pl-2 pr-1.5 text-sm font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
 												onClick={() => onUpdateUser({ id: user._id, role: 'user' })}
 												disabled={isUpdating}
 											>
@@ -191,7 +191,7 @@ const User = () => {
 											</button>
 										)}
 										<button
-											className="flex w-[115px] items-center justify-center gap-1 rounded bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400"
+											className="flex w-[115px] items-center justify-center gap-1 bg-red-700 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:bg-red-600 disabled:from-slate-500 disabled:to-slate-400"
 											onClick={() => handleDelete({ id: user._id, username: user.username })}
 											disabled={isDeleting}
 										>
@@ -205,22 +205,24 @@ const User = () => {
 				</div>
 				{ticketsUser && (
 					<>
-						<h2 className="mt-4 text-2xl font-bold text-gray-900">Viewing {ticketsUser}'s tickets</h2>
+						<h2 className="mt-4 text-2xl font-bold text-gray-900">Passi di {ticketsUser}</h2>
 						{tickets.length === 0 ? (
-							<p className="text-center">This user have not purchased any tickets yet</p>
+							<p className="text-center">Questo utente non ha ancora acquistato Passi</p>
 						) : (
 							<div className="grid grid-cols-1 gap-4 xl:grid-cols-2 min-[1920px]:grid-cols-3">
 								{tickets.map((ticket, index) => {
 									return (
 										<div className="flex flex-col" key={index}>
+
 											<ShowtimeDetails showtime={ticket.showtime} />
-											<div className="flex h-full flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
+											
+											<div className="flex h-full flex-col justify-between text-center text-lg border md:flex-row">
 												<div className="flex h-full flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
-													<p className="whitespace-nowrap font-semibold">Seats : </p>
+													<p className="whitespace-nowrap font-semibold">Posti : </p>
 													<p>
 														{ticket.seats.map((seat) => seat.row + seat.number).join(', ')}
 													</p>
-													<p className="whitespace-nowrap">({ticket.seats.length} seats)</p>
+													<p className="whitespace-nowrap">({ticket.seats.length} posti)</p>
 												</div>
 											</div>
 										</div>
