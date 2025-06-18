@@ -4,16 +4,16 @@ const seminarioSchema = new mongoose.Schema(
 	{
 		name: {
 			type: String,
-			required: [true, 'Please add a seminario name'],
+			required: [true, 'Si prega di aggiungere un nome al seminario'],
 			trim: true
 		},
 		length: {
 			type: Number,
-			required: [true, 'Please add a seminario length']
+			required: [true, 'Si prega di aggiungere la durata del seminario']
 		},
 		img: {
 			type: String,
-			required: [true, 'Please add a seminario img'],
+			required: [true, 'Si prega di aggiungere un\'immagine del poster del seminario'],
 			trim: true
 		}
 	},

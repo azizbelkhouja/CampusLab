@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const theaterSchema = new mongoose.Schema({
-	lab: { type: mongoose.Schema.ObjectId, ref: 'Lab' },
+const aulaSchema = new mongoose.Schema({
+	dip: { type: mongoose.Schema.ObjectId, ref: 'Dip' },
 	number: { type: Number, required: true },
 	seatPlan: {
 		row: {
@@ -17,7 +17,7 @@ const theaterSchema = new mongoose.Schema({
 	showtimes: [{ type: mongoose.Schema.ObjectId, ref: 'Showtime' }]
 })
 
-theaterSchema.pre('deleteOne', { document: true, query: true }, async function (next) {
+aulaSchema.pre('deleteOne', { document: true, query: true }, async function (next) {
 	const showtimes = await this.model('Showtime').find({ _id: { $in: this.showtimes } })
 
 	for (const showtime of showtimes) {
@@ -26,4 +26,4 @@ theaterSchema.pre('deleteOne', { document: true, query: true }, async function (
 	next()
 })
 
-module.exports = mongoose.model('Theater', theaterSchema)
+module.exports = mongoose.model('Aula', aulaSchema)

@@ -9,8 +9,8 @@ const xss = require('xss-clean')
 require('dotenv').config()
 
 const auth = require('./routes/auth')
-const lab = require('./routes/lab')
-const theater = require('./routes/theater')
+const dip = require('./routes/dip')
+const aula = require('./routes/aula')
 const seminario = require('./routes/seminario')
 const showtime = require('./routes/showtime')
 
@@ -18,7 +18,7 @@ mongoose.set('strictQuery', false)
 mongoose
 	.connect(process.env.DATABASE, { autoIndex: true })
 	.then(() => {
-		console.log('mongoose connected!')
+		console.log('database connected!')
 	})
 	.catch((err) => console.log(err))
 
@@ -34,8 +34,8 @@ app.use(helmet())
 app.use(xss())
 
 app.use('/auth', auth)
-app.use('/lab', lab)
-app.use('/theater', theater)
+app.use('/dip', dip)
+app.use('/aula', aula)
 app.use('/seminario', seminario)
 app.use('/showtime', showtime)
 

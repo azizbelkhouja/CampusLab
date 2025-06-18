@@ -11,9 +11,9 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import DateSelector from './DateSelector'
-import Theater from './Theater'
+import Aula from './Aula'
 
-const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchLabs, auth }) => {
+const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips, auth }) => {
 	const {
 		register,
 		handleSubmit,
@@ -52,30 +52,30 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 
 	useEffect(() => {
 		SetIsEditing(false)
-		setValueName('name', labs[selectedLabIndex].name)
-	}, [labs[selectedLabIndex].name])
+		setValueName('name', dips[selectedDipIndex].name)
+	}, [dips[selectedDipIndex].name])
 
-	const handleDelete = (lab) => {
+	const handleDelete = (dip) => {
 		const confirmed = window.confirm(
-			`Do you want to delete lab ${lab.name}, including its theaters, showtimes and tickets?`
+			`Do you want to delete dipartimento ${dip.name}, including its aule, showtimes and tickets?`
 		)
 		if (confirmed) {
-			onDeleteLab(lab._id)
+			onDeleteDip(dip._id)
 		}
 	}
 
-	const onDeleteLab = async (id) => {
+	const onDeleteDip = async (id) => {
 		try {
 			SetIsDeleting(true)
-			const response = await axios.delete(`/lab/${id}`, {
+			const response = await axios.delete(`/dip/${id}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
 
-			setSelectedLabIndex(null)
-			fetchLabs()
-			toast.success('Delete lab successful!', {
+			setSelectedDipIndex(null)
+			fetchDips()
+			toast.success('Eliminazione dipartimento riuscita!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -92,14 +92,14 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 		}
 	}
 
-	const onIncreaseTheater = async (data) => {
+	const onIncreaseAula = async (data) => {
 		try {
 			SetIsIncreaseing(true)
 			const response = await axios.post(
-				`/theater`,
+				`/aula`,
 				{
-					lab: labs[selectedLabIndex]._id,
-					number: labs[selectedLabIndex].theaters.length + 1,
+					dip: dips[selectedDipIndex]._id,
+					number: dips[selectedDipIndex].aulas.length + 1,
 					row: data.row.toUpperCase(),
 					column: data.column
 				},
@@ -109,9 +109,9 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 					}
 				}
 			)
-			fetchLabs()
+			fetchDips()
 
-			toast.success('Add theater successful!', {
+			toast.success('Aula aggiunta con successo!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -128,26 +128,26 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 		}
 	}
 
-	const handleDecreaseTheater = (lab) => {
+	const handleDecreaseAula = (dip) => {
 		const confirmed = window.confirm(
-			`Do you want to delete theater ${labs[selectedLabIndex].theaters.length}, including its showtimes and tickets?`
+			`Vuoi eliminare l'aula ${dips[selectedDipIndex].aulas.length}, inclusi i suoi orari e passi?`
 		)
 		if (confirmed) {
-			onDecreaseTheater()
+			onDecreaseAula()
 		}
 	}
 
-	const onDecreaseTheater = async () => {
+	const onDecreaseAula = async () => {
 		try {
 			SetIsDecreasing(true)
-			const response = await axios.delete(`/theater/${labs[selectedLabIndex].theaters.slice(-1)[0]._id}`, {
+			const response = await axios.delete(`/aula/${dips[selectedDipIndex].aulas.slice(-1)[0]._id}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
 			// console.log(response.data)
-			fetchLabs()
-			toast.success('Decrease theater successful!', {
+			fetchDips()
+			toast.success('Decrease aula successful!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -164,10 +164,10 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 		}
 	}
 
-	const onEditLab = async (data) => {
+	const onEditDip = async (data) => {
 		try {
 			const response = await axios.put(
-				`/lab/${labs[selectedLabIndex]._id}`,
+				`/dip/${dips[selectedDipIndex]._id}`,
 				{
 					name: data.name
 				},
@@ -178,8 +178,8 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 				}
 			)
 			// console.log(response.data)
-			fetchLabs(data.name)
-			toast.success('Edit lab name successful!', {
+			fetchDips(data.name)
+			toast.success('Modifica nome dipartimento riuscita!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -195,41 +195,41 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 	}
 
 	return (
-		<div className="mx-4 h-fit rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 text-gray-900 drop-shadow-md sm:mx-8">
-			<div className="flex items-center justify-center gap-2 rounded-t-md bg-gradient-to-br from-gray-900 to-gray-800 px-2 py-1.5 text-center text-2xl font-semibold text-white sm:py-2">
+		<div className="mx-4 h-fit text-gray-900 border-[1px] border-black sm:mx-8">
+			<div className="flex items-center justify-center gap-2 bg-black px-2 py-1.5 text-center text-2xl font-semibold text-white sm:py-2">
 				{isEditing ? (
 					<input
-						title="Lab name"
+						title="Nome Dipartimento"
 						type="text"
 						required
 						autoFocus
-						className={`flex-grow rounded border border-white bg-gradient-to-br from-gray-900 to-gray-800 px-1 text-center text-2xl font-semibold drop-shadow-sm sm:text-3xl ${
+						className={`flex-grow border border-white px-1 text-center text-2xl font-semibold drop-shadow-sm sm:text-3xl ${
 							errorsName.name && 'border-2 border-red-500'
 						}`}
 						{...registerName('name', { required: true })}
 					/>
 				) : (
-					<span className="flex-grow text-2xl sm:text-3xl">{labs[selectedLabIndex]?.name}</span>
+					<span className="flex-grow text-2xl sm:text-3xl">{dips[selectedDipIndex]?.name}</span>
 				)}
 				{auth.role === 'admin' && (
 					<>
 						{isEditing ? (
-							<form onClick={handleSubmitName(onEditLab)}>
+							<form onClick={handleSubmitName(onEditDip)}>
 								<button
-									title="Save lab name"
-									className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-indigo-600 to-blue-500  py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400"
+									title="Salva dipartimento"
+									className="flex w-fit items-center gap-1 py-1 pl-2 pr-1.5 text-sm font-medium text-white"
 									onClick={() => {
 										SetIsEditing(false)
 									}}
 								>
-									SAVE
+									SALVA
 									<CheckIcon className="h-5 w-5" />
 								</button>
 							</form>
 						) : (
 							<button
-								title="Edit Lab name"
-								className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-indigo-600 to-blue-500  py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400"
+								title="Edit Dipartimento name"
+								className="flex w-fit items-center gap-1 py-1 pl-2 pr-1.5 text-sm font-medium text-white"
 								onClick={() => SetIsEditing(true)}
 							>
 								Modifica
@@ -237,10 +237,10 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 							</button>
 						)}
 						<button
-							title="Delete lab"
+							title="Delete dipartimento"
 							disabled={isDeleting}
-							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
-							onClick={() => handleDelete(labs[selectedLabIndex])}
+							className="flex w-fit items-center gap-1 bg-red-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white"
+							onClick={() => handleDelete(dips[selectedDipIndex])}
 						>
 							{isDeleting ? (
 								'Processing...'
@@ -255,32 +255,34 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 				)}
 			</div>
 			<div className="flex flex-col gap-6 p-4 sm:p-6 overflow-y-auto">
+
 				<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-				<form className="flex flex-col gap-4" onSubmit={handleSubmit(onIncreaseTheater)}>
-					<h2 className="text-3xl font-bold">Theaters</h2>
+
+				<form className="flex flex-col gap-4" onSubmit={handleSubmit(onIncreaseAula)}>
+					<h2 className="text-3xl font-bold">Aule</h2>
 					{auth.role === 'admin' && (
-						<div className="flex w-full flex-wrap justify-between gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4">
-							<h3 className="flex items-center text-xl font-bold">Add Theater</h3>
+						<div className="flex w-full flex-wrap justify-between gap-4 border-[1px] border-black bg-white p-4 text-gray-900">
+							<h3 className="flex items-center text-xl font-bold">Aggiungi Aula</h3>
 							<div className="flex grow flex-col gap-4 sm:justify-end md:flex-row">
 								<div className="flex flex-wrap justify-end gap-4">
 									<div className="flex flex-wrap gap-2">
 										<ArrowsUpDownIcon className="h-6 w-6" />
 										<div className="my-1 flex flex-col items-end">
-											<label className="text-lg font-semibold leading-5">Last Row :</label>
-											<label className="text-xs font-semibold">(A-DZ)</label>
+											<label className="text-lg font-semibold leading-5">Ultima riga :</label>
+											<label className="text-xs font-semibold">(A-Z)</label>
 										</div>
 										<input
-											title={errors.row ? errors.row.message : 'A to DZ'}
+											title={errors.row ? errors.row.message : 'A to Z'}
 											type="text"
 											maxLength="2"
 											required
-											className={`w-14 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm leading-3
+											className={`w-14 border-[1px] border-[#A2841F] px-3 py-1 text-2xl leading-3
 											${errors.row && 'border-2 border-red-500'}`}
 											{...register('row', {
 												required: true,
 												pattern: {
 													value: /^([A-Da-d][A-Za-z]|[A-Za-z])$/,
-													message: 'Invalid row'
+													message: 'Riga non valida, deve essere da A a Z'
 												}
 											})}
 										/>
@@ -288,7 +290,7 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 									<div className="flex flex-wrap gap-2">
 										<ArrowsRightLeftIcon className="h-6 w-6" />
 										<div className="my-1 flex flex-col items-end">
-											<label className="text-lg font-semibold leading-5">Last Column :</label>
+											<label className="text-lg font-semibold leading-5">Ultima Colonna :</label>
 											<label className="text-xs font-semibold">(1-120)</label>
 										</div>
 										<input
@@ -298,7 +300,7 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 											max="120"
 											maxLength="3"
 											required
-											className={`w-24 rounded px-3 py-1 text-2xl font-semibold drop-shadow-sm leading-3 ${
+											className={`w-24 border-[1px] border-[#A2841F] px-3 py-1 text-2xl leading-3 ${
 												errors.column && 'border-2 border-red-500'
 											}`}
 											{...register('column', { required: true })}
@@ -306,16 +308,16 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 									</div>
 								</div>
 								<div className="flex grow md:grow-0">
-									<div className="flex flex-col items-center justify-center gap-1 rounded-l bg-gradient-to-br from-gray-800 to-gray-700 p-1 text-white">
-										<label className="text-xs font-semibold leading-3">Number</label>
+									<div className="flex flex-col items-center justify-center gap-1 text-black p-1 border-[1px] border-black">
+										<label className="text-xs font-semibold leading-3">Numero</label>
 										<label className="text-2xl font-semibold leading-5">
-											{labs[selectedLabIndex].theaters.length + 1}
+											{dips[selectedDipIndex].aulas.length + 1}
 										</label>
 									</div>
 									<button
-										title="Add theater"
+										title="Aggiungi aula"
 										disabled={isIncreasing}
-										className="flex grow items-center justify-center whitespace-nowrap rounded-r bg-gradient-to-r from-indigo-600 to-blue-500 px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:grow-0"
+										className="flex grow items-center justify-center whitespace-nowrap bg-black px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:grow-0"
 										type="submit"
 									>
 										{isIncreasing ? 'Elaborazione...' : 'AGGIUNGI +'}
@@ -325,26 +327,26 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 						</div>
 					)}
 				</form>
-				{labs[selectedLabIndex].theaters.map((theater, index) => {
+				{dips[selectedDipIndex].aulas.map((aula, index) => {
 					return (
-						<Theater
+						<Aula
 							key={index}
-							theaterId={theater._id}
+							aulaId={aula._id}
 							seminari={seminari}
 							selectedDate={selectedDate}
 							setSelectedDate={setSelectedDate}
 						/>
 					)
 				})}
-				{auth.role === 'admin' && labs[selectedLabIndex].theaters.length > 0 && (
+				{auth.role === 'admin' && dips[selectedDipIndex].aulas.length > 0 && (
 					<div className="flex justify-center">
 						<button
-							title="Delete last theater"
+							title="Elimina Ultima Aula"
 							className="w-fit rounded-md bg-gradient-to-r from-red-700 to-rose-600 px-2 py-1 font-medium text-white drop-shadow-md hover:from-red-600 hover:to-rose-500 disabled:from-slate-500 disabled:to-slate-400"
-							onClick={() => handleDecreaseTheater()}
+							onClick={() => handleDecreaseAula()}
 							disabled={isDecreasing}
 						>
-							{isDecreasing ? 'Elaborazione...' : 'DELETE LAST THEATER -'}
+							{isDecreasing ? 'Elaborazione...' : 'Elimina Ultima Aula -'}
 						</button>
 					</div>
 				)}
@@ -353,4 +355,4 @@ const TheaterListsByLab = ({ labs, selectedLabIndex, setSelectedLabIndex, fetchL
 	)
 }
 
-export default TheaterListsByLab
+export default AulaListsByDip

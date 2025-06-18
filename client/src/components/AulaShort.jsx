@@ -5,36 +5,36 @@ import { AuthContext } from '../context/AuthContext'
 import Loading from './Loading'
 import Showtimes from './Showtimes'
 
-const TheaterShort = ({ theaterId, seminari, selectedDate, filterSeminario, rounded = false }) => {
+const AulaShort = ({ aulaId, seminari, selectedDate, filterSeminario, rounded = false }) => {
 	const { auth } = useContext(AuthContext)
-	const [theater, setTheater] = useState({})
-	const [isFetchingTheaterDone, setIsFetchingTheaterDone] = useState(false)
+	const [aula, setAula] = useState({})
+	const [isFetchingAulaDone, setIsFetchingAulaDone] = useState(false)
 
-	const fetchTheater = async (data) => {
+	const fetchAula = async (data) => {
 		try {
-			setIsFetchingTheaterDone(false)
+			setIsFetchingAulaDone(false)
 			let response
 			if (auth.role === 'admin') {
-				response = await axios.get(`/theater/unreleased/${theaterId}`, {
+				response = await axios.get(`/aula/unreleased/${aulaId}`, {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}
 				})
 			} else {
-				response = await axios.get(`/theater/${theaterId}`)
+				response = await axios.get(`/aula/${aulaId}`)
 			}
 			// console.log(response.data.data)
-			setTheater(response.data.data)
+			setAula(response.data.data)
 		} catch (error) {
 			console.error(error)
 		} finally {
-			setIsFetchingTheaterDone(true)
+			setIsFetchingAulaDone(true)
 		}
 	}
 
 	useEffect(() => {
-		fetchTheater()
-	}, [theaterId])
+		fetchAula()
+	}, [aulaId])
 
 	function rowToNumber(column) {
 		let result = 0
@@ -45,7 +45,7 @@ const TheaterShort = ({ theaterId, seminari, selectedDate, filterSeminario, roun
 		return result
 	}
 
-	if (!isFetchingTheaterDone) {
+	if (!isFetchingAulaDone) {
 		return <Loading />
 	}
 
@@ -61,8 +61,8 @@ const TheaterShort = ({ theaterId, seminari, selectedDate, filterSeminario, roun
 						rounded && 'sm:rounded-bl-md'
 					}`}
 				>
-					<p className="text-sm">Theater</p>
-					<p className="text-3xl leading-8">{theater.number}</p>
+					<p className="text-sm">Aula</p>
+					<p className="text-3xl leading-8">{aula.number}</p>
 				</div>
 				{auth.role === 'admin' && (
 					<div
@@ -70,31 +70,31 @@ const TheaterShort = ({ theaterId, seminari, selectedDate, filterSeminario, roun
 					>
 						<div className="flex items-center gap-2">
 							<ArrowsUpDownIcon className="h-5 w-5" />
-							{theater?.seatPlan?.row === 'A' ? (
-								<h4>Row : A</h4>
+							{aula?.seatPlan?.row === 'A' ? (
+								<h4>Riga : A</h4>
 							) : (
-								<h4>Row : A - {theater?.seatPlan?.row}</h4>
+								<h4>Riga : A - {aula?.seatPlan?.row}</h4>
 							)}
 						</div>
 						<div className="flex items-center gap-2">
 							<ArrowsRightLeftIcon className="h-5 w-5" />
-							{theater?.seatPlan?.column === 1 ? (
-								<h4>Column : 1</h4>
+							{aula?.seatPlan?.column === 1 ? (
+								<h4>Colonna : 1</h4>
 							) : (
-								<h4>Column : 1 - {theater?.seatPlan?.column}</h4>
+								<h4>Colonna : 1 - {aula?.seatPlan?.column}</h4>
 							)}
 						</div>
 						<div className="flex items-center gap-2">
 							<UserIcon className="h-5 w-5" />
-							{(rowToNumber(theater.seatPlan.row) * theater.seatPlan.column).toLocaleString('en-US')}{' '}
-							Seats
+							{(rowToNumber(aula.seatPlan.row) * aula.seatPlan.column).toLocaleString('en-US')}{' '}
+							Posti
 						</div>
 					</div>
 				)}
 			</div>
 			<div className="mx-4 flex items-center">
 				<Showtimes
-					showtimes={theater.showtimes}
+					showtimes={aula.showtimes}
 					seminari={seminari}
 					selectedDate={selectedDate}
 					filterSeminario={filterSeminario}
@@ -104,4 +104,4 @@ const TheaterShort = ({ theaterId, seminari, selectedDate, filterSeminario, roun
 		</div>
 	)
 }
-export default TheaterShort
+export default AulaShort

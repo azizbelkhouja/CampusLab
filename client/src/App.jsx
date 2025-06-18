@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Route, Routes } from 'react-router'
 import { ToastContainer } from 'react-toastify'
 import AdminRoute from './AdminRoute'
-import Lab from './pages/Lab'
+import Dip from './pages/Dip'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Seminario from './pages/Seminario'
@@ -25,7 +25,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
-				<Route path="/lab" element={<Lab />} />
+				<Route path="/dip" element={<Dip />} />
 				<Route
 					path="/seminario"
 					element={

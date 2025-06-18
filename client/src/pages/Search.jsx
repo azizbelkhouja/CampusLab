@@ -30,8 +30,8 @@ const Search = () => {
 	const [isFetchingShowtimesDone, setIsFetchingShowtimesDone] = useState(false)
 
 	const [showtimes, setShowtimes] = useState([])
-	const [filterLab, setFilterLab] = useState(null)
-	const [filterTheater, setFilterTheater] = useState(null)
+	const [filterDip, setFilterDip] = useState(null)
+	const [filterAula, setFilterAula] = useState(null)
 	const [filterSeminario, setFilterSeminario] = useState(null)
 	const [filterDate, setFilterDate] = useState(null)
 	const [filterDateFrom, setFilterDateFrom] = useState(null)
@@ -47,8 +47,8 @@ const Search = () => {
 	const [isCheckAll, setIsCheckAll] = useState(false)
 	const [checkedShowtimes, setCheckedShowtimes] = useState([])
 
-	const [sortLab, setSortLab] = useState(0) // -1: descending, 0 no sort, 1 ascending
-	const [sortTheater, setSortTheater] = useState(0)
+	const [sortDip, setSortDip] = useState(0) // -1: descending, 0 no sort, 1 ascending
+	const [sortAula, setSortAula] = useState(0)
 	const [sortSeminario, setSortSeminario] = useState(0)
 	const [sortDate, setSortDate] = useState(0)
 	const [sortTime, setSortTime] = useState(0)
@@ -56,8 +56,8 @@ const Search = () => {
 	const [sortRelease, setSortRelease] = useState(0)
 
 	const resetSort = () => {
-		setSortLab(0)
-		setSortTheater(0)
+		setSortDip(0)
+		setSortAula(0)
 		setSortSeminario(0)
 		setSortDate(0)
 		setSortTime(0)
@@ -76,8 +76,8 @@ const Search = () => {
 			const minutes = showtimeDate.getMinutes().toString().padStart(2, '0')
 			const formattedTime = `${hours} : ${minutes}`
 			return (
-				(!filterLab || filterLab.map((lab) => lab.value).includes(showtime.theater.lab._id)) &&
-				(!filterTheater || filterTheater.map((theater) => theater.value).includes(showtime.theater.number)) &&
+				(!filterDip || filterDip.map((dip) => dip.value).includes(showtime.aula.dip._id)) &&
+				(!filterAula || filterAula.map((aula) => aula.value).includes(showtime.aula.number)) &&
 				(!filterSeminario || filterSeminario.map((seminario) => seminario.value).includes(showtime.seminario._id)) &&
 				(!filterDate || filterDate.map((showtime) => showtime.value).includes(formattedDate)) &&
 				(!filterDateFrom || new Date(filterDateFrom.value) <= new Date(formattedDate)) &&
@@ -100,11 +100,11 @@ const Search = () => {
 			)
 		})
 		.sort((a, b) => {
-			if (sortLab) {
-				return sortLab * a.theater.lab.name.localeCompare(b.theater.lab.name)
+			if (sortDip) {
+				return sortDip * a.aula.dip.name.localeCompare(b.aula.dip.name)
 			}
-			if (sortTheater) {
-				return sortTheater * (a.theater.number - b.theater.number)
+			if (sortAula) {
+				return sortAula * (a.aula.number - b.aula.number)
 			}
 			if (sortSeminario) {
 				return sortSeminario * a.seminario.name.localeCompare(b.seminario.name)
@@ -331,18 +331,18 @@ const Search = () => {
 					{isOpenFilter && (
 						<div className="">
 							<div className="flex flex-col">
-								<h4 className="pt-1 text-lg font-bold text-gray-800">Laboratorio :</h4>
+								<h4 className="pt-1 text-lg font-bold text-gray-800">Dipartimento :</h4>
 								<Select
-									value={filterLab}
+									value={filterDip}
 									options={Array.from(
-										new Set(showtimes.map((showtime) => showtime.theater.lab._id))
+										new Set(showtimes.map((showtime) => showtime.aula.dip._id))
 									).map((value) => ({
 										value,
-										label: showtimes.find((showtime) => showtime.theater.lab._id === value)
-											.theater.lab.name
+										label: showtimes.find((showtime) => showtime.aula.dip._id === value)
+											.aula.dip.name
 									}))}
 									onChange={(value) => {
-										setFilterLab(value)
+										setFilterDip(value)
 										resetState()
 									}}
 									isClearable={true}
@@ -354,15 +354,15 @@ const Search = () => {
 							<div className="flex flex-col">
 								<h4 className="pt-1 text-lg font-bold text-gray-800">Aula :</h4>
 								<Select
-									value={filterTheater}
-									options={Array.from(new Set(showtimes.map((showtime) => showtime.theater.number)))
+									value={filterAula}
+									options={Array.from(new Set(showtimes.map((showtime) => showtime.aula.number)))
 										.sort((a, b) => a - b)
 										.map((value) => ({
 											value,
 											label: value.toString()
 										}))}
 									onChange={(value) => {
-										setFilterTheater(value)
+										setFilterAula(value)
 										resetState()
 									}}
 									isClearable={true}
@@ -726,28 +726,28 @@ const Search = () => {
 					<button
 						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
 						onClick={() => {
-							let prevValue = sortLab
+							let prevValue = sortDip
 							resetSort()
-							setSortLab(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+							setSortDip(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
 						}}
 					>
-						<p className="ml-auto">Laboratorio</p>
-						{sortLab === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
-						{sortLab === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
-						{sortLab === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+						<p className="ml-auto">Dipartimento</p>
+						{sortDip === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortDip === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortDip === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
 						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
 						onClick={() => {
-							let prevValue = sortTheater
+							let prevValue = sortAula
 							resetSort()
-							setSortTheater(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
+							setSortAula(prevValue === 0 ? 1 : prevValue === 1 ? -1 : 0)
 						}}
 					>
-						<p className="ml-auto">Theater</p>
-						{sortTheater === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
-						{sortTheater === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
-						{sortTheater === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
+						<p className="ml-auto">Aula</p>
+						{sortAula === 0 && <ChevronUpDownIcon className="ml-auto w-6 h-6" />}
+						{sortAula === 1 && <ChevronUpIcon className="ml-auto w-6 h-6" />}
+						{sortAula === -1 && <ChevronDownIcon className="ml-auto w-6 h-6" />}
 					</button>
 					<button
 						className="sticky top-0 flex justify-center bg-gradient-to-br from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 px-2 py-1 text-center text-xl font-semibold text-white"
@@ -854,14 +854,14 @@ const Search = () => {
 											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
 										}`}
 									>
-										{showtime.theater.lab.name}
+										{showtime.aula.dip.name}
 									</div>
 									<div
 										className={`border-t-2 border-indigo-200 px-2 py-1 ${
 											isCheckedRow && 'border-white bg-blue-200 text-blue-800'
 										}`}
 									>
-										{showtime.theater.number}
+										{showtime.aula.number}
 									</div>
 									<div
 										className={`border-t-2 border-indigo-200 px-2 py-1 ${

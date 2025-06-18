@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import Select from 'react-tailwindcss-select'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import LabLists from '../components/LabLists'
+import DipLists from '../components/DipLists'
 import DateSelector from '../components/DateSelector'
 import Loading from '../components/Loading'
 import Navbar from '../components/Navbar'
@@ -25,39 +25,39 @@ const Schedule = () => {
 	const [selectedDate, setSelectedDate] = useState(
 		(sessionStorage.getItem('selectedDate') && new Date(sessionStorage.getItem('selectedDate'))) || new Date()
 	)
-	const [selectedLabIndex, setSelectedLabIndex] = useState(
-		parseInt(sessionStorage.getItem('selectedLabIndex')) || 0
+	const [selectedDipIndex, setSelectedDipIndex] = useState(
+		parseInt(sessionStorage.getItem('selectedDipIndex')) || 0
 	)
-	const [labs, setLabs] = useState([])
-	const [isFetchingLabs, setIsFetchingLabs] = useState(true)
+	const [dips, setDips] = useState([])
+	const [isFetchingDips, setIsFetchingDips] = useState(true)
 	const [seminari, setSeminari] = useState([])
 	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
 	const [selectedSeminario, setSelectedSeminario] = useState(null)
 
-	const fetchLabs = async (data) => {
+	const fetchDips = async (data) => {
 		try {
-			setIsFetchingLabs(true)
+			setIsFetchingDips(true)
 			let response
 			if (auth.role === 'admin') {
-				response = await axios.get('/lab/unreleased', {
+				response = await axios.get('/dip/unreleased', {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}
 				})
 			} else {
-				response = await axios.get('/lab')
+				response = await axios.get('/dip')
 			}
 			// console.log(response.data.data)
-			setLabs(response.data.data)
+			setDips(response.data.data)
 		} catch (error) {
 			console.error(error)
 		} finally {
-			setIsFetchingLabs(false)
+			setIsFetchingDips(false)
 		}
 	}
 
 	useEffect(() => {
-		fetchLabs()
+		fetchDips()
 	}, [])
 
 	const fetchSeminari = async (data) => {
@@ -95,7 +95,7 @@ const Schedule = () => {
 			showtime.setHours(hours, minutes, 0)
 			const response = await axios.post(
 				'/showtime',
-				{ seminario: data.seminario, showtime, theater: data.theater, repeat: data.repeat, isRelease: data.isRelease },
+				{ seminario: data.seminario, showtime, aula: data.aula, repeat: data.repeat, isRelease: data.isRelease },
 				{
 					headers: {
 						Authorization: `Bearer ${auth.token}`
@@ -103,7 +103,7 @@ const Schedule = () => {
 				}
 			)
 
-			fetchLabs()
+			fetchDips()
 			if (data.autoIncrease) {
 				const seminarioLength = seminari.find((seminario) => seminario._id === data.seminario).length
 				const [GapHours, GapMinutes] = data.gap.split(':').map(Number)
@@ -154,20 +154,20 @@ const Schedule = () => {
 	}
 
 	const props = {
-		labs,
-		selectedLabIndex,
-		setSelectedLabIndex,
-		fetchLabs,
+		dips,
+		selectedDipIndex,
+		setSelectedDipIndex,
+		fetchDips,
 		auth,
-		isFetchingLabs
+		isFetchingDips
 	}
 
 	return (
 		<div className="flex min-h-screen flex-col gap-4 pb-8 text-gray-900 sm:gap-8">
 			<Navbar />
-			<LabLists {...props} />
-			{selectedLabIndex !== null &&
-				(labs[selectedLabIndex]?.theaters?.length ? (
+			<DipLists {...props} />
+			{selectedDipIndex !== null &&
+				(dips[selectedDipIndex]?.aulas?.length ? (
 					<div className="mx-4 flex flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
 						<h2 className="text-3xl font-bold text-white">Programma</h2>
 						<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
@@ -185,15 +185,15 @@ const Schedule = () => {
 											<select
 												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
 												required
-												{...register('theater', { required: true })}
+												{...register('aula', { required: true })}
 											>
 												<option value="" defaultValue>
 													Scegli un'aula
 												</option>
-												{labs[selectedLabIndex].theaters?.map((theater, index) => {
+												{dips[selectedDipIndex].aulas?.map((aula, index) => {
 													return (
-														<option key={index} value={theater._id}>
-															{theater.number}
+														<option key={index} value={aula._id}>
+															{aula.number}
 														</option>
 													)
 												})}
@@ -342,9 +342,9 @@ const Schedule = () => {
 						) : (
 							<div>
 								<h2 className="text-2xl font-bold">Aule</h2>
-								{labs[selectedLabIndex]?._id && (
+								{dips[selectedDipIndex]?._id && (
 									<ScheduleTable
-										lab={labs[selectedLabIndex]}
+										dip={dips[selectedDipIndex]}
 										selectedDate={selectedDate}
 										auth={auth}
 									/>

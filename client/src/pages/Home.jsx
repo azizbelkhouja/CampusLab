@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import Navbar from '../components/Navbar'
 import NowShowing from '../components/NowShowing'
-import TheaterListsBySeminario from '../components/TheaterListsBySeminario'
+import AulaListsBySeminario from '../components/AulaListsBySeminario'
 import { AuthContext } from '../context/AuthContext'
 
 const Home = () => {
@@ -48,7 +48,7 @@ const Home = () => {
 		<div className="flex min-h-screen flex-col gap-4 pb-8 sm:gap-8">
 			<Navbar />
 			<NowShowing {...props} />
-			{seminari[selectedSeminarioIndex]?.name && <TheaterListsBySeminario {...props} />}
+			{seminari[selectedSeminarioIndex]?.name && <AulaListsBySeminario {...props} />}
 		</div>
 	)
 }

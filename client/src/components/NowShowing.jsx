@@ -3,8 +3,8 @@ import Loading from './Loading'
 
 const NowShowing = ({ seminari, selectedSeminarioIndex, setSelectedSeminarioIndex, auth, isFetchingSeminariosDone }) => {
 	return (
-		<div className="mx-4 flex flex-col rounded-md bg-gradient-to-br from-indigo-200 to-blue-100 p-4 text-gray-900 drop-shadow-md sm:mx-8 sm:p-6">
-			<h2 className="text-3xl font-bold">Previsti</h2>
+		<div className="mx-4 flex flex-col  p-4 text-gray-900 drop-shadow-md sm:mx-8 sm:p-6">
+			<h2 className="text-3xl font-bold text-black">Previsti</h2>
 			{isFetchingSeminariosDone ? (
 				seminari.length ? (
 					<div className="mt-1 overflow-x-auto sm:mt-3">

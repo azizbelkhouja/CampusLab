@@ -28,16 +28,17 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 	}
 
 	const formatDate = (date) => {
-		const weekday = date.toLocaleString('default', { weekday: 'long' })
+		const weekday = date.toLocaleString('it-IT', { weekday: 'long' })
 		const day = date.getDate()
-		const month = date.toLocaleString('default', { month: 'long' })
+		const month = date.toLocaleString('it-IT', { month: 'long' })
 		const year = date.getFullYear()
 		return `${weekday} ${day} ${month} ${year}`
 	}
 
+
 	const DateShort = ({ date, selectedDate }) => {
 		const day = date.getDate()
-		const weekday = date.toLocaleString('default', { weekday: 'short' })
+		const weekday = date.toLocaleString('it-IT', { weekday: 'short' })
 
 		const isThisDate =
 			selectedDate.getDate() === date.getDate() &&
@@ -49,14 +50,14 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 		return (
 			<button
 				title={formatDate(date)}
-				className={`flex min-w-[48px] flex-col items-center justify-center rounded p-1 font-semibold ${
+				className={`flex min-w-[48px] flex-col items-center justify-center p-1 font-semibold ${
 					isThisDate
-						? 'bg-gradient-to-br from-indigo-800 to-blue-700 text-white'
+						? 'bg-[#000000] text-white'
 						: isToday
-						? 'bg-gradient-to-br from-indigo-100 to-white ring-2 ring-inset ring-indigo-800 hover:from-white hover:to-white'
+						? 'bg-blue-900 text-white'
 						: isPast(date)
-						? 'bg-gradient-to-br from-gray-600 to-gray-500 text-white hover:from-gray-500 hover:to-gray-400'
-						: 'bg-gradient-to-br from-indigo-100 to-white hover:from-white hover:to-white'
+						? 'bg-gray-500 text-white hover:bg-gray-400'
+						: 'bg-white border-[1px] hover:bg-slate-100'
 				}`}
 				onClick={() => {
 					setSelectedDate(date)
@@ -97,7 +98,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 		}
 
 		const nextDays = new Date(today)
-		nextDays.setDate(today.getDate() + 14)
+		nextDays.setDate(today.getDate() + 17)
 
 		return generateDateRange(pastDays, nextDays)
 	}
@@ -117,14 +118,13 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="relative flex items-stretch justify-between gap-2 rounded-md bg-gradient-to-br from-indigo-800 to-blue-700 p-2 font-semibold text-white">
+			<div className="relative flex items-stretch justify-between gap-2 bg-white py-2 font-semibold text-[#213D72]">
 				{auth.role === 'admin' || !isPast(new Date().setDate(selectedDate.getDate() - 1)) ? (
 					<button
-						title="Go to yesterday"
-						className={'rounded hover:bg-gradient-to-br hover:from-indigo-600 hover:to-blue-600'}
+						title="Ieri"
 						onClick={handlePrevDay}
 					>
-						<ChevronLeftIcon className="h-10 w-10 text-white" />
+						<ChevronLeftIcon className="h-10 w-10 text-[#213D72]" />
 					</button>
 				) : (
 					<div className="h-10 w-10"></div>
@@ -135,18 +135,17 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 						<input
 							title="Select date"
 							type="Date"
-							min={auth.role !== 'admin' && new Date().toLocaleDateString('en-CA')}
+							min={auth.role !== 'admin' ? new Date().toISOString().split('T')[0] : undefined}
 							required
 							autoFocus
-							className={`w-full rounded border border-white bg-gradient-to-br from-indigo-800 to-blue-700 px-1 text-center text-2xl font-semibold drop-shadow-sm sm:text-3xl`}
-							value={selectedDate.toLocaleDateString('en-CA')}
+							className={`w-full border-white bg-[#213D72] py-2 text-white text-center text-xl sm:text-3xl`}
+							value={selectedDate.toISOString().split('T')[0]}
 							onChange={handleChange}
-							style={{ colorScheme: 'dark' }}
 						/>
 					</div>
 				) : (
 					<div
-						className="flex w-full items-center justify-center rounded text-center text-xl hover:bg-gradient-to-br hover:from-indigo-600 hover:to-blue-600 sm:text-2xl"
+						className="flex w-full items-center justify-center text-center text-xl sm:text-2xl cursor-pointer"
 						onClick={() => {
 							SetIsEditing(true)
 						}}
@@ -157,18 +156,16 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 
 				<div className="flex items-center justify-between gap-2">
 					<button
-						title="Go to tomorrow"
-						className="rounded hover:bg-gradient-to-br hover:from-indigo-600 hover:to-blue-600"
+						title="Domani"
 						onClick={handleNextDay}
 					>
-						<ChevronRightIcon className="h-10 w-10 text-white" />
+						<ChevronRightIcon className="h-10 w-10 text-[#213D72]" />
 					</button>
 					<button
-						title="Go to today"
-						className="rounded px-1 hover:bg-gradient-to-br hover:from-indigo-600 hover:to-blue-600"
+						title="Oggi"
 						onClick={handleToday}
 					>
-						<ArrowPathIcon className="h-10 w-10 text-white" />
+						<ArrowPathIcon className="h-10 w-10 text-[#213D72]" />
 					</button>
 				</div>
 			</div>

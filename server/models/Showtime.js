@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 
 const showtimeSchema = new mongoose.Schema({
-	theater: { type: mongoose.Schema.ObjectId, ref: 'Theater' },
+	aula: { type: mongoose.Schema.ObjectId, ref: 'Aula' },
 	seminario: { type: mongoose.Schema.ObjectId, ref: 'Seminario' },
 	showtime: Date,
 	seats: [
 		{
-			row: { type: String, required: [true, 'Please add a seat row'] },
-			number: { type: Number, required: [true, 'Please add a seat number'] },
+			row: { type: String, required: [true, 'Si prega di aggiungere una fila di posti'] },
+			number: { type: Number, required: [true, 'Si prega di aggiungere un numero di posti'] },
 			user: { type: mongoose.Schema.ObjectId, ref: 'User' }
 		}
 	],

@@ -6,15 +6,15 @@ const userSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		unique: true,
-		required: [true, 'Please add a username']
+		required: [true, 'Aggiungi un nome utente']
 	},
 	email: {
 		type: String,
-		required: [true, 'Please add an email'],
+		required: [true, 'Aggiungi un\'email'],
 		unique: true,
 		match: [
 			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-			'Please add a valid email'
+			'Aggiungi un\'email valida'
 		]
 	},
 	role: {
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
 	},
 	password: {
 		type: String,
-		required: [true, 'Please add a password'],
+		required: [true, 'Aggiungi una password'],
 		minlength: 6,
 		select: false
 	},

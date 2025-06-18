@@ -28,7 +28,7 @@ const Purchase = () => {
 				}
 			)
 			// console.log(response.data)
-			navigate('/lab')
+			navigate('/dip')
 			toast.success('Prenotazione posti riuscita!', {
 				position: 'top-center',
 				autoClose: 2000,
