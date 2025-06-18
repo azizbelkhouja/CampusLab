@@ -110,20 +110,19 @@ const Seminario = () => {
 	return (
 		<div className="flex min-h-screen flex-col gap-4 text-gray-900 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 flex h-fit flex-col gap-4 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				<h2 className="text-3xl font-bold text-white">Lista dei Seminari</h2>
+			<div className="mx-4 flex h-fit flex-col gap-4 p-4 sm:mx-8 sm:p-6">
 				<form
 					onSubmit={handleSubmit(onAddSeminario)}
-					className="flex flex-col items-stretch justify-end gap-x-4 gap-y-2 bg-gradient-to-br from-indigo-100 to-white p-4 drop-shadow-md lg:flex-row"
+					className="flex flex-col items-stretch justify-end gap-x-4 gap-y-2 border-[2px] p-4 lg:flex-row"
 				>
 					<div className="flex w-full grow flex-col flex-wrap justify-start gap-4 lg:w-auto">
-						<h3 className="text-xl font-bold text-[#213D72]">Aggiungi Seminario</h3>
+						<h3 className="text-xl font-bold text-blue-900">Aggiungi Seminario</h3>
 						<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
 							<label className="text-lg font-semibold leading-5">Titolo :</label>
 							<input
 								type="text"
 								required
-								className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow px-3 py-1 font-semibold border-2 sm:w-auto"
 								{...register('name', {
 									required: true
 								})}
@@ -134,7 +133,7 @@ const Seminario = () => {
 							<input
 								type="text"
 								required
-								className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow px-3 py-1 font-semibold border-2 sm:w-auto"
 								{...register('img', {
 									required: true
 								})}
@@ -147,7 +146,7 @@ const Seminario = () => {
 								min="0"
 								max="20"
 								maxLength="2"
-								className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+								className="w-full flex-grow px-3 py-1 font-semibold border-2 sm:w-auto"
 								{...register('lengthHr')}
 							/>
 						</div>
@@ -160,7 +159,7 @@ const Seminario = () => {
 									max="2000"
 									maxLength="4"
 									required
-									className="w-full flex-grow px-3 py-1 font-semibold drop-shadow-sm sm:w-auto"
+									className="w-full flex-grow px-3 py-1 font-semibold border-2 sm:w-auto"
 									{...register('lengthMin', {
 										required: true
 									})}
@@ -174,7 +173,7 @@ const Seminario = () => {
 							<img src={watch('img')} className="h-48-md object-contain drop-shadow-md lg:h-64" />
 						)}
 						<button
-							className="w-full min-w-fit items-center bg-[#8796B3] px-2 py-1 text-center font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-500 disabled:from-slate-500 disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
+							className="w-full min-w-fit items-center  px-2 py-1 text-center font-medium text-white bg-black disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
 							type="submit"
 							disabled={isAddingSeminario}
 						>
@@ -193,11 +192,15 @@ const Seminario = () => {
 						{...register('search')}
 					/>
 				</div>
-				{isFetchingSeminariDone ? (
-					<SeminarioLists seminari={seminari} search={watch('search')} handleDelete={handleDelete} />
-				) : (
-					<Loading />
-				)}
+
+				<h2 className="text-3xl font-bold text-black">Lista dei Seminari</h2>
+				<div className="mt-2">
+					{isFetchingSeminariDone ? (
+						<SeminarioLists seminari={seminari} search={watch('search')} handleDelete={handleDelete} />
+					) : (
+						<Loading />
+					)}
+				</div>
 			</div>
 		</div>
 	)

@@ -129,7 +129,7 @@ const Navbar = () => {
 				</div>
 				<div className="flex grow items-center justify-center gap-3 lg:justify-end">
 					{auth.username && (
-						<p className="text-xl font-bold text-black">Welcome, {auth.username} !</p>
+						<p className="text-xl font-bold text-black">Welcome, <span className='text-blue-900'>{auth.username}</span> !</p>
 					)}
 					{auth.token ? (
 						<button

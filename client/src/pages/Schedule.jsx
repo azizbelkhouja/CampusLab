@@ -337,7 +337,7 @@ const Schedule = () => {
 								</button>
 							</form>
 						)}
-						{isFetchingLabs ? (
+						{isFetchingDips ? (
 							<Loading />
 						) : (
 							<div>
