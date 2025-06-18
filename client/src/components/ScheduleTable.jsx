@@ -81,7 +81,7 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 			<div
 				className={`grid min-h-[50vh] max-h-screen overflow-x-auto grid-cols-${dip.aulas?.length.toString()} grid-rows-${
 					gridRows + shiftEnd
-				} rounded-md bg-gradient-to-br from-indigo-100 to-white`}
+				}  border border-black`}
 				{...events}
 				ref={ref}
 			>
@@ -113,13 +113,13 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 										showtime.seminario.length
 									)} row-start-${
 										getRowStart(showtime.showtime) - firstRowStart + shiftStart
-									} col-start-${aula.number} mx-1 rounded p-1 text-center drop-shadow-md ${
+									} col-start-${aula.number} mx-1 border rounded p-1 text-center drop-shadow-md ${
 										!isPast(new Date(showtime.showtime))
 											? 'bg-white hover:bg-gray-100'
 											: `bg-gray-200  ${
 													auth.role === 'admin' ? 'hover:bg-gray-300' : 'cursor-not-allowed'
 											  }`
-									} ${!showtime.isRelease && 'ring-2 ring-inset ring-gray-800'}`}
+									} ${!showtime.isRelease && 'opacity-50'}`}
 									onClick={() => {
 										if (!isPast(new Date(showtime.showtime)) || auth.role === 'admin')
 											return navigate(`/showtime/${showtime._id}`)
@@ -164,9 +164,9 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 				{dip.aulas.map((aula, index) => (
 					<div
 						key={index}
-						className="sticky top-0 row-span-1 row-start-1 flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 py-1 text-white"
+						className="sticky top-0 border border-black border-t-0 border-r-0 row-span-1 row-start-1 flex flex-col items-center justify-center text-black"
 					>
-						<p className="text-2xl font-semibold leading-7">{index + 1}</p>
+						<p className="text-2xl font-semibold leading-7 pt-3">{index + 1}</p>
 						{auth.role === 'admin' && (
 							<>
 								<div className="flex gap-1 text-xs">

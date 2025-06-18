@@ -168,12 +168,12 @@ const Schedule = () => {
 			<DipLists {...props} />
 			{selectedDipIndex !== null &&
 				(dips[selectedDipIndex]?.aulas?.length ? (
-					<div className="mx-4 flex flex-col gap-2 bg-[#213D72] p-4 drop-shadow-xl sm:mx-8 sm:gap-4 sm:p-6">
-						<h2 className="text-3xl font-bold text-white">Programma</h2>
+					<div className="mx-4 flex flex-col gap-2 bg-white p-4 sm:mx-8 sm:gap-4 sm:p-6">
+						<h2 className="text-3xl font-bold text-black">Programma</h2>
 						<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 						{auth.role === 'admin' && (
 							<form
-								className="flex flex-col lg:flex-row gap-4 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4"
+								className="flex flex-col lg:flex-row gap-4 border p-5 "
 								onSubmit={handleSubmit(onAddShowtime)}
 							>
 								<div className="flex grow flex-col gap-2 rounded-lg">
@@ -183,7 +183,7 @@ const Schedule = () => {
 												Aula:
 											</label>
 											<select
-												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
+												className="h-9 w-full bg-white px-2 py-1 font-semibold text-gray-900 border"
 												required
 												{...register('aula', { required: true })}
 											>
@@ -217,39 +217,39 @@ const Schedule = () => {
 												primaryColor="indigo"
 												classNames={{
 													menuButton: (value) =>
-														'flex font-semibold text-sm border border-gray-300 rounded shadow-sm transition-all duration-300 focus:outline-none bg-white hover:border-gray-400 focus:border-indigo-500 focus:ring focus:ring-indigo-500/20'
+														'flex font-semibold text-sm border'
 												}}
 											/>
 										</div>
-										<div className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
+										<div className="flex items-center gap-2 lg:flex-col lg:items-start">
 											<label className="whitespace-nowrap text-lg font-semibold leading-5">
 												Orario:
 											</label>
 											<input
 												type="time"
-												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
+												className="h-9 w-full bg-white px-2 py-1 font-semibold text-gray-900 border"
 												required
 												{...register('showtime', { required: true })}
 											/>
 										</div>
 									</div>
-									<div className="flex flex-col gap-2 rounded-lg lg:flex-row lg:items-stretch">
+									<div className="flex flex-col gap-2 lg:flex-row lg:items-stretch">
 										<div className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
-											<label className="whitespace-nowrap text-lg font-semibold leading-5">
-												Repeat (Day):
+											<label className="whitespace-nowrap text-lg leading-5">
+												Ripeti (giorni):
 											</label>
 											<input
 												type="number"
 												min={1}
 												defaultValue={1}
 												max={31}
-												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm"
+												className="h-9 w-full border bg-white px-2 py-1 text-gray-900"
 												required
 												{...register('repeat', { required: true })}
 											/>
 										</div>
-										<label className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap text-lg font-semibold leading-5 lg:flex-col lg:items-start">
-											Release now:
+										<label className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap text-lg leading-5 lg:flex-col lg:items-start">
+											Rilascia ora:
 											<input
 												type="checkbox"
 												className="h-6 w-6 lg:h-9 lg:w-9"
@@ -257,12 +257,12 @@ const Schedule = () => {
 											/>
 										</label>
 										<div className="flex flex-col items-start gap-2 lg:flex-row lg:items-end">
-											<p className="font-semibold text-right underline">Auto increase</p>
+											<p className="text-right underline">Aumento automatico</p>
 											<label
 												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-												title="After add, update showtime value to the seminario ending time"
+												title="Dopo l'aggiunta, aggiorna l'orario all'orario di fine seminario"
 											>
-												Showtime:
+												Orario:
 												<input
 													type="checkbox"
 													className="h-6 w-6 lg:h-9 lg:w-9"
@@ -271,9 +271,9 @@ const Schedule = () => {
 											</label>
 											<label
 												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-												title="After add, update date value to the seminario ending time"
+												title="Dopo l'aggiunta, aggiorna la data all'orario di fine seminario"
 											>
-												Date:
+												Data:
 												<input
 													type="checkbox"
 													className="h-6 w-6 lg:h-9 lg:w-9"
@@ -284,9 +284,9 @@ const Schedule = () => {
 										</div>
 										<div
 											className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start"
-											title="Gap between showtimes"
+											title="Intervallo tra gli orari"
 										>
-											<label className="whitespace-nowrap font-semibold leading-5">Gap:</label>
+											<label className="whitespace-nowrap font-semibold leading-5">Intervallo:</label>
 											<input
 												type="time"
 												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm disabled:bg-gray-300"
@@ -295,10 +295,10 @@ const Schedule = () => {
 											/>
 										</div>
 										<div className="flex flex-col items-start gap-2 lg:flex-row lg:items-end">
-											<p className="font-semibold text-right underline">Rounding</p>
+											<p className=" text-right underline">Arrotondamento</p>
 											<label
 												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-												title="Rounding up to the nearest five minutes"
+												title="Arrotonda ai cinque minuti successivi"
 											>
 												5-min:
 												<input
@@ -312,7 +312,7 @@ const Schedule = () => {
 											</label>
 											<label
 												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-												title="Rounding up to the nearest ten minutes"
+												title="Arrotonda ai dieci minuti successivi"
 											>
 												10-min:
 												<input
@@ -328,12 +328,12 @@ const Schedule = () => {
 									</div>
 								</div>
 								<button
-									title="Add showtime"
+									title="Aggiungi orario"
 									disabled={isAddingShowtime}
-									className="whitespace-nowrap bg-[#8796B3] font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
+									className="whitespace-nowrap px-2 bg-black font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
 									type="submit"
 								>
-									ADD +
+									AGGIUNGI +
 								</button>
 							</form>
 						)}

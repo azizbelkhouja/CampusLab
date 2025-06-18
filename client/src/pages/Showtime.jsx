@@ -94,18 +94,19 @@ const Showtime = () => {
 	})
 
 	return (
-		<div className="flex min-h-screen flex-col gap-4 bg-gradient-to-br from-indigo-900 to-blue-500 pb-8 sm:gap-8">
+		<div className="flex min-h-screen flex-col gap-4 pb-8 sm:gap-8">
 			<Navbar />
-			<div className="mx-4 h-fit rounded-lg bg-gradient-to-br from-indigo-200 to-blue-100 p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+			<div className="mx-4 h-fit p-4 drop-shadow-xl sm:mx-8 sm:p-6">
 				{showtime.showtime ? (
 					<>
 						<ShowtimeDetails showtime={showtime} showDeleteBtn={true} fetchShowtime={fetchShowtime} />
-						<div className="flex flex-col justify-between rounded-b-lg bg-gradient-to-br from-indigo-100 to-white text-center text-lg drop-shadow-lg md:flex-row">
+
+						<div className="flex flex-col justify-between text-center border-b-2 border-black border-l-2 text-lg md:flex-row">
 							<div className="flex flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
-								{!isPast && <p className="font-semibold">Selected Seats : </p>}
+								{!isPast && <p className="font-semibold">Posti selezionati :</p>}
 								<p className="text-start">{sortedSelectedSeat.join(', ')}</p>
 								{!!selectedSeats.length && (
-									<p className="whitespace-nowrap">({selectedSeats.length} seats)</p>
+									<p className="whitespace-nowrap">({selectedSeats.length} posti)</p>
 								)}
 							</div>
 							{!!selectedSeats.length && (
@@ -115,18 +116,18 @@ const Showtime = () => {
 										selectedSeats: sortedSelectedSeat,
 										showtime
 									}}
-									className="flex items-center justify-center gap-2 rounded-b-lg bg-gradient-to-br from-indigo-600 to-blue-500 px-4 py-1 font-semibold text-white hover:from-indigo-500 hover:to-blue-500 md:rounded-none md:rounded-br-lg"
+									className="flex items-center justify-center gap-2 bg-black px-4 py-1 font-semibold text-white"
 								>
-									<p>Purchase</p>
+									<p>Acquista</p>
 									<TicketIcon className="h-7 w-7 text-white" />
 								</Link>
 							)}
 						</div>
 
-						<div className="mx-auto mt-4 flex flex-col items-center rounded-lg bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
-							<div className="w-full rounded-lg bg-white">
+						<div className="mx-auto mt-4 flex flex-col items-center bg-gradient-to-br from-indigo-100 to-white p-4 text-center drop-shadow-lg">
+							<div className="w-full bg-white">
 								<div className="bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-xl font-bold text-transparent">
-									Screen
+									Schermo Pc Del Prof
 								</div>
 							</div>
 							<div className="flex w-full flex-col overflow-x-auto overflow-y-hidden">
@@ -179,10 +180,10 @@ const Showtime = () => {
 						</div>
 						{auth.role === 'admin' && (
 							<>
-								<h2 className="mt-4 text-2xl font-bold">Booked Seats</h2>
-								<div className="mt-2 flex gap-2 rounded-md bg-gradient-to-br from-indigo-100 to-white p-4">
+								<h2 className="mt-4 text-2xl font-bold">Posti prenotati</h2>
+								<div className="mt-2 flex gap-2 bg-gradient-to-br from-indigo-100 to-white p-4">
 									<div className="flex grow flex-col">
-										<h4 className="text-lg font-bold text-gray-800">Row</h4>
+										<h4 className="text-lg font-bold text-gray-800">Fila</h4>
 										<Select
 											value={filterRow}
 											options={Array.from(new Set(showtime?.seats.map((seat) => seat.row)))
@@ -214,7 +215,7 @@ const Showtime = () => {
 										/>
 									</div>
 									<div className="flex grow flex-col">
-										<h4 className="text-lg font-bold text-gray-800">Number</h4>
+										<h4 className="text-lg font-bold text-gray-800">Numero</h4>
 										<Select
 											value={filterColumn}
 											options={Array.from(new Set(showtime?.seats.map((seat) => seat.number)))
@@ -236,22 +237,22 @@ const Showtime = () => {
 									</div>
 								</div>
 								<div
-									className={`mt-4 grid max-h-screen w-full overflow-auto rounded-md bg-gradient-to-br from-indigo-100 to-white`}
+									className={`mt-4 grid max-h-screen w-full overflow-auto bg-gradient-to-br from-indigo-100 to-white`}
 									style={{
 										gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))'
 									}}
 								>
-									<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-										Seat
+									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+										Posto
 									</p>
-									<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-										Username
+									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+										Nome utente
 									</p>
-									<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
+									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
 										Email
 									</p>
-									<p className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-700 px-2 py-1 text-center text-xl font-semibold text-white">
-										Role
+									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+										Ruolo
 									</p>
 									{filteredSeats
 										.sort((a, b) => {

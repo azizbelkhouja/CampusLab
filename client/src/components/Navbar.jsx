@@ -154,7 +154,7 @@ const Navbar = () => {
 			<div className="flex w-full flex-row justify-between lg:w-fit">
 				<button className="flex flex-row items-center gap-2" onClick={() => navigate('/')}>
 					<AcademicCapIcon className="h-8 w-8 text-black" />
-					<h1 className="mr-4 text-xl text-black">CampusLab</h1>
+					<h1 className="mr-4 text-xl text-black border-r-2 pr-4">CampusLab</h1>
 				</button>
 				<button
 					className="flex h-8 w-8 items-center justify-center hover:bg-gray-700 lg:hidden"

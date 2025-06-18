@@ -128,7 +128,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 					{!showtime.isRelease && (
 						<button
 							title="Modifica nome dipartimento"
-							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-indigo-600 to-blue-500  py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+							className="flex w-fit items-center gap-1 bg-black py-1 pl-2 pr-1.5 text-sm font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleReleaseShowtime(true)}
 							disabled={isReleasingShowtime}
 						>
@@ -144,8 +144,8 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 					)}
 					{showtime.isRelease && (
 						<button
-							title="Modifica nome dipartimento"
-							className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-indigo-600 to-blue-500  py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400"
+							title="annulla rilascio"
+							className="flex w-fit items-center gap-1 bg-blue-900 py-1 pl-2 pr-1.5 text-sm font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleUnreleasedShowtime(true)}
 							disabled={isUnreleasingShowtime}
 						>
@@ -160,7 +160,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 						</button>
 					)}
 					<button
-						className="flex w-fit items-center gap-1 rounded-md bg-gradient-to-r from-red-700 to-rose-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:from-red-600 hover:to-rose-600 disabled:from-slate-500 disabled:to-slate-400"
+						className="flex w-fit items-center gap-1 bg-red-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white hover:bg-red-600 disabled:from-slate-500 disabled:to-slate-400"
 						onClick={() => handleDelete()}
 						disabled={isDeletingShowtimes}
 					>
@@ -176,17 +176,17 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 				</div>
 			)}
 			<div className="flex justify-between">
-				<div className="flex flex-col justify-center rounded-tl-lg bg-gradient-to-br from-gray-800 to-gray-700 px-4 py-0.5 text-center font-bold text-white sm:px-8">
+				<div className="flex flex-col justify-center bg-black px-4 py-0.5 text-center font-bold text-white sm:px-8">
 					<p className="text-sm">Aula</p>
 					<p className="text-3xl">{showtime?.aula?.number}</p>
 				</div>
-				<div className="flex w-fit grow items-center justify-center rounded-tr-lg bg-gradient-to-br from-indigo-800 to-blue-700 px-4 py-0.5 text-center text-xl font-bold text-white sm:text-3xl">
+				<div className="flex w-fit grow items-center justify-center bg-black px-4 py-0.5 text-center text-xl font-bold text-white sm:text-3xl">
 					<p className="mx-auto">{showtime?.aula?.dip.name}</p>
 					{!showtime?.isRelease && <EyeSlashIcon className="h-8 w-8" title="Unreleased showtime" />}
 				</div>
 			</div>
-			<div className="flex flex-col md:flex-row">
-				<div className="flex grow flex-col gap-4 bg-gradient-to-br from-indigo-100 to-white py-2 drop-shadow-lg sm:py-4">
+			<div className="flex flex-col md:flex-row border-2 border-black">
+				<div className="flex grow flex-col gap-4 sm:py-4">
 					<div className="flex items-center">
 						<img src={showtime?.seminario?.img} className="w-32 px-4 drop-shadow-md" />
 						<div className="flex flex-col">
@@ -203,25 +203,34 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 				</div>
 				<div className="flex flex-col">
 					<div className="flex h-full min-w-max flex-col items-center justify-center gap-y-1 bg-gradient-to-br from-indigo-100 to-white py-2 text-center text-xl font-semibold drop-shadow-lg sm:py-4 sm:text-2xl md:items-start">
-						<p className="mx-4 text-lg leading-4 ">
-							{showtime?.showtime &&
-								`${new Date(showtime?.showtime).toLocaleString('default', { weekday: 'long' })}`}
-						</p>
-						<p className="mx-4 ">
-							{showtime?.showtime &&
-								`${new Date(showtime?.showtime).getDate()}
-               					 ${new Date(showtime?.showtime).toLocaleString('default', { month: 'long' })}
-                				${new Date(showtime?.showtime).getFullYear()}`}
-						</p>
-						<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl">
-							{showtime?.showtime &&
-								`${new Date(showtime?.showtime).getHours().toString().padStart(2, '0')} : ${new Date(
-									showtime?.showtime
-								)
-									.getMinutes()
-									.toString()
-									.padStart(2, '0')}`}
-						</p>
+						{showtime?.showtime && (
+							<>
+								{/* Giorno della settimana (es: martedì) */}
+								<p className="mx-4 text-lg leading-4">
+									{new Date(showtime.showtime).toLocaleDateString('it-IT', {
+										weekday: 'long',
+									})}
+								</p>
+
+								{/* Giorno mese anno (es: 17 giugno 2025) */}
+								<p className="mx-4">
+									{new Date(showtime.showtime).toLocaleDateString('it-IT', {
+										day: 'numeric',
+										month: 'long',
+										year: 'numeric',
+									})}
+								</p>
+
+								{/* Orario (es: 14:30) */}
+								<p className="mx-4 bg-gradient-to-r from-indigo-800 to-blue-700 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl">
+									{new Date(showtime.showtime).toLocaleTimeString('it-IT', {
+										hour: '2-digit',
+										minute: '2-digit',
+										hour12: false,
+									})}
+								</p>
+							</>
+						)}
 					</div>
 				</div>
 			</div>
