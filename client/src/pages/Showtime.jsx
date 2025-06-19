@@ -10,299 +10,351 @@ import Seat from '../components/Seat'
 import ShowtimeDetails from '../components/ShowtimeDetails'
 import { AuthContext } from '../context/AuthContext'
 
+// Showtime component - Displays details of a specific seminar/showtime including seat selection
+// Componente Showtime - Mostra i dettagli di un seminario/spettacolo specifico inclusa la selezione dei posti
 const Showtime = () => {
-	const { auth } = useContext(AuthContext)
-	const { id } = useParams()
-	const [showtime, setShowtime] = useState({})
-	const [selectedSeats, setSelectedSeats] = useState([])
-	const [filterRow, setFilterRow] = useState(null)
-	const [filterColumn, setFilterColumn] = useState(null)
-	const sortedSelectedSeat = selectedSeats.sort((a, b) => {
-		const [rowA, numberA] = a.match(/([A-Za-z]+)(\d+)/).slice(1)
-		const [rowB, numberB] = b.match(/([A-Za-z]+)(\d+)/).slice(1)
-		if (rowA === rowB) {
-			if (parseInt(numberA) > parseInt(numberB)) {
-				return 1
-			} else {
-				return -1
-			}
-		} else if (rowA.length > rowB.length) {
-			return 1
-		} else if (rowA.length < rowB.length) {
-			return -1
-		} else if (rowA > rowB) {
-			return 1
-		}
-		return -1
-	})
+  // Authentication context for user role and token
+  // Contesto di autenticazione per ruolo utente e token
+  const { auth } = useContext(AuthContext)
+  
+  // Get showtime ID from URL parameters
+  // Ottiene l'ID dello showtime dai parametri dell'URL
+  const { id } = useParams()
+  
+  // State for showtime data, selected seats, and filters
+  // Stato per i dati dello showtime, posti selezionati e filtri
+  const [showtime, setShowtime] = useState({})
+  const [selectedSeats, setSelectedSeats] = useState([])
+  const [filterRow, setFilterRow] = useState(null)
+  const [filterColumn, setFilterColumn] = useState(null)
 
-	const fetchShowtime = async (data) => {
-		try {
-			let response
-			if (auth.role === 'admin') {
-				response = await axios.get(`/showtime/user/${id}`, {
-					headers: {
-						Authorization: `Bearer ${auth.token}`
-					}
-				})
-			} else {
-				response = await axios.get(`/showtime/${id}`)
-			}
-			// console.log(response.data.data)
-			setShowtime(response.data.data)
-		} catch (error) {
-			console.error(error)
-			toast.error(error.response.data.message || 'Error', {
-				position: 'top-center',
-				autoClose: 2000,
-				pauseOnHover: false
-			})
-		}
-	}
+  // Sort selected seats alphabetically by row and numerically by seat number
+  // Ordina i posti selezionati alfabeticamente per fila e numericamente per numero
+  const sortedSelectedSeat = selectedSeats.sort((a, b) => {
+    const [rowA, numberA] = a.match(/([A-Za-z]+)(\d+)/).slice(1)
+    const [rowB, numberB] = b.match(/([A-Za-z]+)(\d+)/).slice(1)
+    if (rowA === rowB) {
+      if (parseInt(numberA) > parseInt(numberB)) {
+        return 1
+      } else {
+        return -1
+      }
+    } else if (rowA.length > rowB.length) {
+      return 1
+    } else if (rowA.length < rowB.length) {
+      return -1
+    } else if (rowA > rowB) {
+      return 1
+    }
+    return -1
+  })
 
-	useEffect(() => {
-		fetchShowtime()
-	}, [])
+  // Fetch showtime data from API
+  // Recupera i dati dello showtime dall'API
+  const fetchShowtime = async (data) => {
+    try {
+      let response
+      // Different endpoint for admin vs regular users
+      // Endpoint diverso per admin vs utenti normali
+      if (auth.role === 'admin') {
+        response = await axios.get(`/showtime/user/${id}`, {
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+          }
+        })
+      } else {
+        response = await axios.get(`/showtime/${id}`)
+      }
+      setShowtime(response.data.data)
+    } catch (error) {
+      console.error(error)
+      toast.error(error.response.data.message || 'Error', {
+        position: 'top-center',
+        autoClose: 2000,
+        pauseOnHover: false
+      })
+    }
+  }
 
-	const row = showtime?.aula?.seatPlan?.row
-	let rowLetters = []
-	if (row) {
-		for (let k = 64; k <= (row.length === 2 ? row.charCodeAt(0) : 64); k++) {
-			for (
-				let i = 65;
-				i <= (k === row.charCodeAt(0) || row.length === 1 ? row.charCodeAt(row.length - 1) : 90);
-				i++
-			) {
-				const letter = k === 64 ? String.fromCharCode(i) : String.fromCharCode(k) + String.fromCharCode(i)
-				rowLetters.push(letter)
-			}
-		}
-	}
+  // Fetch data on component mount
+  // Recupera i dati al montaggio del componente
+  useEffect(() => {
+    fetchShowtime()
+  }, [])
 
-	const column = showtime?.aula?.seatPlan.column
-	let colNumber = []
-	for (let k = 1; k <= column; k++) {
-		colNumber.push(k)
-	}
+  // Generate row letters based on classroom seat plan
+  // Genera le lettere delle file in base alla planimetria dell'aula
+  const row = showtime?.aula?.seatPlan?.row
+  let rowLetters = []
+  if (row) {
+    for (let k = 64; k <= (row.length === 2 ? row.charCodeAt(0) : 64); k++) {
+      for (
+        let i = 65;
+        i <= (k === row.charCodeAt(0) || row.length === 1 ? row.charCodeAt(row.length - 1) : 90);
+        i++
+      ) {
+        const letter = k === 64 ? String.fromCharCode(i) : String.fromCharCode(k) + String.fromCharCode(i)
+        rowLetters.push(letter)
+      }
+    }
+  }
 
-	const isPast = new Date(showtime.showtime) < new Date()
-	const filteredSeats = showtime?.seats?.filter((seat) => {
-		return (
-			(!filterRow || filterRow.map((row) => row.value).includes(seat.row)) &&
-			(!filterColumn || filterColumn.map((column) => column.value).includes(String(seat.number)))
-		)
-	})
+  // Generate column numbers based on classroom seat plan
+  // Genera i numeri delle colonne in base alla planimetria dell'aula
+  const column = showtime?.aula?.seatPlan.column
+  let colNumber = []
+  for (let k = 1; k <= column; k++) {
+    colNumber.push(k)
+  }
 
-	return (
-		<div className="flex min-h-screen flex-col gap-4 pb-8 sm:gap-8">
-			<Navbar />
-			<div className="mx-4 h-fit p-4 drop-shadow-xl sm:mx-8 sm:p-6">
-				{showtime.showtime ? (
-					<>
-						<ShowtimeDetails showtime={showtime} showDeleteBtn={true} fetchShowtime={fetchShowtime} />
+  // Check if showtime is in the past
+  // Verifica se lo showtime è nel passato
+  const isPast = new Date(showtime.showtime) < new Date()
 
-						<div className="flex flex-col justify-between text-center border-b-2 border-black border-l-2 text-lg md:flex-row">
-							<div className="flex flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
-								{!isPast && <p className="font-semibold">Posti selezionati :</p>}
-								<p className="text-start">{sortedSelectedSeat.join(', ')}</p>
-								{!!selectedSeats.length && (
-									<p className="whitespace-nowrap">({selectedSeats.length} posti)</p>
-								)}
-							</div>
-							{!!selectedSeats.length && (
-								<Link
-									to={auth.role ? `/purchase/${id}` : '/login'}
-									state={{
-										selectedSeats: sortedSelectedSeat,
-										showtime
-									}}
-									className="flex items-center justify-center gap-2 bg-black px-4 py-1 font-semibold text-white"
-								>
-									<p>Acquista</p>
-									<TicketIcon className="h-7 w-7 text-white" />
-								</Link>
-							)}
-						</div>
+  // Filter seats based on row and column filters
+  // Filtra i posti in base ai filtri di fila e colonna
+  const filteredSeats = showtime?.seats?.filter((seat) => {
+    return (
+      (!filterRow || filterRow.map((row) => row.value).includes(seat.row)) &&
+      (!filterColumn || filterColumn.map((column) => column.value).includes(String(seat.number)))
+    )
+  })
 
-						<div className="mx-auto mt-4 flex flex-col items-center bg-gradient-to-br from-indigo-100 to-white p-4 text-center">
-							<div className="w-full bg-white">
-								<div className="text-xl font-bold">
-									Schermo Pc Del Prof
-								</div>
-							</div>
-							<div className="flex w-full flex-col overflow-x-auto overflow-y-hidden">
-								<div className="m-auto my-2">
-									<div className="flex flex-col">
-										<div className="flex items-center">
-											<div className="flex h-8 w-8 items-center">
-												<p className="w-8"></p>
-											</div>
-											{colNumber.map((col, index) => {
-												return (
-													<div key={index} className="flex h-8 w-8 items-center">
-														<p className="w-8 font-semibold">{col}</p>
-													</div>
-												)
-											})}
-										</div>
-										{rowLetters.reverse().map((rowLetter, index) => {
-											return (
-												<div key={index} className="flex">
-													<div className="flex h-8 w-8 items-center">
-														<p className="w-8 text-xl font-semibold">{rowLetter}</p>
-													</div>
-													{colNumber.map((col, index) => {
-														return (
-															<Seat
-																key={index}
-																seat={{ row: rowLetter, number: col }}
-																setSelectedSeats={setSelectedSeats}
-																selectable={!isPast}
-																isAvailable={
-																	!showtime.seats.find(
-																		(seat) =>
-																			seat.row === rowLetter &&
-																			seat.number === col
-																	)
-																}
-															/>
-														)
-													})}
-													<div className="flex h-8 w-8 items-center">
-														<p className="w-8 text-xl font-semibold">{rowLetter}</p>
-													</div>
-												</div>
-											)
-										})}
-									</div>
-								</div>
-							</div>
-						</div>
-						{auth.role === 'admin' && (
-							<>
-								<h2 className="mt-4 text-2xl font-bold">Posti prenotati</h2>
-								<div className="mt-2 flex gap-2 bg-gradient-to-br from-indigo-100 to-white p-4">
-									<div className="flex grow flex-col">
-										<h4 className="text-lg font-bold text-gray-800">Fila</h4>
-										<Select
-											value={filterRow}
-											options={Array.from(new Set(showtime?.seats.map((seat) => seat.row)))
-												.sort((a, b) => {
-													const rowA = a.row
-													const rowB = b.row
-													if (rowA === rowB) {
-														return 0
-													} else if (rowA.length > rowB.length) {
-														return 1
-													} else if (rowA.length < rowB.length) {
-														return -1
-													} else if (rowA > rowB) {
-														return 1
-													}
-													return -1
-												})
-												.map((value) => ({
-													value,
-													label: value
-												}))}
-											onChange={(value) => {
-												setFilterRow(value)
-											}}
-											isClearable={true}
-											isMultiple={true}
-											isSearchable={true}
-											primaryColor="indigo"
-										/>
-									</div>
-									<div className="flex grow flex-col">
-										<h4 className="text-lg font-bold text-gray-800">Numero</h4>
-										<Select
-											value={filterColumn}
-											options={Array.from(new Set(showtime?.seats.map((seat) => seat.number)))
-												.sort((a, b) => {
-													return a - b
-												})
-												.map((value) => ({
-													value: String(value),
-													label: String(value)
-												}))}
-											onChange={(value) => {
-												setFilterColumn(value)
-											}}
-											isClearable={true}
-											isMultiple={true}
-											isSearchable={true}
-											primaryColor="indigo"
-										/>
-									</div>
-								</div>
-								<div
-									className={`mt-4 grid max-h-screen w-full overflow-auto bg-gradient-to-br from-indigo-100 to-white`}
-									style={{
-										gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))'
-									}}
-								>
-									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
-										Posto
-									</p>
-									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
-										Nome utente
-									</p>
-									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
-										Email
-									</p>
-									<p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
-										Ruolo
-									</p>
-									{filteredSeats
-										.sort((a, b) => {
-											const rowA = a.row
-											const numberA = a.number
-											const rowB = b.row
-											const numberB = b.number
-											if (rowA === rowB) {
-												if (parseInt(numberA) > parseInt(numberB)) {
-													return 1
-												} else {
-													return -1
-												}
-											} else if (rowA.length > rowB.length) {
-												return 1
-											} else if (rowA.length < rowB.length) {
-												return -1
-											} else if (rowA > rowB) {
-												return 1
-											}
-											return -1
-										})
-										.map((seat, index) => {
-											return (
-												<Fragment key={index}>
-													<div className="border-t-2 border-indigo-200 px-2 py-1">
-														{`${seat.row}${seat.number}`}
-													</div>
-													<div className="border-t-2 border-indigo-200 px-2 py-1">
-														{seat.user.username}
-													</div>
-													<div className="border-t-2 border-indigo-200 px-2 py-1">
-														{seat.user.email}
-													</div>
-													<div className="border-t-2 border-indigo-200 px-2 py-1">
-														{seat.user.role}
-													</div>
-												</Fragment>
-											)
-										})}
-								</div>
-							</>
-						)}
-					</>
-				) : (
-					<Loading />
-				)}
-			</div>
-		</div>
-	)
+  return (
+    <div className="flex min-h-screen flex-col gap-4 pb-8 sm:gap-8">
+      <Navbar />
+      <div className="mx-4 h-fit p-4 drop-shadow-xl sm:mx-8 sm:p-6">
+        {/* Show loading spinner while data is being fetched */}
+        {/* Mostra lo spinner di caricamento durante il recupero dei dati */}
+        {showtime.showtime ? (
+          <>
+            {/* Showtime details component */}
+            {/* Componente dettagli showtime */}
+            <ShowtimeDetails showtime={showtime} showDeleteBtn={true} fetchShowtime={fetchShowtime} />
+
+            {/* Selected seats summary and purchase button */}
+            {/* Riepilogo posti selezionati e pulsante acquisto */}
+            <div className="flex flex-col justify-between text-center border-b-2 border-black border-l-2 text-lg md:flex-row">
+              <div className="flex flex-col items-center gap-x-4 px-4 py-2 md:flex-row">
+                {!isPast && <p className="font-semibold">Posti selezionati :</p>}
+                <p className="text-start">{sortedSelectedSeat.join(', ')}</p>
+                {!!selectedSeats.length && (
+                  <p className="whitespace-nowrap">({selectedSeats.length} posti)</p>
+                )}
+              </div>
+              {!!selectedSeats.length && (
+                <Link
+                  to={auth.role ? `/purchase/${id}` : '/login'}
+                  state={{
+                    selectedSeats: sortedSelectedSeat,
+                    showtime
+                  }}
+                  className="flex items-center justify-center gap-2 bg-black px-4 py-1 font-semibold text-white"
+                >
+                  <p>Acquista</p>
+                  <TicketIcon className="h-7 w-7 text-white" />
+                </Link>
+              )}
+            </div>
+
+            {/* Classroom seat map */}
+            {/* Mappa dei posti dell'aula */}
+            <div className="mx-auto mt-4 flex flex-col items-center bg-gradient-to-br from-indigo-100 to-white p-4 text-center">
+              <div className="w-full bg-white">
+                <div className="text-xl font-bold">
+                  Schermo Pc Del Prof
+                </div>
+              </div>
+              <div className="flex w-full flex-col overflow-x-auto overflow-y-hidden">
+                <div className="m-auto my-2">
+                  <div className="flex flex-col">
+                    {/* Column headers */}
+                    {/* Intestazioni colonne */}
+                    <div className="flex items-center">
+                      <div className="flex h-8 w-8 items-center">
+                        <p className="w-8"></p>
+                      </div>
+                      {colNumber.map((col, index) => {
+                        return (
+                          <div key={index} className="flex h-8 w-8 items-center">
+                            <p className="w-8 font-semibold">{col}</p>
+                          </div>
+                        )
+                      })}
+                    </div>
+                    {/* Seat rows */}
+                    {/* File di posti */}
+                    {rowLetters.reverse().map((rowLetter, index) => {
+                      return (
+                        <div key={index} className="flex">
+                          <div className="flex h-8 w-8 items-center">
+                            <p className="w-8 text-xl font-semibold">{rowLetter}</p>
+                          </div>
+                          {/* Individual seats */}
+                          {/* Posti individuali */}
+                          {colNumber.map((col, index) => {
+                            return (
+                              <Seat
+                                key={index}
+                                seat={{ row: rowLetter, number: col }}
+                                setSelectedSeats={setSelectedSeats}
+                                selectable={!isPast}
+                                isAvailable={
+                                  !showtime.seats.find(
+                                    (seat) =>
+                                      seat.row === rowLetter &&
+                                      seat.number === col
+                                  )
+                                }
+                              />
+                            )
+                          })}
+                          <div className="flex h-8 w-8 items-center">
+                            <p className="w-8 text-xl font-semibold">{rowLetter}</p>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Admin-only section for viewing booked seats */}
+            {/* Sezione solo admin per visualizzare i posti prenotati */}
+            {auth.role === 'admin' && (
+              <>
+                <h2 className="mt-4 text-2xl font-bold">Posti prenotati</h2>
+                <div className="mt-2 flex gap-2 bg-gradient-to-br from-indigo-100 to-white p-4">
+                  {/* Row filter */}
+                  {/* Filtro per fila */}
+                  <div className="flex grow flex-col">
+                    <h4 className="text-lg font-bold text-gray-800">Fila</h4>
+                    <Select
+                      value={filterRow}
+                      options={Array.from(new Set(showtime?.seats.map((seat) => seat.row)))
+                        .sort((a, b) => {
+                          const rowA = a.row
+                          const rowB = b.row
+                          if (rowA === rowB) {
+                            return 0
+                          } else if (rowA.length > rowB.length) {
+                            return 1
+                          } else if (rowA.length < rowB.length) {
+                            return -1
+                          } else if (rowA > rowB) {
+                            return 1
+                          }
+                          return -1
+                        })
+                        .map((value) => ({
+                          value,
+                          label: value
+                        }))}
+                      onChange={(value) => {
+                        setFilterRow(value)
+                      }}
+                      isClearable={true}
+                      isMultiple={true}
+                      isSearchable={true}
+                      primaryColor="indigo"
+                    />
+                  </div>
+                  {/* Column filter */}
+                  {/* Filtro per colonna */}
+                  <div className="flex grow flex-col">
+                    <h4 className="text-lg font-bold text-gray-800">Numero</h4>
+                    <Select
+                      value={filterColumn}
+                      options={Array.from(new Set(showtime?.seats.map((seat) => seat.number)))
+                        .sort((a, b) => {
+                          return a - b
+                        })
+                        .map((value) => ({
+                          value: String(value),
+                          label: String(value)
+                        }))}
+                      onChange={(value) => {
+                        setFilterColumn(value)
+                      }}
+                      isClearable={true}
+                      isMultiple={true}
+                      isSearchable={true}
+                      primaryColor="indigo"
+                    />
+                  </div>
+                </div>
+                {/* Booked seats table */}
+                {/* Tabella posti prenotati */}
+                <div
+                  className={`mt-4 grid max-h-screen w-full overflow-auto bg-gradient-to-br from-indigo-100 to-white`}
+                  style={{
+                    gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))'
+                  }}
+                >
+                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                    Posto
+                  </p>
+                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                    Nome utente
+                  </p>
+                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                    Email
+                  </p>
+                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                    Ruolo
+                  </p>
+                  {/* Booked seats data rows */}
+                  {/* Righe di dati dei posti prenotati */}
+                  {filteredSeats
+                    .sort((a, b) => {
+                      const rowA = a.row
+                      const numberA = a.number
+                      const rowB = b.row
+                      const numberB = b.number
+                      if (rowA === rowB) {
+                        if (parseInt(numberA) > parseInt(numberB)) {
+                          return 1
+                        } else {
+                          return -1
+                        }
+                      } else if (rowA.length > rowB.length) {
+                        return 1
+                      } else if (rowA.length < rowB.length) {
+                        return -1
+                      } else if (rowA > rowB) {
+                        return 1
+                      }
+                      return -1
+                    })
+                    .map((seat, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                            {`${seat.row}${seat.number}`}
+                          </div>
+                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                            {seat.user.username}
+                          </div>
+                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                            {seat.user.email}
+                          </div>
+                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                            {seat.user.role}
+                          </div>
+                        </Fragment>
+                      )
+                    })}
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <Loading />
+        )}
+      </div>
+    </div>
+  )
 }
 
 export default Showtime
