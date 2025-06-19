@@ -23,7 +23,7 @@ const Login = () => {
 		try {
 			const response = await axios.post('/auth/login', data)
 			console.log(response.data)
-			toast.success('Login successful!', {
+			toast.success('Accesso riuscito', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -33,7 +33,7 @@ const Login = () => {
 		} catch (error) {
 			console.error(error.response.data)
 			setErrorsMessage(error.response.data)
-			toast.error('Error', {
+			toast.error('Errore durante il login', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false

@@ -76,17 +76,22 @@ const Navbar = () => {
 						<ClockIcon className="h-6 w-6" />
 						<p>Programma</p>
 					</Link>
-					<Link
-						to={'/ticket'}
-						className={`flex items-center justify-center gap-2 px-2 py-1 ${
-							window.location.pathname === '/ticket'
-								? 'border-b-2 border-black'
-								: 'text-black '
-						}`}
-					>
-						<TicketIcon className="h-6 w-6" />
-						<p>Passo</p>
-					</Link>
+					{
+						auth.token && (
+							<Link
+								to={'/tickets'}
+								className={`flex items-center justify-center gap-2 px-2 py-1 ${
+									window.location.pathname === '/tickets'
+										? 'border-b-2 border-black'
+										: 'text-black '
+								}`}
+							>
+								<TicketIcon className="h-6 w-6" />
+								<p>Passi</p>
+							</Link>
+						)
+					}
+					
 					{auth.role === 'admin' && (
 						<>
 							<Link
@@ -120,7 +125,7 @@ const Navbar = () => {
 								}`}
 							>
 								<UsersIcon className="h-6 w-6" />
-								<p>Utente</p>
+								<p>Utenti</p>
 							</Link>
 						</>
 					)}

@@ -104,7 +104,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 				}
 			)
 			await fetchShowtime()
-			toast.success(`Unrelease seminario avvenuto con successo!`, {
+			toast.success(`Nascosta seminario avvenuto con successo!`, {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -136,7 +136,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 								'Elaborazione...'
 							) : (
 								<>
-									Rilascia
+									Pubblica
 									<EyeIcon className="h-5 w-5" />
 								</>
 							)}
@@ -153,7 +153,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 								'Elaborazione...'
 							) : (
 								<>
-									ANNULLA RILASCIO
+									NASCONDI
 									<EyeSlashIcon className="h-5 w-5" />
 								</>
 							)}
@@ -178,7 +178,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 			<div className="flex justify-between">
 				<div className="flex flex-col justify-center bg-black px-4 py-0.5 text-center font-bold text-white sm:px-8">
 					<p className="text-sm">Aula</p>
-					<p className="text-3xl">{showtime?.aula?.number}</p>
+					<p className="text-3xl text-white">{showtime?.aula?.number}</p>
 				</div>
 				<div className="flex w-fit grow items-center justify-center bg-black px-4 py-0.5 text-center text-xl font-bold text-white sm:text-3xl">
 					<p className="mx-auto">{showtime?.aula?.dip.name}</p>
