@@ -6,13 +6,21 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 
+// ShowtimeDetails component to display and manage a seminar's showtime
+// Componente ShowtimeDetails per visualizzare e gestire l'orario di un seminario
 const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
+
 	const { auth } = useContext(AuthContext)
 	const navigate = useNavigate()
+
+	// UI state booleans
+	// Variabili di stato per l'interfaccia utente
 	const [isDeletingShowtimes, SetIsDeletingShowtimes] = useState(false)
 	const [isReleasingShowtime, setIsReleasingShowtime] = useState(false)
 	const [isUnreleasingShowtime, setIsUnreleasingShowtime] = useState(false)
 
+	// Confirm and delete the seminar
+	// Conferma ed elimina il seminario
 	const handleDelete = () => {
 		const confirmed = window.confirm(`Vuoi eliminare questo seminario?`)
 		if (confirmed) {
@@ -28,8 +36,9 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			// console.log(response.data)
-			navigate('/dip')
+
+			navigate('/dip') // Redirect after delete / Reindirizza dopo eliminazione
+
 			toast.success('Eliminazione seminario avvenuta con successo!', {
 				position: 'top-center',
 				autoClose: 2000,
@@ -47,6 +56,8 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 		}
 	}
 
+	// Publish the seminar
+	// Pubblica il seminario
 	const handleReleaseShowtime = () => {
 		const confirmed = window.confirm(`Vuoi rilasciare questo seminario?`)
 		if (confirmed) {
@@ -84,6 +95,8 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 		}
 	}
 
+	// Unpublish the seminar
+	// Annulla la pubblicazione del seminario
 	const handleUnreleasedShowtime = () => {
 		const confirmed = window.confirm(`Vuoi annullare il rilascio di questo seminario?`)
 		if (confirmed) {

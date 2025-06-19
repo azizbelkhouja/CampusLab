@@ -1,3 +1,5 @@
+// Importing required Heroicons components (used for UI buttons/icons)
+// Importazione dei componenti Heroicons necessari (usati per pulsanti/icone UI)
 import {
 	ArrowsRightLeftIcon,
 	ArrowsUpDownIcon,
@@ -5,21 +7,42 @@ import {
 	PencilSquareIcon,
 	TrashIcon
 } from '@heroicons/react/24/solid'
+
+// Axios library for making HTTP requests
+// Libreria Axios per effettuare richieste HTTP
 import axios from 'axios'
+
+// React hooks for state and lifecycle management
+// Hook di React per la gestione dello stato e del ciclo di vita
 import { useEffect, useState } from 'react'
+
+// React Hook Form for form handling and validation
+// React Hook Form per la gestione e validazione dei form
 import { useForm } from 'react-hook-form'
+
+// Toast notifications for success/error messages
+// Notifiche toast per messaggi di successo/errore
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+
+// Custom components for date selection and aula rendering
+// Componenti personalizzati per la selezione della data e visualizzazione aula
 import DateSelector from './DateSelector'
 import Aula from './Aula'
 
+// Main component to manage and render the list of aule based on selected department
+// Componente principale per gestire e visualizzare la lista delle aule in base al dipartimento selezionato
 const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips, auth }) => {
+	// Form hook for creating a new aula
+	// Hook del form per creare una nuova aula
 	const {
 		register,
 		handleSubmit,
 		formState: { errors }
 	} = useForm()
 
+	// Form hook for editing the department name
+	// Hook del form per modificare il nome del dipartimento
 	const {
 		register: registerName,
 		handleSubmit: handleSubmitName,
@@ -27,34 +50,49 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		formState: { errors: errorsName }
 	} = useForm()
 
+	// State for list of seminars
+	// Stato per la lista dei seminari
 	const [seminari, setSeminari] = useState()
+
+	// State for the selected date (from sessionStorage or today's date)
+// Stato per la data selezionata (da sessionStorage o data odierna)
 	const [selectedDate, setSelectedDate] = useState(
 		(sessionStorage.getItem('selectedDate') && new Date(sessionStorage.getItem('selectedDate'))) || new Date()
 	)
+
+	// State flags to control UI actions
+	// Flag di stato per controllare azioni UI
 	const [isIncreasing, SetIsIncreaseing] = useState(false)
 	const [isDeleting, SetIsDeleting] = useState(false)
 	const [isDecreasing, SetIsDecreasing] = useState(false)
 	const [isEditing, SetIsEditing] = useState(false)
 
+	// Fetch seminars from backend
+	// Recupera i seminari dal backend
 	const fetchSeminari = async (data) => {
 		try {
 			const response = await axios.get('/seminario')
-			// console.log(response.data.data)
 			setSeminari(response.data.data)
 		} catch (error) {
 			console.error(error)
 		}
 	}
 
+	// Fetch seminars once when component mounts
+	// Recupera i seminari una volta al montaggio del componente
 	useEffect(() => {
 		fetchSeminari()
 	}, [])
 
+	// Reset editing state and pre-fill form with selected dipartimento name
+	// Resetta lo stato di modifica e precompila il form con il nome del dipartimento selezionato
 	useEffect(() => {
 		SetIsEditing(false)
 		setValueName('name', dips[selectedDipIndex].name)
 	}, [dips[selectedDipIndex].name])
 
+	// Ask for confirmation before deleting dipartimento
+	// Chiede conferma prima di eliminare il dipartimento
 	const handleDelete = (dip) => {
 		const confirmed = window.confirm(
 			`Do you want to delete dipartimento ${dip.name}, including its aule, showtimes and tickets?`
@@ -64,6 +102,8 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
+	// Delete dipartimento by ID
+	// Elimina il dipartimento tramite ID
 	const onDeleteDip = async (id) => {
 		try {
 			SetIsDeleting(true)
@@ -72,7 +112,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-
 			setSelectedDipIndex(null)
 			fetchDips()
 			toast.success('Eliminazione dipartimento riuscita!', {
@@ -92,6 +131,8 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
+	// Add new aula to the selected dipartimento
+	// Aggiunge una nuova aula al dipartimento selezionato
 	const onIncreaseAula = async (data) => {
 		try {
 			SetIsIncreaseing(true)
@@ -110,7 +151,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 				}
 			)
 			fetchDips()
-
 			toast.success('Aula aggiunta con successo!', {
 				position: 'top-center',
 				autoClose: 2000,
@@ -128,6 +168,8 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
+	// Ask for confirmation before deleting the last aula
+	// Chiede conferma prima di eliminare l'ultima aula
 	const handleDecreaseAula = (dip) => {
 		const confirmed = window.confirm(
 			`Vuoi eliminare l'aula ${dips[selectedDipIndex].aulas.length}, inclusi i suoi orari e passi?`
@@ -137,6 +179,8 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
+	// Delete the last aula from the selected dipartimento
+	// Elimina l'ultima aula dal dipartimento selezionato
 	const onDecreaseAula = async () => {
 		try {
 			SetIsDecreasing(true)
@@ -145,7 +189,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			// console.log(response.data)
 			fetchDips()
 			toast.success('Decrease aula successful!', {
 				position: 'top-center',
@@ -164,6 +207,8 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
+	// Update the dipartimento name
+	// Aggiorna il nome del dipartimento
 	const onEditDip = async (data) => {
 		try {
 			const response = await axios.put(
@@ -177,7 +222,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 					}
 				}
 			)
-			// console.log(response.data)
 			fetchDips(data.name)
 			toast.success('Modifica nome dipartimento riuscita!', {
 				position: 'top-center',
@@ -193,6 +237,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 			})
 		}
 	}
+
 
 	return (
 		<div className="mx-4 h-fit text-gray-900 border-[1px] border-black sm:mx-8">

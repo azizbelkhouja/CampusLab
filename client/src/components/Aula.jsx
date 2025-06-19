@@ -1,14 +1,46 @@
+// Aula component for viewing a classroom and adding seminar showtimes
+// Componente Aula per visualizzare un'aula e aggiungere orari per i seminari
+
 import { ArrowsRightLeftIcon, ArrowsUpDownIcon, InformationCircleIcon, UserIcon } from '@heroicons/react/24/outline'
+// Import Heroicons for use in UI
+// Importa Heroicons da usare nell'interfaccia utente
+
 import axios from 'axios'
+// Import Axios for HTTP requests
+// Importa Axios per le richieste HTTP
+
 import { useContext, useEffect, useState } from 'react'
+// Import React hooks: useContext, useEffect, useState
+// Importa gli hook di React: useContext, useEffect, useState
+
 import { useForm } from 'react-hook-form'
+// Import useForm for form handling
+// Importa useForm per la gestione dei moduli
+
 import Select from 'react-tailwindcss-select'
+// Import custom Tailwind dropdown
+// Importa il componente Select compatibile con Tailwind
+
 import { toast } from 'react-toastify'
+// Import toast for notifications
+// Importa toast per le notifiche
+
 import { AuthContext } from '../context/AuthContext'
+// Import AuthContext to access logged-in user info
+// Importa AuthContext per accedere alle informazioni dell'utente autenticato
+
 import Loading from './Loading'
+// Import loading spinner component
+// Importa il componente spinner di caricamento
+
 import Showtimes from './Showtimes'
+// Import Showtimes component to display scheduled times
+// Importa il componente Showtimes per mostrare gli orari programmati
 
 const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate }) => {
+
+	// Get form methods from useForm
+  	// Ottiene i metodi del modulo da useForm
 	const {
 		register,
 		handleSubmit,
@@ -16,27 +48,48 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 		watch,
 	} = useForm()
 
+	// Get auth data from context
+  	// Ottiene i dati di autenticazione dal contesto
 	const { auth } = useContext(AuthContext)
 
+	// State for aula (classroom) data
+  	// Stato per i dati dell'aula
 	const [aula, setAula] = useState({})
+
+	// Track if aula fetching is done
+  	// Tiene traccia se il caricamento dell'aula è completato
 	const [isFetchingAulaDone, setIsFetchingAulaDone] = useState(false)
-	const [isAddingShowtime, SetIsAddingShowtime] = useState(false)
+
+	// Track if a showtime is being added
+  	// Tiene traccia se un orario di seminario sta venendo aggiunto
+	const [isAddingShowtime, setIsAddingShowtime] = useState(false)
+
+	// State for selected seminar in dropdown
+  	// Stato per il seminario selezionato nel menu a tendina
 	const [selectedSeminario, setSelectedSeminario] = useState(null)
 
+	// Fetch aula data from API
+  	// Recupera i dati dell'aula dall'API
 	const fetchAula = async (data) => {
 		try {
 			setIsFetchingAulaDone(false)
 			let response
 			if (auth.role === 'admin') {
+				// If admin, get unreleased aula
+        		// Se admin, recupera l'aula non pubblicata
 				response = await axios.get(`/aula/unreleased/${aulaId}`, {
 					headers: {
 						Authorization: `Bearer ${auth.token}`
 					}
 				})
 			} else {
+				// Otherwise get public aula
+        		// Altrimenti, recupera l'aula pubblica
 				response = await axios.get(`/aula/${aulaId}`)
 			}
-			// console.log(response.data.data)
+
+			// Save aula data to state
+      		// Salva i dati dell'aula nello stato
 			setAula(response.data.data)
 		} catch (error) {
 			console.error(error)
@@ -45,30 +98,43 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 		}
 	}
 
+	// Fetch aula on component mount or when aulaId changes
+  	// Recupera i dati dell'aula al caricamento del componente o quando cambia aulaId
 	useEffect(() => {
 		fetchAula()
 	}, [aulaId])
 
+	// Set default form values on first load
+  // Imposta i valori di default del modulo al primo caricamento
 	useEffect(() => {
 		setValue('autoIncrease', true)
 		setValue('rounding5', true)
 		setValue('gap', '00:10')
 	}, [])
 
+	// Submit handler for adding a new showtime
+  	// Gestore per l'invio del modulo per aggiungere un nuovo orario
 	const onAddShowtime = async (data) => {
 		try {
-			SetIsAddingShowtime(true)
+			setIsAddingShowtime(true)
 			if (!data.seminario) {
-				toast.error('Please select a seminario', {
+				// Mostra errore se nessun seminario è stato selezionato
+				toast.error('Seleziona un seminario', {
 					position: 'top-center',
 					autoClose: 2000,
 					pauseOnHover: false
 				})
 				return
 			}
+
+			// Combine selected date and time into a Date object
+			// Combina la data selezionata e l'orario in un oggetto Date
 			let showtime = new Date(selectedDate)
 			const [hours, minutes] = data.showtime.split(':')
 			showtime.setHours(hours, minutes, 0)
+
+			// Send POST request to add the showtime
+      		// Invia richiesta POST per aggiungere l'orario
 			const response = await axios.post(
 				'/showtime',
 				{ seminario: data.seminario, showtime, aula: aula._id, repeat: data.repeat, isRelease: data.isRelease },
@@ -78,12 +144,20 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 					}
 				}
 			)
-			// console.log(response.data)
+
+			// Refresh aula data after adding
+      		// Aggiorna i dati dell'aula dopo l'aggiunta
 			fetchAula()
+
+			// Auto-increase showtime for next entry
+      		// Aumento automatico dell'orario per la prossima voce
 			if (data.autoIncrease) {
 				const seminarioLength = seminari.find((seminario) => seminario._id === data.seminario).length
 				const [GapHours, GapMinutes] = data.gap.split(':').map(Number)
 				const nextShowtime = new Date(showtime.getTime() + (seminarioLength + GapHours * 60 + GapMinutes) * 60000)
+
+				// Round minutes if selected
+        		// Arrotonda i minuti se selezionato
 				if (data.rounding5 || data.rounding10) {
 					const totalMinutes = nextShowtime.getHours() * 60 + nextShowtime.getMinutes()
 					const roundedMinutes = data.rounding5
@@ -95,6 +169,9 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 						nextShowtime.setDate(nextShowtime.getDate() + 1)
 						roundedHours = 0
 					}
+
+					// Set the new rounded time
+        			// Imposta il nuovo orario arrotondato
 					setValue(
 						'showtime',
 						`${String(roundedHours).padStart(2, '0')}:${String(remainderMinutes).padStart(2, '0')}`
@@ -107,28 +184,33 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 						).padStart(2, '0')}`
 					)
 				}
+
+				// Optionally increase the selected date too
+        		// Facoltativamente aumenta anche la data selezionata
 				if (data.autoIncreaseDate) {
 					setSelectedDate(nextShowtime)
 					sessionStorage.setItem('selectedDate', nextShowtime)
 				}
 			}
-			toast.success('Add showtime successful!', {
+			toast.success('Aggiunta seminario riuscita!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
 			})
 		} catch (error) {
 			console.error(error)
-			toast.error('Error', {
+			toast.error('Errore durante l\'aggiunta del seminario', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
 			})
 		} finally {
-			SetIsAddingShowtime(false)
+			setIsAddingShowtime(false)
 		}
 	}
 
+	// Convert seat row letter (like AA) to a number
+  	// Converte la lettera della fila (es. AA) in un numero
 	function rowToNumber(column) {
 		let result = 0
 		for (let i = 0; i < column.length; i++) {
@@ -138,6 +220,8 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 		return result
 	}
 
+	// Show loading spinner while fetching
+  	// Mostra il caricamento mentre i dati vengono recuperati
 	if (!isFetchingAulaDone) {
 		return <Loading />
 	}
@@ -237,7 +321,7 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 										/>
 									</div>
 									<label className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start">
-										Rilascia ora:
+										Pubblica ora:
 										<input
 											type="checkbox"
 											className="h-6 w-6 lg:h-9 lg:w-9"

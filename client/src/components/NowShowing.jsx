@@ -1,6 +1,8 @@
 import 'react-toastify/dist/ReactToastify.css'
 import Loading from './Loading'
 
+// NowShowing component displays a list of available seminars (seminari)
+// Il componente NowShowing mostra un elenco di seminari disponibili (seminari)
 const NowShowing = ({ seminari, selectedSeminarioIndex, setSelectedSeminarioIndex, auth, isFetchingSeminariDone }) => {
 	return (
 		<div className="mx-4 flex flex-col  p-4 text-gray-900 sm:mx-8 sm:p-6">

@@ -5,11 +5,17 @@ import { useDraggable } from 'react-use-draggable-scroll'
 import { AuthContext } from '../context/AuthContext'
 
 const ScheduleTable = ({ dip, selectedDate }) => {
-	const ref = useRef(null)
-	const { auth } = useContext(AuthContext)
-	const { events } = useDraggable(ref)
-	const navigate = useNavigate()
 
+	const ref = useRef(null) // Reference to scrollable div / Riferimento al contenitore scrollabile
+
+	const { auth } = useContext(AuthContext) // Get authenticated user / Ottieni l'utente autenticato
+
+	const { events } = useDraggable(ref) // Enable drag to scroll / Abilita il trascinamento per scroll
+
+	const navigate = useNavigate() // Used to navigate to showtime page / Usato per navigare alla pagina del seminario
+
+	// Convert showtime to grid row number (5-minute steps)
+  	// Converte l'orario in numero di riga nella griglia (passi di 5 minuti)
 	const getRowStart = (showtime) => {
 		showtime = new Date(showtime)
 		const hour = showtime.getHours()
@@ -18,10 +24,14 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 		return Math.round((60 * hour + min) / 5)
 	}
 
+	// Calculate how many rows a seminar spans
+  	// Calcola quante righe occupa un seminario
 	const getRowSpan = (length) => {
 		return Math.round(length / 5)
 	}
 
+	// Get earliest and latest showtimes on the selected day
+  	// Ottieni gli orari di inizio e fine per il giorno selezionato
 	const getRowStartRange = () => {
 		let firstRowStart = 100000
 		let lastRowEnd = 0
@@ -47,6 +57,8 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 		return [firstRowStart, lastRowEnd, count]
 	}
 
+	// Filter only today's showtimes for an aula
+  	// Filtra solo i seminari di oggi per un'aula
 	const getTodayShowtimes = (aula) => {
 		return aula.showtimes?.filter((showtime, index) => {
 			return (
@@ -57,6 +69,8 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 		})
 	}
 
+	// Convert row label (e.g., A, B, C) to number
+  	// Converte l'etichetta della riga (es. A, B, C) in un numero
 	function rowToNumber(column) {
 		let result = 0
 		for (let i = 0; i < column.length; i++) {
@@ -69,9 +83,10 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 	const firstRowStart = getRowStartRange()[0]
 	const gridRows = Math.max(1, getRowStartRange()[1] - getRowStartRange()[0])
 	const showtimeCount = getRowStartRange()[2]
-	const shiftStart = 3
-	const shiftEnd = 2
+	const shiftStart = 3 // spacing from top / spazio dall'alto
+	const shiftEnd = 2 // spacing from bottom / spazio dal basso
 
+	// Check if a seminario is in the past / Controlla se un seminario è nel passato
 	const isPast = (date) => {
 		return date < new Date()
 	}
@@ -85,6 +100,7 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 				{...events}
 				ref={ref}
 			>
+				{/* Render showtime blocks / Mostra i blocchi dei seminari */}
 				{dip.aulas?.map((aula, index) => {
 					{
 						return getTodayShowtimes(aula)?.map((showtime, index) => {

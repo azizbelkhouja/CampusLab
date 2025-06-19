@@ -15,24 +15,45 @@ import { toast } from 'react-toastify'
 import { AuthContext } from '../context/AuthContext'
 
 const Navbar = () => {
+
+	// Get auth state and updater from context
+	// Ottenere lo stato di autenticazione e il setter dal contesto
 	const { auth, setAuth } = useContext(AuthContext)
+
+	// State for controlling mobile menu visibility
+	// Stato per controllare la visibilità del menu su mobile
 	const [menuOpen, setMenuOpen] = useState(false)
+
+	// State for managing logout processing state
+	// Stato per gestire lo stato di elaborazione del logout
 	const [isLoggingOut, SetLoggingOut] = useState(false)
 
+	// Toggle menu open/close for mobile view
+	// Mostra o nasconde il menu nella visualizzazione mobile
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen)
 	}
 
+	// Hook to programmatically navigate to routes
+	// Hook per navigare tra le rotte del sito
 	const navigate = useNavigate()
 
+	// Logout function
+	// Funzione per il logout
 	const onLogout = async () => {
 		try {
-			SetLoggingOut(true)
-			const response = await axios.get('/auth/logout')
-			// console.log(response)
+			SetLoggingOut(true) // Start logout process / Inizio processo di logout
+			const response = await axios.get('/auth/logout') // API call to logout / Chiamata API per logout
+			
+			// Clear auth context and session storage
+			// Resetta il contesto di autenticazione e la sessione
 			setAuth({ username: null, email: null, role: null, token: null })
 			sessionStorage.clear()
+
+			// Navigate to homepage
+			// Naviga alla home
 			navigate('/')
+
 			toast.success('Disconnessione riuscita!', {
 				position: 'top-center',
 				autoClose: 2000,
@@ -46,10 +67,12 @@ const Navbar = () => {
 				pauseOnHover: false
 			})
 		} finally {
-			SetLoggingOut(false)
+			SetLoggingOut(false) // End logout process / Fine processo di logout
 		}
 	}
 
+	// Function to render the menu items
+	// Funzione per mostrare i collegamenti del menu
 	const menuLists = () => {
 		return (
 			<>
@@ -76,6 +99,8 @@ const Navbar = () => {
 						<ClockIcon className="h-6 w-6" />
 						<p>Programma</p>
 					</Link>
+
+					{/* Tickets (visible only if user is logged in) / Passi (visibile solo se loggato) */}
 					{
 						auth.token && (
 							<Link
@@ -92,6 +117,7 @@ const Navbar = () => {
 						)
 					}
 					
+					{/* Admin-only links / Collegamenti visibili solo all'admin */}
 					{auth.role === 'admin' && (
 						<>
 							<Link
