@@ -1,3 +1,5 @@
+
+
 const Seminario = require('../models/Seminario')
 const Showtime = require('../models/Showtime')
 const Aula = require('../models/Aula')

@@ -1,3 +1,5 @@
+
+
 const express = require('express')
 const {
 	getAulas,
@@ -9,6 +11,7 @@ const {
 	deleteAula,
 	getUnreleasedAulaBySeminario
 } = require('../controllers/aulaController')
+
 const router = express.Router()
 
 const { protect, authorize } = require('../middleware/auth')

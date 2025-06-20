@@ -1,21 +1,9 @@
-/**
- * DipLists component displays a searchable list of departments ("dips"),
- * allows an admin user to add new departments,
- * and manages selection of a department.
- * Shows loading while fetching dips and uses toast notifications for feedback.
- *
- * Componente DipLists mostra una lista ricercabile di dipartimenti ("dips"),
- * permette all'admin di aggiungere nuovi dipartimenti,
- * e gestisce la selezione di un dipartimento.
- * Mostra uno spinner durante il caricamento e usa notifiche toast per feedback.
- */
-
 import { MagnifyingGlassIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
-import axios from 'axios' // HTTP requests library / Libreria per richieste HTTP
-import { useState } from 'react' // React hook for state management / Hook di React per gestione stato
-import { useForm } from 'react-hook-form' // Library to manage forms / Libreria per gestione form
-import { toast } from 'react-toastify' // Library for notifications / Libreria per notifiche
-import 'react-toastify/dist/ReactToastify.css' 
+import axios from 'axios'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Loading from './Loading'
 
 const DipLists = ({
@@ -26,8 +14,6 @@ const DipLists = ({
 	auth,
 	isFetchingDips = false
 }) => {
-	// React Hook Form utilities for form handling
-	// Utilità di React Hook Form per la gestione del form
 	const {
 		register,
 		handleSubmit,
@@ -36,27 +22,19 @@ const DipLists = ({
 		formState: { errors }
 	} = useForm()
 
-	// State to indicate if adding a new dip is in progress
-  	// Stato per indicare se si sta aggiungendo un nuovo dipartimento
 	const [isAdding, SetIsAdding] = useState(false)
 
-	// Function to handle adding a new dip
-  	// Funzione per gestire l'aggiunta di un nuovo dipartimento
 	const onAddDip = async (data) => {
 		try {
-			SetIsAdding(true) // Disable button and show loading text / Disabilita bottone e mostra testo caricamento
-
-			// Send POST request to backend with auth token to add new dip
-      		// Invia richiesta POST al backend con token di autenticazione per aggiungere il nuovo dipartimento
+			SetIsAdding(true)
 			const response = await axios.post('/dip', data, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			reset() // Clear input field after successful submission / Pulisce il campo input dopo invio con successo
-
-			fetchDips(data.name) // Refresh dips list, optionally filtered by new dip name / Aggiorna lista dips, filtrando eventualmente per il nuovo nome
-
+			// console.log(response.data)
+			reset()
+			fetchDips(data.name)
 			toast.success('Aggiunto dipartimento con successo!', {
 				position: 'top-center',
 				autoClose: 2000,
@@ -70,13 +48,11 @@ const DipLists = ({
 				pauseOnHover: false
 			})
 		} finally {
-			SetIsAdding(false) // Re-enable submit button / Riabilita il bottone di invio
+			SetIsAdding(false)
 		}
 	}
 
 	const DipLists = ({ dips }) => {
-		// Filter dips by search input (case insensitive)
-    	// Filtra i dipartimenti in base al testo di ricerca (case insensitive)
 		const dipsList = dips?.filter((dip) =>
 			dip.name.toLowerCase().includes(watch('search')?.toLowerCase() || '')
 		)

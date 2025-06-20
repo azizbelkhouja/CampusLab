@@ -10,7 +10,7 @@ exports.protect = async (req, res, next) => {
 
 	//Make sure token exists
 	if (!token || token == 'null') {
-		return res.status(401).json({ success: false, message: 'Not authorize to access this route' })
+		return res.status(401).json({ success: false, message: 'Non autorizzato ad accedere a questa rotta' })
 	}
 
 	try {
@@ -21,7 +21,7 @@ exports.protect = async (req, res, next) => {
 		next()
 	} catch (err) {
 		console.log(err.stack)
-		return res.status(401).json({ success: false, message: 'Not authorize to access this route' })
+		return res.status(401).json({ success: false, message: 'Non autorizzato ad accedere a questa rotta' })
 	}
 }
 
@@ -31,7 +31,7 @@ exports.authorize = (...roles) => {
 		if (!roles.includes(req.user.role)) {
 			return res.status(403).json({
 				success: false,
-				message: `User role ${req.user.role} is not authorized to access this route`
+				message: `Il ruolo utente ${req.user.role} non è autorizzato ad accedere a questa rotta`
 			})
 		}
 		next()

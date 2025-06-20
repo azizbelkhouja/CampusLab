@@ -39,6 +39,6 @@ app.use('/aula', aula)
 app.use('/seminario', seminario)
 app.use('/showtime', showtime)
 
-const port = process.env.PORT || 8080
+const port = 8080
 
 app.listen(port, () => console.log(`start server in port ${port}`))
