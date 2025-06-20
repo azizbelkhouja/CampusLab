@@ -9,10 +9,10 @@ import Seminario from './pages/Seminario'
 import Purchase from './pages/Purchase'
 import Register from './pages/Register'
 import Schedule from './pages/Schedule'
-import Search from './pages/Search'
 import Showtime from './pages/Showtime'
 import Tickets from './pages/Tickets'
 import User from './pages/User'
+import NotFound from './pages/NotFound'
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL || 'http://localhost:8080'
 axios.defaults.withCredentials = true
@@ -34,14 +34,6 @@ function App() {
 						</AdminRoute>
 					}
 				/>
-				<Route
-					path="/search"
-					element={
-						<AdminRoute>
-							<Search />
-						</AdminRoute>
-					}
-				/>
 				<Route path="/showtime/:id" element={<Showtime />} />
 				<Route path="/purchase/:id" element={<Purchase />} />
 				<Route path="/tickets" element={<Tickets />} />
@@ -54,6 +46,7 @@ function App() {
 						</AdminRoute>
 					}
 				/>
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</>
 	)

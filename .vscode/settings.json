@@ -68,6 +68,14 @@
         {
             "folderPath": "CampusLab\\client\\src\\components\\SeminarioLists.jsx\\",
             "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Search.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\User.jsx\\",
+            "badge": "😀"
         }
     ]
 }

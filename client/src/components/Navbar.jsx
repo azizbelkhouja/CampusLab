@@ -109,17 +109,6 @@ const Navbar = () => {
 								<p>Seminari</p>
 							</Link>
 							<Link
-								to={'/search'}
-								className={`flex items-center justify-center gap-2 px-2 py-1 ${
-									window.location.pathname === '/search'
-										? 'border-b-2 border-white text-white'
-										: 'text-white '
-								}`}
-							>
-								<FunnelIcon className="h-6 w-6" />
-								<p>Cerca</p>
-							</Link>
-							<Link
 								to={'/user'}
 								className={`flex items-center justify-center gap-2 px-2 py-1 ${
 									window.location.pathname === '/user'

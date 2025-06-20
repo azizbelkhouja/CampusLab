@@ -181,7 +181,6 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 			<div className="flex justify-between border border-black border-b-0">
 				<div className="flex flex-col justify-center bg-gray-200 px-4 py-0.5 text-center font-bold text-black">
 					<p className="text-sm">Aula</p>
-					<p className="text-3xl text-black">{showtime?.aula?.number}</p>
 				</div>
 				<div className="flex w-fit grow items-center justify-center bg-gray-200 px-4 py-0.5 text-center text-xl font-bold text-black sm:text-3xl">
 					<p className="mx-auto">{showtime?.aula?.dip.name}</p>
