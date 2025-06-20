@@ -26,7 +26,6 @@ const Seminario = () => {
 		try {
 			setIsFetchingSeminariDone(false)
 			const response = await axios.get('/seminario')
-			// console.log(response.data.data)
 			reset()
 			setSeminari(response.data.data)
 		} catch (error) {
@@ -49,7 +48,6 @@ const Seminario = () => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			// console.log(response.data)
 			fetchSeminari()
 			toast.success('Add seminario successful!', {
 				position: 'top-center',
@@ -84,7 +82,6 @@ const Seminario = () => {
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			// console.log(response.data)
 			fetchSeminari()
 			toast.success('Delete seminario successful!', {
 				position: 'top-center',
@@ -173,7 +170,7 @@ const Seminario = () => {
 							<img src={watch('img')} className="h-48-md object-contain drop-shadow-md lg:h-64" />
 						)}
 						<button
-							className="w-full min-w-fit items-center  px-2 py-1 text-center font-medium text-white bg-black disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
+							className="w-full min-w-fit items-center px-2 py-1 text-center font-medium text-white bg-black disabled:to-slate-400 lg:w-24 xl:w-32 xl:text-xl"
 							type="submit"
 							disabled={isAddingSeminario}
 						>
@@ -181,7 +178,7 @@ const Seminario = () => {
 						</button>
 					</div>
 				</form>
-				<div className="relative drop-shadow-sm">
+				<div className="relative mt-7 mb-8">
 					<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
 						<MagnifyingGlassIcon className="h-5 w-5 stroke-2 text-gray-500" />
 					</div>

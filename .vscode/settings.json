@@ -59,7 +59,15 @@
         },
         {
             "folderPath": "CampusLab\\client\\src\\components\\ShowtimeDetails.jsx\\",
-            "badge": "🤔"
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Seminario.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\SeminarioLists.jsx\\",
+            "badge": "😀"
         }
     ]
 }
