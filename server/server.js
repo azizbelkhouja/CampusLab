@@ -15,6 +15,7 @@ const seminario = require('./routes/seminario')
 const showtime = require('./routes/showtime')
 
 mongoose.set('strictQuery', false)
+
 mongoose
 	.connect(process.env.DATABASE, { autoIndex: true })
 	.then(() => {
@@ -35,7 +36,10 @@ app.use(xss())
 
 app.use('/auth', auth)
 app.use('/dip', dip)
+
+// endpoint /aula
 app.use('/aula', aula)
+
 app.use('/seminario', seminario)
 app.use('/showtime', showtime)
 

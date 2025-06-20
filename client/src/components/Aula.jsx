@@ -9,6 +9,7 @@ import Loading from './Loading'
 import Showtimes from './Showtimes'
 
 const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate }) => {
+
 	const {
 		register,
 		handleSubmit,
@@ -17,6 +18,7 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 	} = useForm()
 
 	const { auth } = useContext(AuthContext)
+
 	const [aula, setAula] = useState({})
 	const [isFetchingAulaDone, setIsFetchingAulaDone] = useState(false)
 	const [isAddingShowtime, setIsAddingShowtime] = useState(false)
@@ -25,17 +27,24 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 	const fetchAula = async (data) => {
 		try {
 			setIsFetchingAulaDone(false)
+
+			// Chiamate Frontend → Backend
 			let response
 			if (auth.role === 'admin') {
+
 				response = await axios.get(`/aula/unreleased/${aulaId}`, {
 					headers: {
-						Authorization: `Bearer ${auth.token}`
+						Authorization: `Bearer ${auth.token}` // JWT per autorizzazione
 					}
 				})
+
 			} else {
 				response = await axios.get(`/aula/${aulaId}`)
 			}
+
 			setAula(response.data.data)
+			// Fine Chiamate Frontend → Backend
+
 		} catch (error) {
 			console.error(error)
 		} finally {
@@ -43,10 +52,12 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 		}
 	}
 
+	// chiamare la funzione fetchAula ogni volta che cambia il valore di aulaId
 	useEffect(() => {
 		fetchAula()
 	}, [aulaId])
 
+	// esegue una sola volta all’avvio del componente
 	useEffect(() => {
 		setValue('autoIncrease', true)
 		setValue('rounding5', true)
@@ -64,30 +75,39 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 				})
 				return
 			}
+
 			let showtime = new Date(selectedDate)
 			const [hours, minutes] = data.showtime.split(':')
 			showtime.setHours(hours, minutes, 0)
+
 			const response = await axios.post(
 				'/showtime',
 				{ seminario: data.seminario, showtime, aula: aula._id, repeat: data.repeat, isRelease: data.isRelease },
 				{
 					headers: {
-						Authorization: `Bearer ${auth.token}`
+						Authorization: `Bearer ${auth.token}` // Bearer : indica che il tipo di token è un token di accesso
 					}
 				}
 			)
+
 			fetchAula()
+
 			if (data.autoIncrease) {
 				const seminarioLength = seminari.find((seminario) => seminario._id === data.seminario).length
+
 				const [GapHours, GapMinutes] = data.gap.split(':').map(Number)
+
+				// la data/ora in cui inizierà il prossimo seminario, calcolata dopo la fine del seminario corrente più la pausa.
 				const nextShowtime = new Date(showtime.getTime() + (seminarioLength + GapHours * 60 + GapMinutes) * 60000)
+
 				if (data.rounding5 || data.rounding10) {
 					const totalMinutes = nextShowtime.getHours() * 60 + nextShowtime.getMinutes()
-					const roundedMinutes = data.rounding5
-						? Math.ceil(totalMinutes / 5) * 5
-						: Math.ceil(totalMinutes / 10) * 10
+					const roundedMinutes = data.rounding5 ? Math.ceil(totalMinutes / 5) * 5 : Math.ceil(totalMinutes / 10) * 10
+
 					let roundedHours = Math.floor(roundedMinutes / 60)
+
 					const remainderMinutes = roundedMinutes % 60
+
 					if (roundedHours === 24) {
 						nextShowtime.setDate(nextShowtime.getDate() + 1)
 						roundedHours = 0
