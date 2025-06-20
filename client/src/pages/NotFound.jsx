@@ -26,7 +26,7 @@ return (
                         </p>
                         <Link
                             to="/"
-                            className="inline-block border-2 border-black hover:text-white hover:bg-black px-6 py-2"
+                            className="inline-block rounded border-2 border-[#203E72] hover:text-white hover:bg-[#203E72] px-6 py-2"
                         >
                             Vai alla Home Page
                         </Link>

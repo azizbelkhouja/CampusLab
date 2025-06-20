@@ -127,7 +127,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 						<ChevronLeftIcon className="h-10 w-10 text-black" />
 					</button>
 				) : (
-					<div className="h-10 w-10"></div>
+					<div className="h-10 w-10" />
 				)}
 
 				{isEditing ? (

@@ -76,6 +76,18 @@
         {
             "folderPath": "CampusLab\\client\\src\\pages\\User.jsx\\",
             "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\NotFound.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Register.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Login.jsx\\",
+            "badge": "😀"
         }
     ]
 }

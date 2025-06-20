@@ -83,10 +83,9 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 	const firstRowStart = getRowStartRange()[0]
 	const gridRows = Math.max(1, getRowStartRange()[1] - getRowStartRange()[0])
 	const showtimeCount = getRowStartRange()[2]
-	const shiftStart = 3 // spacing from top / spazio dall'alto
-	const shiftEnd = 2 // spacing from bottom / spazio dal basso
+	const shiftStart = 3
+	const shiftEnd = 2
 
-	// Check if a seminario is in the past / Controlla se un seminario è nel passato
 	const isPast = (date) => {
 		return date < new Date()
 	}
@@ -100,7 +99,6 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 				{...events}
 				ref={ref}
 			>
-				{/* Render showtime blocks / Mostra i blocchi dei seminari */}
 				{dip.aulas?.map((aula, index) => {
 					{
 						return getTodayShowtimes(aula)?.map((showtime, index) => {

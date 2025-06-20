@@ -140,7 +140,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 				}
 			})
 			fetchDips()
-			toast.success('Decrease aula successful!', {
+			toast.success('Eliminazione aula riuscita!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false

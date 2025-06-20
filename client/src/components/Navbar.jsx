@@ -135,7 +135,7 @@ const Navbar = () => {
 							{isLoggingOut ? 'Elaborazione...' : 'Esci'}
 						</button>
 					) : (
-						<button className="bg-white py-1 font-semibold text-[#203E72] px-3">
+						<button className="bg-white py-1 rounded font-semibold text-[#203E72] px-3">
 							<Link to={'/login'}>Login</Link>
 						</button>
 					)}

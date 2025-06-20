@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from '../context/AuthContext'
 
 const Login = () => {
+
 	const navigate = useNavigate()
 	const { auth, setAuth } = useContext(AuthContext)
 	const [errorsMessage, setErrorsMessage] = useState('')
@@ -48,8 +49,8 @@ const Login = () => {
 	}
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-[#213D72]">
-			<div className="w-full max-w-md space-y-8 p-4 shadow-xl bg-white">
+		<div className="flex min-h-screen items-center justify-center">
+			<div className="w-full max-w-md space-y-8 p-4 shadow-2xl  bg-white">
 				<div>
 					<h2 className="mt-4 text-center text-4xl font-extrabold text-[#213D72]">Login</h2>
 				</div>
@@ -77,7 +78,7 @@ const Login = () => {
 						{errorsMessage && <span className="text-sm text-red-500">{errorsMessage}</span>}
 						<button
 							type="submit"
-							className="mt-4 w-full bg-[#213D72] py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-900 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:from-slate-500 disabled:to-slate-400"
+							className="mt-4 w-full bg-[#213D72] py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-900"
 							disabled={isLoggingIn}
 						>
 							{isLoggingIn ? 'Processing...' : 'Login'}

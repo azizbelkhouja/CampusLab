@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Register = () => {
+
 	const navigate = useNavigate()
 	const [errorsMessage, setErrorsMessage] = useState('')
 	const [isRegistering, SetIsRegistering] = useState(false)
@@ -45,10 +46,10 @@ const Register = () => {
 	}
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-900 to-blue-500 py-12 px-4 sm:px-6 lg:px-8">
-			<div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-4 shadow-xl">
+		<div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+			<div className="w-full max-w-md space-y-8 p-4 shadow-2xl">
 				<div>
-					<h2 className="mt-4 text-center text-4xl font-extrabold text-gray-900">Register</h2>
+					<h2 className="mt-4 text-center text-4xl font-extrabold text-[#213D72]">Registrati</h2>
 				</div>
 				<form className="mt-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
 					<input
@@ -56,31 +57,37 @@ const Register = () => {
 						type="text"
 						autoComplete="username"
 						{...register('username', { required: true })}
-						className={inputClasses`${errors.username ? 'border-red-500' : ''}`}
-						placeholder="Username"
+						className={`${inputClasses()} ${errors.username ? 'border-red-500' : ''}`}
+						placeholder="Nome utente"
 					/>
-					{errors.username && <span className="text-sm text-red-500">Nome Utente è obbligatorio</span>}
+					{errors.username && <span className="text-sm text-red-500">Il nome utente è obbligatorio</span>}
 					<input
 						name="email"
 						type="email"
 						autoComplete="email"
-						{...register('email', { required: true })}
-						className={inputClasses`${errors.email ? 'border-red-500' : ''}`}
+						{...register('email', {
+							required: 'L\'email è obbligatoria',
+							validate: (value) =>
+								value.endsWith('@edu.unife.it') || 'L\'email deve essere un indirizzo @edu.unife.it'
+						})}
+						className={`${inputClasses()} ${errors.email ? 'border-red-500' : ''}`}
 						placeholder="Email"
 					/>
-					{errors.email && <span className="text-sm text-red-500">Email è obbligatorio</span>}
+					{errors.email && (
+						<span className="text-sm text-red-500">{errors.email.message}</span>
+					)}
 					<input
 						name="password"
 						type="password"
 						autoComplete="current-password"
 						{...register('password', {
-							required: 'Password is required',
+							required: 'La password è obbligatoria',
 							minLength: {
 								value: 6,
-								message: 'Password must be at least 6 characters long'
+								message: 'La password deve essere lunga almeno 6 caratteri'
 							}
 						})}
-						className={inputClasses`${errors.password ? 'border-red-500' : ''}`}
+						className={`${inputClasses()} ${errors.password ? 'border-red-500' : ''}`}
 						placeholder="Password"
 					/>
 					{errors.password && <span className="text-sm text-red-500">{errors.password?.message}</span>}
@@ -88,15 +95,15 @@ const Register = () => {
 						{errorsMessage && <span className="text-sm text-red-500">{errorsMessage}</span>}
 						<button
 							type="submit"
-							className="mt-4 w-full rounded-md bg-blue-600 bg-gradient-to-br from-indigo-600 to-blue-500 py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-700 hover:from-indigo-500 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:from-slate-500 disabled:to-slate-400"
+							className="mt-4 w-full bg-[#213D72] py-2 px-4 font-medium text-white drop-shadow-md hover:bg-blue-900"
 							disabled={isRegistering}
 						>
 							{isRegistering ? 'Elaborazione...' : 'Registrati'}
 						</button>
 					</div>
-					<p className="text-right">
+					<p className="text-right text-[#0086A0]">
 						Hai già un account?{' '}
-						<Link to={'/login'} className="font-bold text-blue-600">
+						<Link to={'/login'} className="text-black">
 							Accedi qui
 						</Link>
 					</p>
