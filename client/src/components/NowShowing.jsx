@@ -16,7 +16,7 @@ const NowShowing = ({ seminari, selectedSeminarioIndex, setSelectedSeminarioInde
 									<div
 										key={index}
 										title={seminario.name}
-										className="flex w-[108px] flex-col bg-black p-1 text-white cursor-pointer drop-shadow-md hover:bg-gray-700 sm:w-[144px]"
+										className="flex w-[108px] flex-col bg-gray-200 p-1 text-white cursor-pointer drop-shadow-md sm:w-[144px]"
 										onClick={() => {
 											setSelectedSeminarioIndex(null)
 											sessionStorage.setItem('selectedSeminarioIndex', null)
@@ -26,7 +26,7 @@ const NowShowing = ({ seminari, selectedSeminarioIndex, setSelectedSeminarioInde
 											src={seminario.img}
 											className="h-36 object-cover sm:h-48"
 										/>
-										<p className="truncate pt-1 text-center text-sm font-semibold leading-4">
+										<p className="truncate text-black pt-1 text-center text-sm font-semibold">
 											{seminario.name}
 										</p>
 									</div>
@@ -43,7 +43,7 @@ const NowShowing = ({ seminari, selectedSeminarioIndex, setSelectedSeminarioInde
 											src={seminario.img}
 											className="h-36 object-cover drop-shadow-md sm:h-48"
 										/>
-										<p className="truncate pt-1 text-center text-sm font-semibold leading-4">
+										<p className="truncate pt-1 text-center text-sm">
 											{seminario.name}
 										</p>
 									</div>

@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const mongoSanitize = require('express-mongo-sanitize')
 const helmet = require('helmet')
 const xss = require('xss-clean')
+
 require('dotenv').config()
 
 const auth = require('./routes/auth')
@@ -26,6 +27,7 @@ mongoose
 const app = express()
 
 app.use(express.json())
+
 app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: true }))

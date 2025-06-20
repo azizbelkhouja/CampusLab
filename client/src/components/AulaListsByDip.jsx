@@ -1,48 +1,20 @@
-// Importing required Heroicons components (used for UI buttons/icons)
-// Importazione dei componenti Heroicons necessari (usati per pulsanti/icone UI)
-import {
-	ArrowsRightLeftIcon,
-	ArrowsUpDownIcon,
-	CheckIcon,
-	PencilSquareIcon,
-	TrashIcon
-} from '@heroicons/react/24/solid'
-
-// Axios library for making HTTP requests
-// Libreria Axios per effettuare richieste HTTP
+import { ArrowsRightLeftIcon, ArrowsUpDownIcon, CheckIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
-
-// React hooks for state and lifecycle management
-// Hook di React per la gestione dello stato e del ciclo di vita
 import { useEffect, useState } from 'react'
-
-// React Hook Form for form handling and validation
-// React Hook Form per la gestione e validazione dei form
 import { useForm } from 'react-hook-form'
-
-// Toast notifications for success/error messages
-// Notifiche toast per messaggi di successo/errore
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-// Custom components for date selection and aula rendering
-// Componenti personalizzati per la selezione della data e visualizzazione aula
 import DateSelector from './DateSelector'
 import Aula from './Aula'
 
-// Main component to manage and render the list of aule based on selected department
-// Componente principale per gestire e visualizzare la lista delle aule in base al dipartimento selezionato
 const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips, auth }) => {
-	// Form hook for creating a new aula
-	// Hook del form per creare una nuova aula
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors }
 	} = useForm()
 
-	// Form hook for editing the department name
-	// Hook del form per modificare il nome del dipartimento
 	const {
 		register: registerName,
 		handleSubmit: handleSubmitName,
@@ -50,25 +22,17 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		formState: { errors: errorsName }
 	} = useForm()
 
-	// State for list of seminars
-	// Stato per la lista dei seminari
 	const [seminari, setSeminari] = useState()
 
-	// State for the selected date (from sessionStorage or today's date)
-// Stato per la data selezionata (da sessionStorage o data odierna)
 	const [selectedDate, setSelectedDate] = useState(
 		(sessionStorage.getItem('selectedDate') && new Date(sessionStorage.getItem('selectedDate'))) || new Date()
 	)
 
-	// State flags to control UI actions
-	// Flag di stato per controllare azioni UI
 	const [isIncreasing, SetIsIncreaseing] = useState(false)
 	const [isDeleting, SetIsDeleting] = useState(false)
 	const [isDecreasing, SetIsDecreasing] = useState(false)
 	const [isEditing, SetIsEditing] = useState(false)
 
-	// Fetch seminars from backend
-	// Recupera i seminari dal backend
 	const fetchSeminari = async (data) => {
 		try {
 			const response = await axios.get('/seminario')
@@ -78,32 +42,24 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
-	// Fetch seminars once when component mounts
-	// Recupera i seminari una volta al montaggio del componente
 	useEffect(() => {
 		fetchSeminari()
 	}, [])
 
-	// Reset editing state and pre-fill form with selected dipartimento name
-	// Resetta lo stato di modifica e precompila il form con il nome del dipartimento selezionato
 	useEffect(() => {
 		SetIsEditing(false)
 		setValueName('name', dips[selectedDipIndex].name)
 	}, [dips[selectedDipIndex].name])
 
-	// Ask for confirmation before deleting dipartimento
-	// Chiede conferma prima di eliminare il dipartimento
 	const handleDelete = (dip) => {
 		const confirmed = window.confirm(
-			`Do you want to delete dipartimento ${dip.name}, including its aule, showtimes and tickets?`
+			`Vuoi eliminare il dipartimento ${dip.name}, incluse le sue aule, orari e passi?`
 		)
 		if (confirmed) {
 			onDeleteDip(dip._id)
 		}
 	}
 
-	// Delete dipartimento by ID
-	// Elimina il dipartimento tramite ID
 	const onDeleteDip = async (id) => {
 		try {
 			SetIsDeleting(true)
@@ -131,8 +87,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
-	// Add new aula to the selected dipartimento
-	// Aggiunge una nuova aula al dipartimento selezionato
 	const onIncreaseAula = async (data) => {
 		try {
 			SetIsIncreaseing(true)
@@ -168,8 +122,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
-	// Ask for confirmation before deleting the last aula
-	// Chiede conferma prima di eliminare l'ultima aula
 	const handleDecreaseAula = (dip) => {
 		const confirmed = window.confirm(
 			`Vuoi eliminare l'aula ${dips[selectedDipIndex].aulas.length}, inclusi i suoi orari e passi?`
@@ -179,8 +131,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
-	// Delete the last aula from the selected dipartimento
-	// Elimina l'ultima aula dal dipartimento selezionato
 	const onDecreaseAula = async () => {
 		try {
 			SetIsDecreasing(true)
@@ -207,8 +157,6 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 		}
 	}
 
-	// Update the dipartimento name
-	// Aggiorna il nome del dipartimento
 	const onEditDip = async (data) => {
 		try {
 			const response = await axios.put(
@@ -240,8 +188,8 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 
 
 	return (
-		<div className="mx-4 h-fit text-gray-900 border-[1px] border-black sm:mx-8">
-			<div className="flex items-center justify-center gap-2 bg-black px-2 py-1.5 text-center text-2xl font-semibold text-white sm:py-2">
+		<div className="mx-4 h-fit border-[1px] border-black sm:mx-8">
+			<div className="flex items-center justify-center gap-2 bg-gray-200 px-2 py-1.5 text-center text-2xl font-semibold text-white sm:py-2">
 				{isEditing ? (
 					<input
 						title="Nome Dipartimento"
@@ -254,7 +202,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 						{...registerName('name', { required: true })}
 					/>
 				) : (
-					<span className="flex-grow text-2xl sm:text-3xl">{dips[selectedDipIndex]?.name}</span>
+					<span className="flex-grow text-black text-2xl sm:text-3xl">{dips[selectedDipIndex]?.name}</span>
 				)}
 				{auth.role === 'admin' && (
 					<>
@@ -262,7 +210,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 							<form onClick={handleSubmitName(onEditDip)}>
 								<button
 									title="Salva dipartimento"
-									className="flex w-fit items-center gap-1 py-1 pl-2 pr-1.5 text-sm font-medium text-white"
+									className="flex w-fit items-center gap-1 py-1 pl-2 pr-1.5 text-sm font-medium text-black"
 									onClick={() => {
 										SetIsEditing(false)
 									}}
@@ -274,7 +222,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 						) : (
 							<button
 								title="Edit Dipartimento name"
-								className="flex w-fit items-center gap-1 py-1 pl-2 pr-1.5 text-sm font-medium text-white"
+								className="flex w-fit items-center gap-1 py-1 pl-2 pr-1.5 text-sm font-medium text-black"
 								onClick={() => SetIsEditing(true)}
 							>
 								Modifica
@@ -284,7 +232,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 						<button
 							title="Delete dipartimento"
 							disabled={isDeleting}
-							className="flex w-fit items-center gap-1 bg-red-500 py-1 pl-2 pr-1.5 text-sm font-medium text-white"
+							className="flex w-fit items-center rounded gap-1 bg-red-600 py-1 pl-2 pr-1.5 text-sm font-medium text-white"
 							onClick={() => handleDelete(dips[selectedDipIndex])}
 						>
 							{isDeleting ? (
@@ -301,13 +249,12 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 			</div>
 			<div className="flex flex-col gap-6 p-4 sm:p-6 overflow-y-auto">
 
-				<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+				
 
-				<form className="flex flex-col gap-4" onSubmit={handleSubmit(onIncreaseAula)}>
-					<h2 className="text-3xl font-bold">Aule</h2>
+				<form className="flex mb-8 mt-3 flex-col gap-4" onSubmit={handleSubmit(onIncreaseAula)}>
 					{auth.role === 'admin' && (
 						<div className="flex w-full flex-wrap justify-between gap-4 border-[1px] border-black bg-white p-4 text-gray-900">
-							<h3 className="flex items-center text-xl font-bold">Aggiungi Aula</h3>
+							<h3 className="flex items-center text-xl font-bold">Aggiungi Aula : </h3>
 							<div className="flex grow flex-col gap-4 sm:justify-end md:flex-row">
 								<div className="flex flex-wrap justify-end gap-4">
 									<div className="flex flex-wrap gap-2">
@@ -321,7 +268,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 											type="text"
 											maxLength="2"
 											required
-											className={`w-14 border-[1px] border-[#A2841F] px-3 py-1 text-2xl leading-3
+											className={`w-14 border-[1px] border-black px-3 py-1 text-2xl leading-3
 											${errors.row && 'border-2 border-red-500'}`}
 											{...register('row', {
 												required: true,
@@ -345,7 +292,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 											max="120"
 											maxLength="3"
 											required
-											className={`w-24 border-[1px] border-[#A2841F] px-3 py-1 text-2xl leading-3 ${
+											className={`w-24 border-[1px] border-black px-3 py-1 text-2xl leading-3 ${
 												errors.column && 'border-2 border-red-500'
 											}`}
 											{...register('column', { required: true })}
@@ -353,8 +300,8 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 									</div>
 								</div>
 								<div className="flex grow md:grow-0">
-									<div className="flex flex-col items-center justify-center gap-1 text-black p-1 border-[1px] border-black">
-										<label className="text-xs font-semibold leading-3">Numero</label>
+									<div className="flex flex-col items-center justify-center gap-1 text-black p-1 border-[1px] border-r-0 border-black">
+										<label className="text-xs font-semibold leading-3">Aula</label>
 										<label className="text-2xl font-semibold leading-5">
 											{dips[selectedDipIndex].aulas.length + 1}
 										</label>
@@ -362,7 +309,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 									<button
 										title="Aggiungi aula"
 										disabled={isIncreasing}
-										className="flex grow items-center justify-center whitespace-nowrap bg-black px-2 py-1 font-medium text-white drop-shadow-md hover:from-indigo-500 hover:to-blue-400 disabled:from-slate-500 disabled:to-slate-400 md:grow-0"
+										className="flex grow items-center justify-center whitespace-nowrap border border-black bg-gray-200 px-2 py-1 font-medium text-black md:grow-0"
 										type="submit"
 									>
 										{isIncreasing ? 'Elaborazione...' : 'AGGIUNGI +'}
@@ -372,6 +319,10 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 						</div>
 					)}
 				</form>
+
+				<DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+
+				<h2 className="text-3xl mt-5 font-bold">Aule :</h2>
 				{dips[selectedDipIndex].aulas.map((aula, index) => {
 					return (
 						<Aula
@@ -387,7 +338,7 @@ const AulaListsByDip = ({ dips, selectedDipIndex, setSelectedDipIndex, fetchDips
 					<div className="flex justify-center">
 						<button
 							title="Elimina Ultima Aula"
-							className="w-fit bg-red-500 px-2 py-1 font-medium text-white drop-shadow-md hover:bg-red-600 disabled:from-slate-500 disabled:to-slate-400"
+							className="w-fit bg-red-500 px-2 py-1 rounded font-medium text-white hover:bg-red-600 disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleDecreaseAula()}
 							disabled={isDecreasing}
 						>

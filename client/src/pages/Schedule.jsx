@@ -13,7 +13,9 @@ import { AuthContext } from '../context/AuthContext'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 
 const Schedule = () => {
+
 	const { auth } = useContext(AuthContext)
+
 	const {
 		register,
 		handleSubmit,
@@ -22,12 +24,15 @@ const Schedule = () => {
 		setValue,
 		formState: { errors }
 	} = useForm()
+
 	const [selectedDate, setSelectedDate] = useState(
 		(sessionStorage.getItem('selectedDate') && new Date(sessionStorage.getItem('selectedDate'))) || new Date()
 	)
+
 	const [selectedDipIndex, setSelectedDipIndex] = useState(
 		parseInt(sessionStorage.getItem('selectedDipIndex')) || 0
 	)
+
 	const [dips, setDips] = useState([])
 	const [isFetchingDips, setIsFetchingDips] = useState(true)
 	const [seminari, setSeminari] = useState([])
@@ -47,7 +52,6 @@ const Schedule = () => {
 			} else {
 				response = await axios.get('/dip')
 			}
-			// console.log(response.data.data)
 			setDips(response.data.data)
 		} catch (error) {
 			console.error(error)

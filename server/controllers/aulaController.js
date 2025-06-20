@@ -24,6 +24,7 @@ exports.getAulas = async (req, res, next) => {
 	}
 }
 
+// restituisce un'aula specifica dal database
 exports.getAula = async (req, res, next) => {
 	try {
 		const aula = await Aula.findById(req.params.id)
@@ -46,6 +47,7 @@ exports.getAula = async (req, res, next) => {
 	}
 }
 
+// restituisce un'aula non pubblicata specifica dal database
 exports.getUnreleasedAula = async (req, res, next) => {
 	try {
 		const aula = await Aula.findById(req.params.id).populate([
@@ -63,6 +65,7 @@ exports.getUnreleasedAula = async (req, res, next) => {
 	}
 }
 
+// restituisce le aule per un seminario specifico in una data specifica
 exports.getAulaBySeminario = async (req, res, next) => {
 	try {
 		const { mid, date, timezone } = req.params
@@ -204,6 +207,7 @@ exports.getAulaBySeminario = async (req, res, next) => {
 
 }
 
+// restituisce le aule non pubblicate per un seminario specifico in una data specifica
 exports.getUnreleasedAulaBySeminario = async (req, res, next) => {
 	try {
 		const { mid, date, timezone } = req.params
@@ -237,6 +241,7 @@ exports.getUnreleasedAulaBySeminario = async (req, res, next) => {
 	}
 }
 
+// crea una nuova aula nel database
 exports.createAula = async (req, res, next) => {
 	try {
 		const { dip: dipId, row, column } = req.body
@@ -270,6 +275,7 @@ exports.createAula = async (req, res, next) => {
 	}
 }
 
+// aggiorna un'aula esistente nel database
 exports.updateAula = async (req, res, next) => {
 	try {
 		const aula = await Aula.findByIdAndUpdate(req.params.id, req.body, {
@@ -286,6 +292,7 @@ exports.updateAula = async (req, res, next) => {
 	}
 }
 
+// elimina un'aula esistente dal database
 exports.deleteAula = async (req, res, next) => {
 	try {
 		const aula = await Aula.findById(req.params.id)

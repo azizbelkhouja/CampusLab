@@ -1,0 +1,57 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\Navbar.jsx\\",
+            "color": "foldercolorizer.color_006633",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\NowShowing.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\DipLists.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\DateSelector.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\AulaShort.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Home.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\AulaListsBySeminario.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Dip.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\AulaListsByDip.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\Showtimes.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Schedule.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\Loading.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\Aula.jsx\\",
+            "badge": "😀"
+        }
+    ]
+}

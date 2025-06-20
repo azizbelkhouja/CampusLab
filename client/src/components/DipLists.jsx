@@ -32,7 +32,6 @@ const DipLists = ({
 					Authorization: `Bearer ${auth.token}`
 				}
 			})
-			// console.log(response.data)
 			reset()
 			fetchDips(data.name)
 			toast.success('Aggiunto dipartimento con successo!', {

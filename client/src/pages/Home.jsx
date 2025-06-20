@@ -7,6 +7,7 @@ import AulaListsBySeminario from '../components/AulaListsBySeminario'
 import { AuthContext } from '../context/AuthContext'
 
 const Home = () => {
+	
 	const { auth } = useContext(AuthContext)
 	const [selectedSeminarioIndex, setSelectedSeminarioIndex] = useState(parseInt(sessionStorage.getItem('selectedSeminarioIndex')))
 	const [seminari, setSeminari] = useState([])

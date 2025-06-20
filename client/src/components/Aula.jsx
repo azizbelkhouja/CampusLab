@@ -28,13 +28,12 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 		try {
 			setIsFetchingAulaDone(false)
 
-			// Chiamate Frontend → Backend
 			let response
 			if (auth.role === 'admin') {
 
 				response = await axios.get(`/aula/unreleased/${aulaId}`, {
 					headers: {
-						Authorization: `Bearer ${auth.token}` // JWT per autorizzazione
+						Authorization: `Bearer ${auth.token}`
 					}
 				})
 
@@ -43,7 +42,6 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 			}
 
 			setAula(response.data.data)
-			// Fine Chiamate Frontend → Backend
 
 		} catch (error) {
 			console.error(error)
@@ -52,12 +50,10 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 		}
 	}
 
-	// chiamare la funzione fetchAula ogni volta che cambia il valore di aulaId
 	useEffect(() => {
 		fetchAula()
 	}, [aulaId])
 
-	// esegue una sola volta all’avvio del componente
 	useEffect(() => {
 		setValue('autoIncrease', true)
 		setValue('rounding5', true)
@@ -85,7 +81,7 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 				{ seminario: data.seminario, showtime, aula: aula._id, repeat: data.repeat, isRelease: data.isRelease },
 				{
 					headers: {
-						Authorization: `Bearer ${auth.token}` // Bearer : indica che il tipo di token è un token di accesso
+						Authorization: `Bearer ${auth.token}`
 					}
 				}
 			)
@@ -93,19 +89,16 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 			fetchAula()
 
 			if (data.autoIncrease) {
+
 				const seminarioLength = seminari.find((seminario) => seminario._id === data.seminario).length
-
 				const [GapHours, GapMinutes] = data.gap.split(':').map(Number)
-
-				// la data/ora in cui inizierà il prossimo seminario, calcolata dopo la fine del seminario corrente più la pausa.
 				const nextShowtime = new Date(showtime.getTime() + (seminarioLength + GapHours * 60 + GapMinutes) * 60000)
 
 				if (data.rounding5 || data.rounding10) {
+
 					const totalMinutes = nextShowtime.getHours() * 60 + nextShowtime.getMinutes()
 					const roundedMinutes = data.rounding5 ? Math.ceil(totalMinutes / 5) * 5 : Math.ceil(totalMinutes / 10) * 10
-
 					let roundedHours = Math.floor(roundedMinutes / 60)
-
 					const remainderMinutes = roundedMinutes % 60
 
 					if (roundedHours === 24) {
@@ -258,6 +251,7 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 										<input
 											type="checkbox"
 											className="h-6 w-6 lg:h-9 lg:w-9"
+											defaultChecked={true}
 											{...register('isRelease')}
 										/>
 									</label>
@@ -342,7 +336,7 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 							</button>
 						</form>
 						{filterSeminario?.name && (
-							<div className="mx-4 flex gap-2 rounded-md bg-gradient-to-r from-indigo-600 to-blue-500 p-2 text-white">
+							<div className="mx-4 flex gap-2 bg-[#203E72] p-2 text-white">
 								<InformationCircleIcon className="h-6 w-6" />
 								{`Stai visualizzando gli orari di "${filterSeminario?.name}"`}
 							</div>
