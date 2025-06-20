@@ -135,18 +135,18 @@ const Navbar = () => {
 				</div>
 				<div className="flex grow items-center justify-center gap-3 lg:justify-end">
 					{auth.username && (
-						<p className="text-xl font-bold text-white">Welcome, {auth.username} !</p>
+						<p className="text-xl font-bold text-white"><span className='text-gray-400'>Welcome,</span> {auth.username} !</p>
 					)}
 					{auth.token ? (
 						<button
-							className="bg-white px-5 rounded py-2 text-black disabled:slate-500"
+							className="bg-white px-5 font-semibold rounded py-2 text-[#203E72] disabled:slate-500"
 							onClick={() => onLogout()}
 							disabled={isLoggingOut}
 						>
 							{isLoggingOut ? 'Elaborazione...' : 'Esci'}
 						</button>
 					) : (
-						<button className="bg-white py-1 text-black px-3">
+						<button className="bg-white py-1 font-semibold text-[#203E72] px-3">
 							<Link to={'/login'}>Login</Link>
 						</button>
 					)}

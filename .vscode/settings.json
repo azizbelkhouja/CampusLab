@@ -52,6 +52,14 @@
         {
             "folderPath": "CampusLab\\client\\src\\components\\Aula.jsx\\",
             "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Tickets.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\ShowtimeDetails.jsx\\",
+            "badge": "🤔"
         }
     ]
 }
