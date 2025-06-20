@@ -88,6 +88,34 @@
         {
             "folderPath": "CampusLab\\client\\src\\pages\\Login.jsx\\",
             "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Showtime.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\Seat.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\pages\\Purchase.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\AdminRoute.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\App.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\main.jsx\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "CampusLab\\client\\src\\components\\ScheduleTable.jsx\\",
+            "badge": "😀"
         }
     ]
 }
