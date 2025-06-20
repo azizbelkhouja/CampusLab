@@ -190,10 +190,8 @@ const Showtime = () => {
 
             {auth.role === 'admin' && (
               <>
-                <h2 className="mt-8 text-2xl font-bold">Posti prenotati</h2>
-                <div className="mt-2 flex gap-2 bg-gradient-to-br from-indigo-100 to-white p-4">
-                  {/* Row filter */}
-                  {/* Filtro per fila */}
+                <h2 className="mt-10 text-2xl font-bold">Posti prenotati</h2>
+                <div className="flex gap-2 bg-[#F0F8FF] p-4">
                   <div className="flex grow flex-col">
                     <h4 className="text-lg font-bold text-gray-800">Fila</h4>
                     <Select
@@ -250,28 +248,25 @@ const Showtime = () => {
                     />
                   </div>
                 </div>
-                {/* Booked seats table */}
-                {/* Tabella posti prenotati */}
                 <div
-                  className={`mt-4 grid max-h-screen w-full overflow-auto bg-gradient-to-br from-indigo-100 to-white`}
+                  className="mt-4 grid max-h-screen w-full overflow-auto"
                   style={{
                     gridTemplateColumns: 'repeat(4, minmax(max-content, 1fr))'
                   }}
                 >
-                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                  <p className="sticky top-0 bg-[#F0F8FF] px-2 py-1 text-center text-xl font-semibold text-black border-r-2 border-gray-200">
                     Posto
                   </p>
-                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                  <p className="sticky top-0 bg-[#F0F8FF] px-2 py-1 text-center text-xl font-semibold text-black border-r-2 border-gray-200">
                     Nome utente
                   </p>
-                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                  <p className="sticky top-0 bg-[#F0F8FF] px-2 py-1 text-center text-xl font-semibold text-black border-r-2 border-gray-200">
                     Email
                   </p>
-                  <p className="sticky top-0 bg-white px-2 py-1 text-center text-xl font-semibold text-black border-r-2">
+                  <p className="sticky top-0 bg-[#F0F8FF] px-2 py-1 text-center text-xl font-semibold text-black border-r-2 border-gray-200">
                     Ruolo
                   </p>
-                  {/* Booked seats data rows */}
-                  {/* Righe di dati dei posti prenotati */}
+
                   {filteredSeats
                     .sort((a, b) => {
                       const rowA = a.row
@@ -296,16 +291,16 @@ const Showtime = () => {
                     .map((seat, index) => {
                       return (
                         <Fragment key={index}>
-                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                          <div className="border-t-2 border-gray-200 px-2 py-1">
                             {`${seat.row}${seat.number}`}
                           </div>
-                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                          <div className="border-t-2 border-gray-200 px-2 py-1">
                             {seat.user.username}
                           </div>
-                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                          <div className="border-t-2 border-gray-200 px-2 py-1">
                             {seat.user.email}
                           </div>
-                          <div className="border-t-2 border-indigo-200 px-2 py-1">
+                          <div className="border-t-2 border-gray-200 px-2 py-1">
                             {seat.user.role}
                           </div>
                         </Fragment>

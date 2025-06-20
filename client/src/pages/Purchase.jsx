@@ -27,7 +27,6 @@ const Purchase = () => {
 					}
 				}
 			)
-			// console.log(response.data)
 			navigate('/dip')
 			toast.success('Prenotazione posti riuscita!', {
 				position: 'top-center',
