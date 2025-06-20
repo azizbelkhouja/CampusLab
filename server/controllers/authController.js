@@ -2,9 +2,6 @@
 
 const User = require('../models/User')
 
-//@desc    Register user
-//@route   POST /auth/register
-//@access  Public
 exports.register = async (req, res, next) => {
 	try {
 		const { username, email, password, role = 'user' } = req.body
@@ -23,9 +20,6 @@ exports.register = async (req, res, next) => {
 	}
 }
 
-//@desc		Login user
-//@route	POST /auth/login
-//@access	Public
 exports.login = async (req, res, next) => {
 	try {
 		const { username, password } = req.body
@@ -74,9 +68,6 @@ const sendTokenResponse = (user, statusCode, res) => {
 	})
 }
 
-//@desc		Get current Logged in user
-//@route 	POST /auth/me
-//@access	Private
 exports.getMe = async (req, res, next) => {
 	try {
 		const user = await User.findById(req.user.id)
@@ -89,9 +80,6 @@ exports.getMe = async (req, res, next) => {
 	}
 }
 
-//@desc		Get user's tickets
-//@route 	POST /auth/tickets
-//@access	Private
 exports.getTickets = async (req, res, next) => {
 	try {
 		const user = await User.findById(req.user.id, { tickets: 1 }).populate({
@@ -112,9 +100,6 @@ exports.getTickets = async (req, res, next) => {
 	}
 }
 
-//@desc		Log user out / clear cookie
-//@route 	GET /auth/logout
-//@access	Private
 exports.logout = async (req, res, next) => {
 	try {
 		res.cookie('token', 'none', {
@@ -130,9 +115,6 @@ exports.logout = async (req, res, next) => {
 	}
 }
 
-//@desc		Get All user
-//@route 	POST /auth/user
-//@access	Private Admin
 exports.getAll = async (req, res, next) => {
 	try {
 		const user = await User.find().populate({
@@ -153,9 +135,6 @@ exports.getAll = async (req, res, next) => {
 	}
 }
 
-//@desc		Delete user
-//@route 	DELETE /auth/user/:id
-//@access	Private Admin
 exports.deleteUser = async (req, res, next) => {
 	try {
 		const user = await User.findByIdAndDelete(req.params.id)
@@ -169,9 +148,6 @@ exports.deleteUser = async (req, res, next) => {
 	}
 }
 
-//@desc     Update user
-//@route    PUT /auth/user/:id
-//@access   Private
 exports.updateUser = async (req, res, next) => {
 	try {
 		const user = await User.findByIdAndUpdate(req.params.id, req.body, {

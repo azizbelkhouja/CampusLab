@@ -2,9 +2,6 @@
 
 const Dip = require('../models/Dip')
 
-//@desc     GET all Dips
-//@route    GET /Dip
-//@access   Public
 exports.getDips = async (req, res, next) => {
 	try {
 		const dips = await Dip.find()
@@ -34,9 +31,6 @@ exports.getDips = async (req, res, next) => {
 	}
 }
 
-//@desc     GET all dips with all unreleased showtime
-//@route    GET /dip/unreleased
-//@access   Private admin
 exports.getUnreleasedDips = async (req, res, next) => {
 	try {
 		const dips = await Dip.find()
@@ -58,9 +52,6 @@ exports.getUnreleasedDips = async (req, res, next) => {
 	}
 }
 
-//@desc     GET single dip
-//@route    GET /dip/:id
-//@access   Public
 exports.getDip = async (req, res, next) => {
 	try {
 		const dip = await Dip.findById(req.params.id)
@@ -92,9 +83,6 @@ exports.getDip = async (req, res, next) => {
 	}
 }
 
-//@desc     Create dip
-//@route    POST /dip
-//@access   Private
 exports.createDip = async (req, res, next) => {
 	try {
 		const dip = await Dip.create(req.body)
@@ -107,9 +95,6 @@ exports.createDip = async (req, res, next) => {
 	}
 }
 
-//@desc     Update dips
-//@route    PUT /dip/:id
-//@access   Private Admin
 exports.updateDip = async (req, res, next) => {
 	try {
 		const dip = await Dip.findByIdAndUpdate(req.params.id, req.body, {
@@ -126,9 +111,6 @@ exports.updateDip = async (req, res, next) => {
 	}
 }
 
-//@desc     Delete single dip
-//@route    DELETE /dip/:id
-//@access   Private Admin
 exports.deleteDip = async (req, res, next) => {
 	try {
 		const dip = await Dip.findById(req.params.id)

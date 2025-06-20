@@ -3,9 +3,6 @@
 const Seminario = require('../models/Seminario')
 const Showtime = require('../models/Showtime')
 
-//@desc     GET all seminarios
-//@route    GET /seminario
-//@access   Public
 exports.getSeminari = async (req, res, next) => {
 	try {
 		const seminari = await Seminario.find().sort({ createdAt: -1 })
@@ -15,16 +12,13 @@ exports.getSeminari = async (req, res, next) => {
 	}
 }
 
-//@desc     GET showing seminarios
-//@route    GET /seminario/showing
-//@access   Public
 exports.getShowingSeminari = async (req, res, next) => {
 	try {
 		const showingShowtime = await Showtime.aggregate([
 			{ $match: { showtime: { $gte: new Date() }, isRelease: true } },
 			{
 				$lookup: {
-					from: 'seminarios', // Replace "seminari" with the actual collection name of your seminari
+					from: 'seminarios',
 					localField: 'seminario',
 					foreignField: '_id',
 					as: 'seminario'
@@ -57,16 +51,14 @@ exports.getShowingSeminari = async (req, res, next) => {
 		res.status(400).json({ success: false, message: err })
 	}
 }
-//@desc     GET showing seminari with all unreleased showtime
-//@route    GET /seminario/unreleased/showing
-//@access   Private admin
+
 exports.getUnreleasedShowingSeminari = async (req, res, next) => {
 	try {
 		const showingShowtime = await Showtime.aggregate([
 			{ $match: { showtime: { $gte: new Date() }, isRelease: true } },
 			{
 				$lookup: {
-					from: 'seminarios', // Replace "seminari" with the actual collection name of your seminari
+					from: 'seminarios',
 					localField: 'seminario',
 					foreignField: '_id',
 					as: 'seminario'
@@ -100,9 +92,6 @@ exports.getUnreleasedShowingSeminari = async (req, res, next) => {
 	}
 }
 
-//@desc     GET single seminario
-//@route    GET /seminario/:id
-//@access   Public
 exports.getSeminario = async (req, res, next) => {
 	try {
 		const seminario = await Seminario.findById(req.params.id)
@@ -117,9 +106,6 @@ exports.getSeminario = async (req, res, next) => {
 	}
 }
 
-//@desc     Create seminario
-//@route    POST /seminario
-//@access   Private
 exports.createSeminario = async (req, res, next) => {
 	try {
 		const seminario = await Seminario.create(req.body)
@@ -132,9 +118,6 @@ exports.createSeminario = async (req, res, next) => {
 	}
 }
 
-//@desc     Update seminarios
-//@route    PUT /seminario/:id
-//@access   Private Admin
 exports.updateSeminario = async (req, res, next) => {
 	try {
 		const seminario = await Seminario.findByIdAndUpdate(req.params.id, req.body, {
@@ -151,9 +134,6 @@ exports.updateSeminario = async (req, res, next) => {
 	}
 }
 
-//@desc     Delete single seminario
-//@route    DELETE /seminario/:id
-//@access   Private Admin
 exports.deleteSeminario = async (req, res, next) => {
 	try {
 		const seminario = await Seminario.findById(req.params.id)
