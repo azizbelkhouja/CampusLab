@@ -38,7 +38,7 @@ exports.getAula = async (req, res, next) => {
 			})
 
 		if (!aula) {
-			return res.status(400).json({ success: false, message: `Aula not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Aula non trovata con id ${req.params.id}` })
 		}
 
 		res.status(200).json({ success: true, data: aula })

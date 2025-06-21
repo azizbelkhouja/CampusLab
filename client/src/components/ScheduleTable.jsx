@@ -6,16 +6,13 @@ import { AuthContext } from '../context/AuthContext'
 
 const ScheduleTable = ({ dip, selectedDate }) => {
 
-	const ref = useRef(null) // Reference to scrollable div / Riferimento al contenitore scrollabile
+	const ref = useRef(null)
+	const { auth } = useContext(AuthContext)
 
-	const { auth } = useContext(AuthContext) // Get authenticated user / Ottieni l'utente autenticato
+	const { events } = useDraggable(ref)
 
-	const { events } = useDraggable(ref) // Enable drag to scroll / Abilita il trascinamento per scroll
+	const navigate = useNavigate()
 
-	const navigate = useNavigate() // Used to navigate to showtime page / Usato per navigare alla pagina del seminario
-
-	// Convert showtime to grid row number (5-minute steps)
-  	// Converte l'orario in numero di riga nella griglia (passi di 5 minuti)
 	const getRowStart = (showtime) => {
 		showtime = new Date(showtime)
 		const hour = showtime.getHours()
@@ -24,14 +21,10 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 		return Math.round((60 * hour + min) / 5)
 	}
 
-	// Calculate how many rows a seminar spans
-  	// Calcola quante righe occupa un seminario
 	const getRowSpan = (length) => {
 		return Math.round(length / 5)
 	}
 
-	// Get earliest and latest showtimes on the selected day
-  	// Ottieni gli orari di inizio e fine per il giorno selezionato
 	const getRowStartRange = () => {
 		let firstRowStart = 100000
 		let lastRowEnd = 0
@@ -57,8 +50,6 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 		return [firstRowStart, lastRowEnd, count]
 	}
 
-	// Filter only today's showtimes for an aula
-  	// Filtra solo i seminari di oggi per un'aula
 	const getTodayShowtimes = (aula) => {
 		return aula.showtimes?.filter((showtime, index) => {
 			return (
@@ -69,8 +60,6 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 		})
 	}
 
-	// Convert row label (e.g., A, B, C) to number
-  	// Converte l'etichetta della riga (es. A, B, C) in un numero
 	function rowToNumber(column) {
 		let result = 0
 		for (let i = 0; i < column.length; i++) {
@@ -200,7 +189,7 @@ const ScheduleTable = ({ dip, selectedDate }) => {
 								<p className="flex items-center gap-1 text-sm">
 									<UserIcon className="h-4 w-4" />
 									{(rowToNumber(aula.seatPlan.row) * aula.seatPlan.column).toLocaleString(
-										'en-US'
+										'it-IT'
 									)}{' '}
 									Posti
 								</p>

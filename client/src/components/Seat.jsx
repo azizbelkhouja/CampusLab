@@ -4,7 +4,7 @@ import { memo, useState } from 'react'
 
 const Seat = ({ seat, setSelectedSeats, selectable, isAvailable }) => {
 
-	const [isSelected, setIsSelected] = useState(false) // Track if this seat is selected / Tiene traccia se il posto è selezionato
+	const [isSelected, setIsSelected] = useState(false) // Tiene traccia se il posto è selezionato
 
 	return !isAvailable ? (
 

@@ -25,6 +25,7 @@ const Navbar = () => {
 	}
 
 	const navigate = useNavigate()
+
 	const onLogout = async () => {
 		try {
 			setLoggingOut(true)
@@ -56,8 +57,7 @@ const Navbar = () => {
 		return (
 			<>
 				<div className="flex flex-col gap-2 lg:flex-row">
-					<Link
-						to={'/dip'}
+					<Link to={'/dip'}
 						className={`flex items-center justify-center gap-2 px-2 py-1 ${
 							window.location.pathname === '/dip'
 								? 'border-b-2 border-white text-white'
@@ -67,8 +67,8 @@ const Navbar = () => {
 						<HomeModernIcon className="h-6 w-6" />
 						<p>Dipartimenti</p>
 					</Link>
-					<Link
-						to={'/schedule'}
+
+					<Link to={'/schedule'}
 						className={`flex items-center justify-center gap-2 px-2 py-1 ${
 							window.location.pathname === '/schedule'
 								? 'border-b-2 border-white text-white'
@@ -81,8 +81,7 @@ const Navbar = () => {
 
 					{
 						auth.token && (
-							<Link
-								to={'/tickets'}
+							<Link to={'/tickets'}
 								className={`flex items-center justify-center gap-2 px-2 py-1 ${
 									window.location.pathname === '/tickets'
 										? 'border-b-2 border-white text-white'
@@ -97,8 +96,7 @@ const Navbar = () => {
 					
 					{auth.role === 'admin' && (
 						<>
-							<Link
-								to={'/seminario'}
+							<Link to={'/seminario'}
 								className={`flex items-center justify-center gap-2 px-2 py-1 ${
 									window.location.pathname === '/seminario'
 										? 'border-b-2 border-white text-white'
@@ -108,8 +106,8 @@ const Navbar = () => {
 								<VideoCameraIcon className="h-6 w-6" />
 								<p>Seminari</p>
 							</Link>
-							<Link
-								to={'/user'}
+
+							<Link to={'/user'}
 								className={`flex items-center justify-center gap-2 px-2 py-1 ${
 									window.location.pathname === '/user'
 										? 'border-b-2 border-white text-white'
@@ -122,6 +120,7 @@ const Navbar = () => {
 						</>
 					)}
 				</div>
+				
 				<div className="flex grow items-center justify-center gap-3 lg:justify-end">
 					{auth.username && (
 						<p className="text-xl font-bold text-white"><span className='text-gray-400'>Welcome,</span> {auth.username} !</p>
