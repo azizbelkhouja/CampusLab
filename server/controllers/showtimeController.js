@@ -51,7 +51,7 @@ exports.getShowtime = async (req, res, next) => {
 		}
 
 		if (!showtime.isRelease) {
-			return res.status(400).json({ success: false, message: `Showtime is not released` })
+			return res.status(400).json({ success: false, message: `Showtime non è pubblicato` })
 		}
 
 		res.status(200).json({ success: true, data: showtime })
@@ -224,10 +224,8 @@ exports.deleteShowtimes = async (req, res, next) => {
 		let showtimesIds
 
 		if (!ids) {
-			// Delete all showtimes
 			showtimesIds = await Showtime.find({}, '_id')
 		} else {
-			// Find showtimes based on the provided IDs
 			showtimesIds = await Showtime.find({ _id: { $in: ids } }, '_id')
 		}
 

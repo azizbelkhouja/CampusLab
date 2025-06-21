@@ -24,19 +24,19 @@ exports.login = async (req, res, next) => {
 		const { username, password } = req.body
 
 		if (!username || !password) {
-			return res.status(400).json('Please provide an username and password')
+			return res.status(400).json('Per favore fornisci un nome utente e una password')
 		}
 
 		const user = await User.findOne({ username }).select('+password')
 
 		if (!user) {
-			return res.status(400).json('Invalid credentials')
+			return res.status(400).json('Credenziali non valide')
 		}
 
 		const isMatch = await user.matchPassword(password)
 
 		if (!isMatch) {
-			return res.status(401).json('Invalid credentials')
+			return res.status(401).json('Credenziali non valide')
 		}
 
 		sendTokenResponse(user, 200, res)
@@ -151,7 +151,7 @@ exports.updateUser = async (req, res, next) => {
 		})
 
 		if (!user) {
-			return res.status(400).json({ success: false, message: `User not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `User non trovato con id ${req.params.id}` })
 		}
 		res.status(200).json({ success: true, data: user })
 	} catch (err) {
