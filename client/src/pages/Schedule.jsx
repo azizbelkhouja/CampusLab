@@ -19,7 +19,6 @@ const Schedule = () => {
 	const {
 		register,
 		handleSubmit,
-		reset,
 		watch,
 		setValue,
 		formState: { errors }
@@ -218,7 +217,6 @@ const Schedule = () => {
 													setSelectedSeminario(value)
 												}}
 												isSearchable={true}
-												primaryColor="indigo"
 												classNames={{
 													menuButton: (value) =>
 														'flex font-semibold text-sm border'

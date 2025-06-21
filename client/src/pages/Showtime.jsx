@@ -20,8 +20,10 @@ const Showtime = () => {
   const [filterColumn, setFilterColumn] = useState(null)
 
   const sortedSelectedSeat = selectedSeats.sort((a, b) => {
+
     const [rowA, numberA] = a.match(/([A-Za-z]+)(\d+)/).slice(1)
     const [rowB, numberB] = b.match(/([A-Za-z]+)(\d+)/).slice(1)
+    
     if (rowA === rowB) {
       if (parseInt(numberA) > parseInt(numberB)) {
         return 1
@@ -224,8 +226,7 @@ const Showtime = () => {
                       primaryColor="indigo"
                     />
                   </div>
-                  {/* Column filter */}
-                  {/* Filtro per colonna */}
+
                   <div className="flex grow flex-col">
                     <h4 className="text-lg font-bold text-gray-800">Numero</h4>
                     <Select

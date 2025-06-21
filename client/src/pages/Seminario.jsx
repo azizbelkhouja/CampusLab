@@ -49,7 +49,7 @@ const Seminario = () => {
 				}
 			})
 			fetchSeminari()
-			toast.success('Add seminario successful!', {
+			toast.success('Seminario aggiunto con successo!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
@@ -68,7 +68,7 @@ const Seminario = () => {
 
 	const handleDelete = (seminario) => {
 		const confirmed = window.confirm(
-			`Do you want to delete seminario ${seminario.name}, including its showtimes and tickets?`
+			`Vuoi eliminare il seminario ${seminario.name}, inclusi i suoi orari e biglietti?`
 		)
 		if (confirmed) {
 			onDeleteSeminario(seminario._id)
@@ -83,7 +83,7 @@ const Seminario = () => {
 				}
 			})
 			fetchSeminari()
-			toast.success('Delete seminario successful!', {
+			toast.success('Seminario eliminato con successo!', {
 				position: 'top-center',
 				autoClose: 2000,
 				pauseOnHover: false
