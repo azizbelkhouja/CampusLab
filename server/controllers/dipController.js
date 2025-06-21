@@ -74,7 +74,7 @@ exports.getDip = async (req, res, next) => {
 			})
 
 		if (!dip) {
-			return res.status(400).json({ success: false, message: `Dip not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Dip non trovato con id ${req.params.id}` })
 		}
 
 		res.status(200).json({ success: true, data: dip })
@@ -103,7 +103,7 @@ exports.updateDip = async (req, res, next) => {
 		})
 
 		if (!dip) {
-			return res.status(400).json({ success: false, message: `Dip not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Dip non trovato con id ${req.params.id}` })
 		}
 		res.status(200).json({ success: true, data: dip })
 	} catch (err) {
@@ -116,7 +116,7 @@ exports.deleteDip = async (req, res, next) => {
 		const dip = await Dip.findById(req.params.id)
 
 		if (!dip) {
-			return res.status(400).json({ success: false, message: `Dip not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Dip non trovato con id ${req.params.id}` })
 		}
 
 		await dip.deleteOne()

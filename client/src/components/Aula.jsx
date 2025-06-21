@@ -268,30 +268,6 @@ const Aula = ({ aulaId, seminari, selectedDate, filterSeminario, setSelectedDate
 												{...register('autoIncrease')}
 											/>
 										</label>
-										<label
-											className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-											title="Dopo l'aggiunta, aggiorna la data al termine del seminario"
-										>
-											Data:
-											<input
-												type="checkbox"
-												className="h-6 w-6 lg:h-9 lg:w-9"
-												disabled={!watch('autoIncrease')}
-												{...register('autoIncreaseDate')}
-											/>
-										</label>
-									</div>
-									<div
-										className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start"
-										title="Intervallo tra gli orari"
-									>
-										<label className="whitespace-nowrap font-semibold leading-5">Intervallo:</label>
-										<input
-											type="time"
-											className="h-9 w-full border bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm disabled:bg-gray-300"
-											disabled={!watch('autoIncrease')}
-											{...register('gap')}
-										/>
 									</div>
 									<div className="flex flex-col items-start gap-2 lg:flex-row lg:items-end">
 										<p className="text-right underline">Arrotondamento</p>

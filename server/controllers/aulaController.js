@@ -56,7 +56,7 @@ exports.getUnreleasedAula = async (req, res, next) => {
 		])
 
 		if (!aula) {
-			return res.status(400).json({ success: false, message: `Aula not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Aula non trovata con id ${req.params.id}` })
 		}
 
 		res.status(200).json({ success: true, data: aula })
@@ -143,17 +143,17 @@ exports.getAulaBySeminario = async (req, res, next) => {
 			const { dip: dipId, row, column } = req.body
 			const rowRegex = /^([A-D][A-Z]|[A-Z])$/
 			if (!rowRegex.test(row)) {
-				return res.status(400).json({ success: false, message: `Row is not a valid letter between A to CZ` })
+				return res.status(400).json({ success: false, message: `Riga non è una lettera fra A e CZ` })
 			}
 
 			if (column < 1 || column > 120) {
-				return res.status(400).json({ success: false, message: `Column is not a valid number between 1 to 250` })
+				return res.status(400).json({ success: false, message: `Colonna non è un numero fra 1 e 250` })
 			}
 
 			const dip = await Dip.findById(dipId)
 
 			if (!dip) {
-				return res.status(400).json({ success: false, message: `Dip not found with id of ${dipId}` })
+				return res.status(400).json({ success: false, message: `Dip non trovato con id ${dipId}` })
 			}
 
 			const aula = await Aula.create({ dip, number: dip.aulas.length + 1, seatPlan: { row, column } })
@@ -179,7 +179,7 @@ exports.getAulaBySeminario = async (req, res, next) => {
 			})
 
 			if (!aula) {
-				return res.status(400).json({ success: false, message: `Aula not found with id of ${req.params.id}` })
+				return res.status(400).json({ success: false, message: `Aula non trovata con id ${req.params.id}` })
 			}
 			res.status(200).json({ success: true, data: aula })
 		} catch (err) {
@@ -192,7 +192,7 @@ exports.getAulaBySeminario = async (req, res, next) => {
 			const aula = await Aula.findById(req.params.id)
 
 			if (!aula) {
-				return res.status(400).json({ success: false, message: `Aula not found with id of ${req.params.id}` })
+				return res.status(400).json({ success: false, message: `Aula non trovata con id ${req.params.id}` })
 			}
 
 			await aula.deleteOne()
@@ -257,7 +257,7 @@ exports.createAula = async (req, res, next) => {
 		const dip = await Dip.findById(dipId)
 
 		if (!dip) {
-			return res.status(400).json({ success: false, message: `Dip not found with id of ${dipId}` })
+			return res.status(400).json({ success: false, message: `Dip non trovata con id ${dipId}` })
 		}
 
 		const aula = await Aula.create({ dip: dip, number: dip.aulas.length + 1, seatPlan: { row, column } })
@@ -284,7 +284,7 @@ exports.updateAula = async (req, res, next) => {
 		})
 
 		if (!aula) {
-			return res.status(400).json({ success: false, message: `Aula not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Aula non trovata con id ${req.params.id}` })
 		}
 		res.status(200).json({ success: true, data: aula })
 	} catch (err) {
@@ -298,7 +298,7 @@ exports.deleteAula = async (req, res, next) => {
 		const aula = await Aula.findById(req.params.id)
 
 		if (!aula) {
-			return res.status(400).json({ success: false, message: `Aula not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Aula non trovata con id ${req.params.id}` })
 		}
 
 		await aula.deleteOne()

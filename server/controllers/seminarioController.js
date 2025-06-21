@@ -97,7 +97,7 @@ exports.getSeminario = async (req, res, next) => {
 		const seminario = await Seminario.findById(req.params.id)
 
 			if (!seminario) {
-				return res.status(400).json({ success: false, message: `Seminario not found with id of ${req.params.id}` })
+				return res.status(400).json({ success: false, message: `Seminario non trovato con id ${req.params.id}` })
 			}
 
 		res.status(200).json({ success: true, data: seminario })
@@ -126,7 +126,7 @@ exports.updateSeminario = async (req, res, next) => {
 		})
 
 		if (!seminario) {
-			return res.status(400).json({ success: false, message: `Seminario not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Seminario non trovato con id ${req.params.id}` })
 		}
 		res.status(200).json({ success: true, data: seminario })
 	} catch (err) {
@@ -139,7 +139,7 @@ exports.deleteSeminario = async (req, res, next) => {
 		const seminario = await Seminario.findById(req.params.id)
 
 		if (!seminario) {
-			return res.status(400).json({ success: false, message: `Seminario not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Seminario non trovato con id ${req.params.id}` })
 		}
 
 		await seminario.deleteOne()

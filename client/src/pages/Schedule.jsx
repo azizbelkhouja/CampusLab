@@ -237,8 +237,8 @@ const Schedule = () => {
 											/>
 										</div>
 									</div>
-									<div className="flex flex-col gap-2 lg:flex-row lg:items-stretch">
-										<div className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start">
+									<div className="flex flex-col gap-12 lg:flex-row lg:items-stretch">
+										<div className="flex items-center gap-x-8 gap-y-1 lg:flex-col lg:items-start">
 											<label className="whitespace-nowrap text-lg leading-5">
 												Ripeti (giorni):
 											</label>
@@ -253,7 +253,7 @@ const Schedule = () => {
 											/>
 										</div>
 										<label className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap text-lg leading-5 lg:flex-col lg:items-start">
-											Rilascia ora:
+											Pubblica ora:
 											<input
 												type="checkbox"
 												className="h-6 w-6 lg:h-9 lg:w-9"
@@ -273,30 +273,6 @@ const Schedule = () => {
 													{...register('autoIncrease')}
 												/>
 											</label>
-											<label
-												className="flex items-center gap-x-2 gap-y-1 whitespace-nowrap font-semibold leading-5 lg:flex-col lg:items-start"
-												title="Dopo l'aggiunta, aggiorna la data all'orario di fine seminario"
-											>
-												Data:
-												<input
-													type="checkbox"
-													className="h-6 w-6 lg:h-9 lg:w-9"
-													disabled={!watch('autoIncrease')}
-													{...register('autoIncreaseDate')}
-												/>
-											</label>
-										</div>
-										<div
-											className="flex items-center gap-x-2 gap-y-1 lg:flex-col lg:items-start"
-											title="Intervallo tra gli orari"
-										>
-											<label className="whitespace-nowrap font-semibold leading-5">Intervallo:</label>
-											<input
-												type="time"
-												className="h-9 w-full rounded bg-white px-2 py-1 font-semibold text-gray-900 drop-shadow-sm disabled:bg-gray-300"
-												disabled={!watch('autoIncrease')}
-												{...register('gap')}
-											/>
 										</div>
 										<div className="flex flex-col items-start gap-2 lg:flex-row lg:items-end">
 											<p className=" text-right underline">Arrotondamento</p>

@@ -47,7 +47,7 @@ exports.getShowtime = async (req, res, next) => {
 			.select('-seats.user')
 
 		if (!showtime) {
-			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Showtime non trovato con id ${req.params.id}` })
 		}
 
 		if (!showtime.isRelease) {
@@ -70,7 +70,7 @@ exports.getShowtimeWithUser = async (req, res, next) => {
 		])
 
 		if (!showtime) {
-			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Showtime non trovato con id ${req.params.id}` })
 		}
 
 		res.status(200).json({ success: true, data: showtime })
@@ -85,7 +85,7 @@ exports.addShowtime = async (req, res, next) => {
 		const { seminario: seminarioId, showtime: showtimeString, aula: aulaId, repeat = 1, isRelease } = req.body
 
 		if (repeat > 31 || repeat < 1) {
-			return res.status(400).json({ success: false, message: `Repeat is not a valid number between 1 to 31` })
+			return res.status(400).json({ success: false, message: `Repeat non è un numero valido tra 1 e 31` })
 		}
 
 		let showtime = new Date(showtimeString)
@@ -95,13 +95,13 @@ exports.addShowtime = async (req, res, next) => {
 		const aula = await Aula.findById(aulaId)
 
 		if (!aula) {
-			return res.status(400).json({ success: false, message: `Aula not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Aula non trovata con id ${req.params.id}` })
 		}
 
 		const seminario = await Seminario.findById(seminarioId)
 
 		if (!seminario) {
-			return res.status(400).json({ success: false, message: `Seminario not found with id of ${seminarioId}` })
+			return res.status(400).json({ success: false, message: `Seminario non trovato con id ${seminarioId}` })
 		}
 
 		for (let i = 0; i < repeat; i++) {
@@ -133,7 +133,7 @@ exports.purchase = async (req, res, next) => {
 		const showtime = await Showtime.findById(req.params.id).populate({ path: 'aula', select: 'seatPlan' })
 
 		if (!showtime) {
-			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Showtime non trovato con id ${req.params.id}` })
 		}
 
 		const isSeatValid = seats.every((seatNumber) => {
@@ -149,7 +149,7 @@ exports.purchase = async (req, res, next) => {
 		})
 
 		if (!isSeatValid) {
-			return res.status(400).json({ success: false, message: 'Seat is not valid' })
+			return res.status(400).json({ success: false, message: 'Posto non valido' })
 		}
 
 		const isSeatAvailable = seats.every((seatNumber) => {
@@ -158,7 +158,7 @@ exports.purchase = async (req, res, next) => {
 		})
 
 		if (!isSeatAvailable) {
-			return res.status(400).json({ success: false, message: 'Seat not available' })
+			return res.status(400).json({ success: false, message: 'Posto non disponibile' })
 		}
 
 		const seatUpdates = seats.map((seatNumber) => {
@@ -192,7 +192,7 @@ exports.updateShowtime = async (req, res, next) => {
 		})
 
 		if (!showtime) {
-			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Showtime non trovato con id ${req.params.id}` })
 		}
 		res.status(200).json({ success: true, data: showtime })
 	} catch (err) {
@@ -205,7 +205,7 @@ exports.deleteShowtime = async (req, res, next) => {
 		const showtime = await Showtime.findById(req.params.id)
 
 		if (!showtime) {
-			return res.status(400).json({ success: false, message: `Showtime not found with id of ${req.params.id}` })
+			return res.status(400).json({ success: false, message: `Showtime non trovato con id ${req.params.id}` })
 		}
 
 		await showtime.deleteOne()
