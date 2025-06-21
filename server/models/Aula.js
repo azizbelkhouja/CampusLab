@@ -7,11 +7,11 @@ const aulaSchema = new mongoose.Schema({
 		row: {
 			type: String,
 			maxlength: 2,
-			required: [true, 'Per favore aggiungi una riga al seatPlan']
+			required: [true, 'Per favore aggiungi una riga']
 		},
 		column: {
 			type: Number,
-			required: [true, 'Per favore aggiungi una colonna al seatPlan']
+			required: [true, 'Per favore aggiungi una colonna']
 		}
 	},
 	showtimes: [{ type: mongoose.Schema.ObjectId, ref: 'Showtime' }]

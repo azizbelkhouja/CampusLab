@@ -147,7 +147,7 @@ const ShowtimeDetails = ({ showDeleteBtn, showtime, fetchShowtime }) => {
 					)}
 					{showtime.isRelease && (
 						<button
-							title="annulla rilascio"
+							title="annulla pubblicazione"
 							className="flex w-fit items-center gap-1 bg-blue-900 py-1 pl-2 pr-1.5 text-sm font-medium text-white disabled:from-slate-500 disabled:to-slate-400"
 							onClick={() => handleUnreleasedShowtime(true)}
 							disabled={isUnreleasingShowtime}
