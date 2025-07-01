@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Navbar from '../components/Navbar'
 import NowShowing from '../components/NowShowing'
 import AulaListsBySeminario from '../components/AulaListsBySeminario'
+
 import { AuthContext } from '../context/AuthContext'
 
 const Home = () => {
@@ -15,7 +16,9 @@ const Home = () => {
 
 	const fetchSeminari = async (data) => {
 		try {
+
 			setIsFetchingSeminariDone(false)
+			
 			let response
 			if (auth.role === 'admin') {
 				response = await axios.get('/seminario/unreleased/showing', {

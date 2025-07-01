@@ -52,6 +52,7 @@ const DipLists = ({
 	}
 
 	const DipLists = ({ dips }) => {
+
 		const dipsList = dips?.filter((dip) =>
 			dip.name.toLowerCase().includes(watch('search')?.toLowerCase() || '')
 		)
@@ -62,9 +63,11 @@ const DipLists = ({
 					<button
 					className="w-fit px-2.5 py-1.5 font-medium text-black border-b-2 border-black bg-gray-200"
 					onClick={() => {
+
 						setSelectedDipIndex(null)
 							sessionStorage.setItem('selectedDipIndex', null)
 						}}
+						
 						key={index}
 					>
 						{dip.name}

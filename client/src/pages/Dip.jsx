@@ -7,10 +7,13 @@ import AulaListsByDip from '../components/AulaListsByDip'
 import { AuthContext } from '../context/AuthContext'
 
 const Dip = () => {
+
 	const { auth } = useContext(AuthContext)
+
 	const [selectedDipIndex, setSelectedDipIndex] = useState(
 		parseInt(sessionStorage.getItem('selectedDipIndex')) || 0
 	)
+
 	const [dips, setDips] = useState([])
 	const [isFetchingDips, setIsFetchingDips] = useState(true)
 
@@ -56,6 +59,7 @@ const Dip = () => {
 		auth,
 		isFetchingDips
 	}
+	
 	return (
 		<div className="flex min-h-screen flex-col gap-4">
 			<Navbar />
